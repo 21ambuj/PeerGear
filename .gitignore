@@ -1,0 +1,57 @@
+# ==============================================================================
+# PeerGear .gitignore
+# ==============================================================================
+
+# Environment secrets and credentials (NEVER commit live secrets)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Python & Django cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Database & local media uploads
+db.sqlite3
+*.sqlite3
+media/id_cards/*
+!media/id_cards/.gitkeep
+staticfiles/
+
+# Frontend dependencies & production bundles
+node_modules/
+campusshare_frontend/node_modules/
+campusshare_frontend/dist/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE, OS, and Temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+test.docx
+*.tmp
+*.bak
+*.swp

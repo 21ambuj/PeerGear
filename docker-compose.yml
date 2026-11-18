@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # MongoDB Service (or connect to external MongoDB Atlas by setting MONGO_URI)
+  mongodb:
+    image: mongo:6.0
+    container_name: peergear_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=campusshare_db
+
+  # Django Backend API Service
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: peergear_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/
+      - MONGO_DB_NAME=campusshare_db
+      - SECRET_KEY=production-secret-key-change-me
+      - DJANGO_DEBUG=False
+    depends_on:
+      - mongodb
+    volumes:
+      - media_volume:/app/media
+
+  # React Frontend Service (Nginx)
+  frontend:
+    build:
+      context: ./campusshare_frontend
+      dockerfile: Dockerfile
+    container_name: peergear_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+  media_volume:
