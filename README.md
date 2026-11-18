@@ -1,110 +1,188 @@
-# PeerGear: Peer-to-Peer Campus Resource Exchange & Smart Escrow Platform
+# PeerGear | Peer-to-Peer Campus Equipment Exchange & Smart Escrow Platform
 
-An industry-standard, fully functional campus resource exchange and renting web application engineered for university students. 
-Strictly designed and aligned with the course syllabi of:
-1. **CSE494: Intelligent NoSQL Databases** (MongoDB, PyMongo, BSON, Aggregations, Explain Profiling, Schema Validation)
-2. **INT253: Web Development in Python using Django** (Django REST Views, App Structuring, User Authentication, Request Validation, Error Handling)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Django](https://img.shields.io/badge/Django-Backend-092E20?style=flat-square&logo=django&logoColor=white)](https://djangoproject.com)
+[![MongoDB](https://img.shields.io/badge/MongoDB-NoSQL-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com)
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-Frontend-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS%20v4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=flat-square&logo=docker&logoColor=white)](https://docker.com)
 
----
-
-## 🌟 Key Platform Features
-
-- **College Verified Accounts**: Secure registration and login restricting or verifying campus students, with trust ratings and an embedded security deposit wallet.
-- **Resource Catalog & Full-Text Search**: Explore badminton rackets, scientific calculators, pure cotton lab coats, bicycles, DSLR cameras, musical instruments, and project kits using MongoDB `$text` search and compound filters.
-- **100% Refundable Security Deposit Escrow**: Protects resource owners by holding security deposits in escrow during the rental lifecycle, automatically refunding students upon undamaged return.
-- **Digital Handover OTP & Condition Tracking**:
-  - **Before Handover (Pickup)**: Verified with a 4-digit OTP and initial condition photos.
-  - **After Return (Inspection)**: Side-by-side photographic condition inspection ledger.
-- **Demand Board ("Notify Me When Available")**: Students can post requests for items they urgently need for practicals/fests; when any student lists a matching item, the system automatically dispatches notifications.
-- **Fair Dispute Management**: Dedicated panel for college admin to inspect photo evidence, deduct repair costs from deposits, and penalize policy violators.
-- **AI-Driven Recommendation Engine**: Evaluates item popularity, owner trust scores, and rental rates using native MongoDB Aggregation pipelines.
-- **Live Query Optimizer (explain() benchmark)**: Live academic demonstration modal showing `IXSCAN` vs `COLLSCAN` execution statistics.
+**PeerGear** is an end-to-end peer-to-peer equipment sharing and rental marketplace built specifically for university campuses. It allows verified college students to securely lend and borrow academic equipment, calculators, lab coats, sports gear, cameras, project electronics, and bicycles with built-in financial security deposits, dual-OTP handovers, and photographic condition ledgers.
 
 ---
 
-## 📚 Syllabus Mapping Matrix
+## 🌟 Key Platform Capabilities
 
-### 1. CSE494: Intelligent NoSQL Databases
+### 1. 🎓 Verified Student Identity & Trust System
+- **Mandatory Campus Verification**: Multi-step onboarding with live Email OTP verification and College ID Card upload.
+- **Admin Document Moderation**: Campus moderation console where administrators review, approve, or reject student ID cards with custom reason feedback.
+- **Trust Badges & User Profiles**: Verified student badges, exchange history, hostel block location tags, and peer accountability scores.
 
-| Syllabus Unit | Course Requirement | Code Implementation in CampusShare |
-| :--- | :--- | :--- |
-| **Unit I & II** | NoSQL Data Models, BSON Data Types & CRUD | Dynamic category attributes stored using native BSON types (`ObjectId`, `ISODate`, `Double`, `Array`, `Boolean`) via PyMongo driver in `campusshare_backend/db.py`. |
-| **Unit III** | Embedding vs. Referencing | - **Embedded**: Condition verification photos (`before_pickup`, `after_return`), timestamps, and reviews inside `rentals` documents.<br>- **Referenced**: `owner_id` and `renter_id` pointing to `users`, and `item_id` pointing to `items`. |
-| **Unit III** | Schema Validation Rules & Constraints | Enforced engine-level validation using MongoDB `$jsonSchema` in `scripts/setup_mongo_indexes.py`. |
-| **Unit IV** | Indexing Basics & Performance | - **Full-Text Index**: `db.items.create_index([("title", TEXT), ("description", TEXT), ("tags", TEXT)])`<br>- **Compound Index**: `db.items.create_index([("category", 1), ("availability_status", 1), ("rental_rate_per_day", 1)])`<br>- **Single/Unique Indexes**: on `email` and `college_id`. |
-| **Unit IV** | Covered Queries & `explain()` | Benchmarking script `scripts/explain_query_analysis.py` and live UI modal demonstrating `IXSCAN` vs `COLLSCAN` metrics (`totalDocsExamined`, `executionTimeMillis`). |
-| **Unit IV & V** | Aggregation Pipeline Framework | Multi-stage aggregation pipelines: `$match` -> `$lookup` -> `$unwind` -> `$group` -> `$project` -> `$sort` for revenue by category and platform metrics in `analytics/views.py`. |
-| **Unit V & VI** | AI Analytics & Recommendation | Heuristic multi-attribute scoring pipeline prioritizing items based on ratings, owner trust rating, and affordability. |
+### 2. 🛡️ 100% Refundable Security Deposit Escrow
+- **Escrow Wallet Engine**: Digital deposit wallet protecting equipment owners against damage or loss.
+- **Automated Hold & Refund**: Security deposits are locked in escrow when a booking is confirmed and automatically returned to the borrower's wallet upon undamaged return inspection.
+- **Financial Audit Ledger**: Comprehensive transaction tracking for top-ups, rental earnings, escrow holds, and refunds.
 
-### 2. INT253: Web Development in Python using Django
+### 3. 🤝 Secure Handover & Photographic Condition Ledger
+- **Digital Handover OTPs**: 4-digit verification codes generated for physical pickups and returns to eliminate disputes regarding who received or returned an item.
+- **Before-Pickup & After-Return Photo Proof**: Real-time condition logging storing side-by-side photographic condition evidence in the exchange ledger.
 
-| Syllabus Unit | Course Requirement | Code Implementation in CampusShare |
-| :--- | :--- | :--- |
-| **Unit I & II** | Project & App Structuring, Views & URLs | Decoupled Django apps (`accounts`, `items`, `rentals`, `demand_requests`, `analytics`) with explicit HTTP method handling (`GET`, `POST`, `PUT`, `DELETE`). |
-| **Unit IV** | Data Validation & HTTP Response Codes | Request sanitization and explicit HTTP response status codes (`200 OK`, `201 Created`, `400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `404 Not Found`). |
-| **Unit V & VI** | User Management, JWT Authentication & Security | JWT token issuance and verification, hashed passwords, CORS headers, and protected endpoint decorators (`require_auth`). |
+### 4. 📢 Campus Requests Board ("Notify Me")
+- Students can broadcast requests for urgent practical equipment, calculators, or project components.
+- When an owner lists a matching resource, automated system notifications alert requesting students instantly.
+
+### 5. 🛡️ Administrative Portal & Dispute Resolution
+- **Standalone Admin Console**: Dedicated route (`/admin-login`) for authorized university administrators.
+- **Interactive Moderation Dashboard**:
+  - Review pending student ID verifications with side-by-side image inspection.
+  - Audit live campus rentals and resolve active disputes.
+  - Inspect student directory with one-click account moderation and status toggling.
+
+### 6. 📱 Mobile-First Responsive Experience
+- Full native-app feel on mobile devices with an iOS-style bottom tab bar (`Explore`, `Requests`, floating `+ List`, `Rentals`, and `Profile`).
+- Touch-friendly design with native momentum scrolling, safe-area inset padding, and auto-zoom prevention.
 
 ---
 
-## 🚀 Quickstart Guide
+## 🏗️ Architecture & Technology Stack
+
+```mermaid
+graph LR
+    A[Client: React 18 + Vite] -->|REST API / JWT| B[Django REST Backend]
+    B -->|PyMongo Driver| C[(MongoDB Database)]
+    B -->|SMTP TLS| D[Email Service: Gmail / College Mail]
+    A -.->|Static Hosting| E[Nginx / Vercel]
+    B -.->|WSGI Container| F[Gunicorn / Render]
+```
+
+### Frontend
+- **Framework**: React 18 with Vite build tooling
+- **Styling**: Tailwind CSS with custom responsive utilities
+- **State & Context**: Modular AuthContext and ToastContext
+- **Icons**: Lucide React
+- **API Client**: Axios with automatic JWT interceptors and multipart upload fallbacks
+
+### Backend
+- **Framework**: Python 3.11+ / Django 4.x
+- **API Architecture**: Modular Django apps (`accounts`, `items`, `rentals`, `demand_requests`, `analytics`)
+- **Authentication**: Stateless JWT authentication with salted password hashing
+- **Security**: CORS headers, strict referrer policy, X-Frame options, and request sanitization
+- **Email Delivery**: SMTP with TLS support for live OTP and notification dispatches
+
+### Database (MongoDB)
+- **Driver**: PyMongo native driver
+- **Data Modeling**: Dynamic JSON/BSON document schema supporting diverse equipment categories
+- **Optimization**: Compound indexes (`category`, `availability_status`, `rental_rate_per_day`) and MongoDB `$text` search indexes for fast catalog lookups
+- **Analytics**: Aggregation pipelines for campus impact metrics and revenue reporting
+
+---
+
+## 🚀 Quickstart & Local Installation
 
 ### Prerequisites
 - Python 3.10+
-- MongoDB Community Server (Running on `localhost:27017`)
 - Node.js 18+ and npm
+- MongoDB Community Server (Running locally on `mongodb://localhost:27017/`)
 
-### 1. Database Setup & Indexing
-Run the following scripts from the project root:
+### 1. Clone the Repository
 ```bash
-# Set up MongoDB indexes & $jsonSchema validation rules
+git clone https://github.com/21ambuj/PeerGear.git
+cd PeerGear
+```
+
+### 2. Backend Setup
+```bash
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Run database setup (indexes & validation)
 python scripts/setup_mongo_indexes.py
 
-# Seed realistic campus items, student personas, and rentals
-python scripts/seed_demo_data.py
+# (Optional) Seed initial demo catalog and admin account
+python scripts/ensure_admin_user.py
 
-# Run live explain() query plan benchmark
-python scripts/explain_query_analysis.py
-```
-
-### 2. Start Django Backend (Port 8000)
-Double-click `run_backend.bat` or run:
-```bash
+# Start Django development server
 python manage.py runserver 127.0.0.1:8000
 ```
-- API Root: `http://127.0.0.1:8000/api/`
+*Backend API will run at: `http://127.0.0.1:8000/api/`*
 
-### 3. Start React Frontend (Port 5173)
-Double-click `run_frontend.bat` or run:
+### 3. Frontend Setup
 ```bash
 cd campusshare_frontend
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 ```
-- Open browser at: `http://localhost:5173`
-
-*(Tip: You can also double click `start_all.bat` to launch both backend and frontend together!)*
+*Frontend application will run at: `http://localhost:5173`*
 
 ---
 
-## 🎯 Demo Personas (1-Click Switcher in Navbar)
+## 🐳 Docker Deployment
 
-1. **Aarav Sharma** (`aarav.sharma@college.edu` / `campus123`): Student owner who lists calculators, cycles, and blazers.
-2. **Priya Patel** (`priya.patel@college.edu` / `campus123`): Student who rents and lists lab coats and algorithm textbooks.
-3. **Rohit Verma** (`rohit.verma@college.edu` / `campus123`): Student owner of badminton rackets and Arduino kits.
-4. **Sneha Reddy** (`sneha.reddy@college.edu` / `campus123`): Student musician with acoustic guitars.
-5. **Prof. D. Sen (Admin)** (`admin@college.edu` / `campus123`): College Dispute Resolution Officer.
+To launch the complete platform (MongoDB, Django API, and Nginx React Frontend) in isolated production containers with a single command:
+
+```bash
+docker compose up -d --build
+```
+
+- **Web Frontend**: `http://localhost` (Port 80)
+- **Backend API**: `http://localhost:8000` (Port 8000)
+- **MongoDB**: `localhost:27017`
 
 ---
 
-## 🎓 Viva Questions & Answers
+## ☁️ Cloud Deployment Options
 
-**Q1: Why did you choose MongoDB over a Relational SQL Database?**  
-*Answer:* In a campus resource exchange, different item categories possess completely different dynamic specifications (e.g. bicycle frame sizes and gears vs calculator battery models and exam approvals vs lab coat sizes). A document database handles dynamic sub-documents cleanly without complex schema migrations or sparse relational tables.
+### Option 1: Managed Cloud (Render + Vercel)
+1. **Backend on Render**:
+   - Create a Web Service connected to your repository.
+   - Set Build Command: `pip install -r requirements.txt`
+   - Set Start Command: `gunicorn campusshare_backend.wsgi:application --bind 0.0.0.0:$PORT`
+   - Configure environment variables from [.env.production.example](.env.production.example).
+2. **Frontend on Vercel**:
+   - Import the `campusshare_frontend` directory.
+   - Framework preset: `Vite`.
+   - Set Environment Variable: `VITE_API_URL=https://<your-render-backend-url>/api`.
 
-**Q2: What is the difference between Embedding and Referencing in your project?**  
-*Answer:* We **embedded** condition inspection photos, timestamps, and reviews inside the `rentals` documents because they are always read and displayed together. We **referenced** `owner_id` and `renter_id` pointing to the `users` collection to prevent redundant student data duplication across dozens of rentals.
+### Option 2: Docker / Virtual Private Server (AWS / DigitalOcean / Linode)
+- Clone the repository onto your host.
+- Copy `.env.production.example` to `.env` and configure your credentials.
+- Run `docker compose -f docker-compose.yml up -d`.
 
-**Q3: How does your indexing optimize query performance?**  
-*Answer:* We implemented compound indexes on `(category, availability_status, rental_rate_per_day)` and a text index on `(title, description, tags)`. In our `explain()` analysis, indexed queries execute an `IXSCAN` examining only 1 document in ~1ms, whereas unindexed queries fall back to a full `COLLSCAN` examining every document in the collection.
+---
 
-**Q4: How does your smart recommendation engine work?**  
-*Answer:* It executes a MongoDB Aggregation Pipeline utilizing `$lookup` to join owner reputation, calculates an heuristic score factoring in item rating ($20\times$), owner trust score ($10\times$), and price affordability ($0.3\times$), and sorts the catalog in descending order of recommendation score.
+## 📡 API Overview
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/accounts/register/` | Register new student account |
+| `POST` | `/api/accounts/login/` | Authenticate student and issue JWT token |
+| `POST` | `/api/accounts/verify-email-otp/` | Verify 6-digit email registration OTP |
+| `POST` | `/api/accounts/upload-id-card/` | Upload student ID card proof (Base64 / Multipart) |
+| `POST` | `/api/accounts/admin/login/` | Authenticate campus administrator |
+| `GET` | `/api/accounts/admin/users/` | Retrieve student directory and pending verifications |
+| `POST` | `/api/accounts/admin/users/<id>/verify-id/` | Approve or reject student ID card with reasons |
+| `GET` | `/api/items/` | Browse catalog with search, category, and price filters |
+| `POST` | `/api/items/create/` | List new equipment for campus exchange |
+| `POST` | `/api/rentals/book/` | Book item with automated escrow deposit hold |
+| `POST` | `/api/rentals/verify-pickup/` | Verify pickup with OTP and log initial photo proof |
+| `POST` | `/api/rentals/verify-return/` | Complete return inspection and release escrow deposit |
+| `GET` | `/api/requests/` | View active campus demand requests board |
+| `GET` | `/api/analytics/summary/` | Aggregate platform utilization and impact metrics |
+
+---
+
+## 🔒 Security Best Practices
+- **No Committed Secrets**: All sensitive API keys and SMTP credentials are managed via environment variables (`.env`).
+- **Input Sanitization**: Multi-layer validation on all user payloads and document uploads.
+- **Scoped Permissions**: Role-based access control isolating student endpoints from administrative moderation tools.
+- **Sanitized Media Handling**: Uploaded verification files and condition photos are validated by MIME-type and size.
+
+---
+
+## 📄 License
+This project is open-source and available under the [MIT License](LICENSE).
