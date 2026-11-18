@@ -15,8 +15,11 @@ from pymongo import MongoClient, ASCENDING, DESCENDING, TEXT
 # Add project root to sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-MONGO_URI = 'mongodb://localhost:27017/'
-DB_NAME = 'campusshare_db'
+from dotenv import load_dotenv
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env'))
+
+MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/')
+DB_NAME = os.getenv('MONGO_DB_NAME', 'campusshare_db')
 
 def setup_database_and_indexes():
     client = MongoClient(MONGO_URI)
