@@ -1,7 +1,12 @@
 import axios from 'axios';
 
-// Base API configuration (supports production env VITE_API_URL or defaults to /api proxied locally/via ngrok)
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+// Base API configuration (auto-normalizes external URLs to include /api and strips trailing slashes)
+let rawBase = (import.meta.env.VITE_API_URL || '/api').trim();
+rawBase = rawBase.replace(/\/+$/, '');
+if (rawBase.startsWith('http') && !rawBase.endsWith('/api')) {
+  rawBase = `${rawBase}/api`;
+}
+const API_BASE = rawBase;
 
 const api = axios.create({
   baseURL: API_BASE,

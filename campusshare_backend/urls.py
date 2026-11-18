@@ -31,11 +31,22 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', api_root_status, name='api-root'),
     path('api/', api_root_status, name='api-status'),
+    
+    # API endpoints (supports both with /api/ and direct paths without /api/)
     path('api/accounts/', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
+    
     path('api/items/', include('items.urls')),
+    path('items/', include('items.urls')),
+    
     path('api/rentals/', include('rentals.urls')),
+    path('rentals/', include('rentals.urls')),
+    
     path('api/requests/', include('demand_requests.urls')),
+    path('requests/', include('demand_requests.urls')),
+    
     path('api/analytics/', include('analytics.urls')),
+    path('analytics/', include('analytics.urls')),
 ]
 
 from django.urls import re_path
