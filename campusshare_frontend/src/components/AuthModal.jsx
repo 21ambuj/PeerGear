@@ -47,6 +47,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
   
   // OTP Verification States
   const [otp, setOtp] = useState('');
+  const [demoOtp, setDemoOtp] = useState('');
   const [resendTimer, setResendTimer] = useState(60);
   const [resendLoading, setResendLoading] = useState(false);
   
@@ -88,6 +89,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
         const resData = await login(email.trim(), password);
         if (resData?.requires_otp) {
           // Unverified student attempting login! Route to OTP step
+          if (resData.demo_otp) setDemoOtp(resData.demo_otp);
           setMode('register');
           setRegStep('OTP');
           setResendTimer(60);
@@ -122,6 +124,10 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
           phone: phone.trim() || '+91 9876543210',
         });
 
+        if (resData?.demo_otp) {
+          setDemoOtp(resData.demo_otp);
+        }
+
         // Move to Step 2: OTP Verification (User is NOT logged in yet!)
         setRegStep('OTP');
         setResendTimer(60);
@@ -133,6 +139,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
       }
     } catch (err) {
       if (err.response?.data?.requires_otp) {
+        if (err.response.data.demo_otp) setDemoOtp(err.response.data.demo_otp);
         setMode('register');
         setRegStep('OTP');
         setResendTimer(60);
@@ -208,7 +215,10 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
     try {
       isSubmittingRef.current = true;
       setResendLoading(true);
-      await authApi.resendEmailOtp({ email: email.trim().toLowerCase() });
+      const res = await authApi.resendEmailOtp({ email: email.trim().toLowerCase() });
+      if (res.data?.demo_otp) {
+        setDemoOtp(res.data.demo_otp);
+      }
       setResendTimer(60);
       showToast(`A fresh verification code has been dispatched to ${email.trim()}.`, 'info', 'OTP Resent');
     } catch (err) {
@@ -482,6 +492,31 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
               </button>
             </div>
 
+            {/* Demo / Rapid Evaluation OTP Display */}
+            {demoOtp && (
+              <div className="mb-4 p-3.5 bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border border-emerald-300 rounded-2xl shadow-xs flex items-center justify-between">
+                <div className="flex items-center space-x-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                    OTP
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-bold text-emerald-900 uppercase tracking-wider">Evaluation Demo Code</div>
+                    <div className="font-mono font-black text-emerald-800 tracking-widest text-base">
+                      {demoOtp}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOtp(demoOtp)}
+                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white rounded-xl text-xs font-bold transition shadow-xs cursor-pointer flex items-center space-x-1"
+                >
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Auto-Fill</span>
+                </button>
+              </div>
+            )}
+
             {/* Spam / Junk Notice Box */}
             <div className="mb-4 bg-amber-50/90 border border-amber-200/90 rounded-2xl p-3 text-xs text-amber-900 space-y-1">
               <div className="flex items-center space-x-1.5 font-bold text-amber-950">
@@ -489,7 +524,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                 <span>Can't find the email in your Inbox?</span>
               </div>
               <p className="pl-5 text-[11px] leading-relaxed text-amber-800">
-                Please check your <strong>Spam</strong>, <strong>Junk</strong>, or <strong>Promotions</strong> folder! Google Mail sometimes places automated verification codes from new senders in Spam.
+                Please check your <strong>Spam</strong> or <strong>Promotions</strong> folder! Cloud platforms also deliver verification directly to the secure evaluation interface.
               </p>
             </div>
 
