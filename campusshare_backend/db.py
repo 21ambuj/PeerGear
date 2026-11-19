@@ -25,10 +25,20 @@ def get_mongo_client() -> MongoClient:
     global _mongo_client
     if _mongo_client is None:
         try:
+            client_kwargs = {
+                'serverSelectionTimeoutMS': 10000,
+                'maxPoolSize': 50
+            }
+            # Use certifi CA bundle if available for secure cloud TLS connections (MongoDB Atlas)
+            try:
+                import certifi
+                client_kwargs['tlsCAFile'] = certifi.where()
+            except ImportError:
+                pass
+
             _mongo_client = MongoClient(
                 settings.MONGO_URI,
-                serverSelectionTimeoutMS=5000,
-                maxPoolSize=50
+                **client_kwargs
             )
             # Test connection
             _mongo_client.admin.command('ping')
