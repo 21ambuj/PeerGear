@@ -132,11 +132,18 @@ def items_list_create_view(request):
             return JsonResponse({"error": "Authentication required to list an item."}, status=401)
 
         try:
-            data = json.loads(request.body.decode("utf-8"))
+            body_text = request.body.decode("utf-8")
+            data = json.loads(body_text)
             if not isinstance(data, dict):
                 return JsonResponse({"error": "Invalid JSON format: expected object."}, status=400)
-        except Exception:
-            return JsonResponse({"error": "Invalid JSON body."}, status=400)
+        except UnicodeDecodeError:
+            return JsonResponse({"error": "Request body encoding error. Expected UTF-8."}, status=400)
+        except json.JSONDecodeError as jde:
+            return JsonResponse({
+                "error": f"Invalid or truncated request data (payload size: {len(request.body)} bytes). If uploading a high-resolution photo, please retry with a smaller image."
+            }, status=400)
+        except Exception as e:
+            return JsonResponse({"error": f"Invalid JSON body: {str(e)}"}, status=400)
 
         title = safe_str(data.get("title"), max_length=150)
         category = safe_str(data.get("category"), max_length=60)
@@ -309,11 +316,18 @@ def item_detail_view(request, item_id):
 
     if request.method == "PUT":
         try:
-            data = json.loads(request.body.decode("utf-8"))
+            body_text = request.body.decode("utf-8")
+            data = json.loads(body_text)
             if not isinstance(data, dict):
                 return JsonResponse({"error": "Invalid JSON format: expected object."}, status=400)
-        except Exception:
-            return JsonResponse({"error": "Invalid JSON body."}, status=400)
+        except UnicodeDecodeError:
+            return JsonResponse({"error": "Request body encoding error. Expected UTF-8."}, status=400)
+        except json.JSONDecodeError as jde:
+            return JsonResponse({
+                "error": f"Invalid or truncated request data (payload size: {len(request.body)} bytes). If uploading a high-resolution photo, please retry with a smaller image."
+            }, status=400)
+        except Exception as e:
+            return JsonResponse({"error": f"Invalid JSON body: {str(e)}"}, status=400)
 
         update_fields = {}
         if "title" in data and data["title"] is not None:

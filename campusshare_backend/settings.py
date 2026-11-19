@@ -162,4 +162,9 @@ EMAIL_TIMEOUT = 10
 RESEND_API_KEY = os.getenv('RESEND_API_KEY', '').strip()
 RESEND_FROM_EMAIL = os.getenv('RESEND_FROM_EMAIL', 'PeerGear Campus <noreply@chatme.in>').strip()
 
+# Upload Limits (Increased to 15MB to handle modern high-resolution smartphone camera photos)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 15 * 1024 * 1024  # 15 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 15 * 1024 * 1024  # 15 MB
+
+
 
