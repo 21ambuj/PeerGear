@@ -147,13 +147,12 @@ def register_view(request):
         )
 
         # Issue or reuse OTP only AFTER MongoDB update succeeds
-        issued_otp = issue_or_reuse_otp(email, name)
+        issue_or_reuse_otp(email, name)
         return JsonResponse({
-            "message": f"Verification code sent! For evaluation/demo, your code is: {issued_otp}",
+            "message": f"Verification code sent! A fresh 6-digit verification code has been dispatched to {email}.",
             "requires_otp": True,
             "is_email_verified": False,
-            "email": email,
-            "demo_otp": issued_otp
+            "email": email
         }, status=200)
 
     # Step 2: Check if college_id is claimed by another user
@@ -191,14 +190,13 @@ def register_view(request):
         return JsonResponse({"error": "An account with this email address already exists. Please sign in."}, status=400)
 
     # Step 4: Issue OTP and dispatch email ONLY AFTER successful insert!
-    issued_otp = issue_or_reuse_otp(email, name)
+    issue_or_reuse_otp(email, name)
 
     return JsonResponse({
-        "message": f"Account details saved! For evaluation/demo, your code is: {issued_otp}",
+        "message": f"Account details saved! A 6-digit verification code has been sent to {email}.",
         "requires_otp": True,
         "is_email_verified": False,
-        "email": email,
-        "demo_otp": issued_otp
+        "email": email
     }, status=201)
 
 @csrf_exempt
@@ -328,13 +326,7 @@ def resend_email_otp_view(request):
     })
 
     send_verification_email(email, new_otp, user.get("name", "Student"))
-    return JsonResponse({
-        "message": f"A fresh verification code has been sent to {email}.",
-        "requires_otp": True,
-        "is_email_verified": False,
-        "email": email,
-        "demo_otp": new_otp
-    }, status=200)
+    return JsonResponse({"message": f"A fresh verification code has been sent to {email}."}, status=200)
 
 @csrf_exempt
 def upload_id_card_view(request):
@@ -485,13 +477,12 @@ def login_view(request):
 
     # Enforce strict OTP verification: reject unverified student accounts
     if not user.get("is_email_verified", False):
-        issued_otp = issue_or_reuse_otp(email, user.get("name", "Student"))
+        issue_or_reuse_otp(email, user.get("name", "Student"))
         return JsonResponse({
-            "error": f"Email verification required. For evaluation/demo, your code is: {issued_otp}",
+            "error": f"Email verification required. A 6-digit verification code has been dispatched to {email}.",
             "requires_otp": True,
             "is_email_verified": False,
-            "email": email,
-            "demo_otp": issued_otp
+            "email": email
         }, status=403)
 
     token = generate_jwt(user)
