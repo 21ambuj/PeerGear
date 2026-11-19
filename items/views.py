@@ -228,7 +228,7 @@ def items_list_create_view(request):
     return JsonResponse({"error": "Method not allowed."}, status=405)
 
 def _attach_owners(items_list, users_col):
-    """Utility to attach basic owner info to items (Referencing resolution)."""
+    """Utility to attach rich owner info to items (Referencing resolution with campus trust badges)."""
     owner_ids = [item.get("owner_id") for item in items_list if item.get("owner_id")]
     if not owner_ids:
         return
@@ -241,8 +241,14 @@ def _attach_owners(items_list, users_col):
                 "id": str(owner["_id"]),
                 "name": owner.get("name"),
                 "email": owner.get("email"),
-                "hostel_block": owner.get("hostel_block"),
-                "trust_score": owner.get("trust_score", 5.0)
+                "college_id": owner.get("college_id", "CAMPUS-STUDENT"),
+                "hostel_block": owner.get("hostel_block", "Campus Residence"),
+                "trust_score": owner.get("trust_score", 5.0),
+                "is_verified": bool(owner.get("is_verified", False)),
+                "is_email_verified": bool(owner.get("is_email_verified", False)),
+                "verification_tier": owner.get("verification_tier", "UNVERIFIED"),
+                "id_card_status": owner.get("id_card_status", "NOT_UPLOADED"),
+                "phone": owner.get("phone")
             }
 
 def _trigger_demand_notifications(new_item, owner):

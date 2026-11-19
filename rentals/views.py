@@ -219,8 +219,9 @@ def my_rentals_view(request):
                 "title": item.get("title"),
                 "category": item.get("category"),
                 "image": item.get("images", [""])[0] if item.get("images") else "",
-                "pickup_location": item.get("pickup_location")
+                "pickup_location": item.get("pickup_location") or "Campus Main Hub"
             }
+            r["pickup_location"] = item.get("pickup_location") or "Campus Main Hub"
         
         owner = users_map.get(r.get("owner_id"))
         if owner:
@@ -228,8 +229,14 @@ def my_rentals_view(request):
                 "id": str(owner["_id"]),
                 "name": owner.get("name"),
                 "phone": owner.get("phone"),
-                "hostel_block": owner.get("hostel_block"),
-                "trust_score": owner.get("trust_score", 5.0)
+                "email": owner.get("email"),
+                "college_id": owner.get("college_id", "CAMPUS-STUDENT"),
+                "hostel_block": owner.get("hostel_block", "Campus Residence"),
+                "trust_score": owner.get("trust_score", 5.0),
+                "is_verified": bool(owner.get("is_verified", False)),
+                "is_email_verified": bool(owner.get("is_email_verified", False)),
+                "verification_tier": owner.get("verification_tier", "UNVERIFIED"),
+                "id_card_status": owner.get("id_card_status", "NOT_UPLOADED")
             }
 
         renter = users_map.get(r.get("renter_id"))
@@ -238,8 +245,14 @@ def my_rentals_view(request):
                 "id": str(renter["_id"]),
                 "name": renter.get("name"),
                 "phone": renter.get("phone"),
-                "hostel_block": renter.get("hostel_block"),
-                "trust_score": renter.get("trust_score", 5.0)
+                "email": renter.get("email"),
+                "college_id": renter.get("college_id", "CAMPUS-STUDENT"),
+                "hostel_block": renter.get("hostel_block", "Campus Residence"),
+                "trust_score": renter.get("trust_score", 5.0),
+                "is_verified": bool(renter.get("is_verified", False)),
+                "is_email_verified": bool(renter.get("is_email_verified", False)),
+                "verification_tier": renter.get("verification_tier", "UNVERIFIED"),
+                "id_card_status": renter.get("id_card_status", "NOT_UPLOADED")
             }
 
         # Real-world security protection:
@@ -734,3 +747,34 @@ def submit_review_view(request, rental_id):
     )
 
     return JsonResponse({"message": "Review submitted successfully!"}, status=200)
+
+@csrf_exempt
+def rental_status_view(request, rental_id):
+    """
+    GET /api/rentals/<rental_id>/status/
+    Lightweight endpoint returning live rental state, handover status, and verification flags.
+    Enables automatic QR modal auto-close and real-time confirmation.
+    """
+    user = get_current_user_from_request(request)
+    if not user:
+        return JsonResponse({"error": "Authentication required."}, status=401)
+
+    obj_id = to_object_id(rental_id)
+    rentals_col = get_rentals_collection()
+    rental = rentals_col.find_one({"_id": obj_id})
+    if not rental:
+        return JsonResponse({"error": "Rental not found."}, status=404)
+
+    # Security check: only contract participants or admin
+    if str(rental.get("renter_id")) != str(user["_id"]) and str(rental.get("owner_id")) != str(user["_id"]) and user.get("role") != "ADMIN":
+        return JsonResponse({"error": "Unauthorized."}, status=403)
+
+    return JsonResponse({
+        "status": rental.get("status"),
+        "is_active": rental.get("status") == "ACTIVE",
+        "is_completed": rental.get("status") in ["COMPLETED", "COMPLETED_DISPUTE_SETTLED"],
+        "pickup_verified": bool(rental.get("condition_tracking", {}).get("pickup_verification", {}).get("otp_verified")),
+        "return_verified": bool(rental.get("condition_tracking", {}).get("return_verification")),
+        "rental": serialize_doc(rental)
+    }, status=200)
+

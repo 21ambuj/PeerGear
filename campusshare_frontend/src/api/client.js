@@ -71,6 +71,7 @@ export const itemsApi = {
 export const rentalsApi = {
   book: (data) => api.post('/rentals/book/', data),
   myRentals: (params) => api.get('/rentals/my-rentals/', { params }),
+  getStatus: (rentalId) => api.get(`/rentals/${rentalId}/status/`),
   verifyPickup: (rentalId, data) => api.post(`/rentals/${rentalId}/verify-pickup/`, data),
   verifyReturn: (rentalId, data) => api.post(`/rentals/${rentalId}/verify-return/`, data),
   submitReview: (rentalId, data) => api.post(`/rentals/${rentalId}/review/`, data),

@@ -15,7 +15,10 @@ import {
   X,
   Edit2,
   Trash2,
-  Tag
+  Tag,
+  CheckCircle2,
+  MapPin,
+  Star
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -307,15 +310,44 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth }) => {
               )}
 
               {/* Owner Info & Escrow Guarantee */}
-              <div className="bg-indigo-50/60 border border-indigo-100 rounded-2xl p-4 mb-6 flex items-center justify-between">
-                <div>
-                  <p className="text-[10px] font-bold uppercase text-indigo-600">Verified Owner</p>
-                  <p className="font-bold text-slate-900 text-sm">{selectedItem.owner?.name || 'Campus Student'}</p>
-                  <p className="text-xs text-slate-500">{selectedItem.owner?.hostel_block} • Trust: ⭐ {selectedItem.owner?.trust_score || 5.0}</p>
+              <div className="bg-gradient-to-r from-indigo-50/80 via-purple-50/50 to-indigo-50/80 border border-indigo-200/80 rounded-2xl p-4 mb-6 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white font-black flex items-center justify-center text-sm shadow-xs shrink-0">
+                    {selectedItem.owner?.name?.charAt(0) || 'O'}
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-1.5 flex-wrap">
+                      <p className="text-[10px] font-black uppercase text-indigo-700 tracking-wider">Item Owner</p>
+                      {selectedItem.owner?.is_verified ? (
+                        <span className="inline-flex items-center space-x-1 px-2 py-0.2 rounded-full text-[9px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                          <span>CAMPUS ID VERIFIED</span>
+                        </span>
+                      ) : selectedItem.owner?.is_email_verified ? (
+                        <span className="inline-flex items-center space-x-1 px-2 py-0.2 rounded-full text-[9px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
+                          <CheckCircle2 className="w-3 h-3 text-blue-600" />
+                          <span>EMAIL VERIFIED</span>
+                        </span>
+                      ) : null}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
+                      <p className="font-extrabold text-slate-900 text-sm">{selectedItem.owner?.name || 'Campus Student'}</p>
+                      {selectedItem.owner?.college_id && (
+                        <span className="font-mono text-[10px] bg-white border border-slate-200 px-1.5 py-0.2 rounded text-slate-600 font-bold">
+                          Reg: {selectedItem.owner.college_id}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-slate-500">
+                      📍 {selectedItem.owner?.hostel_block || 'Campus Residence'} • <span className="text-amber-700 font-bold">★ {selectedItem.owner?.trust_score || 5.0} Trust</span>
+                    </p>
+                  </div>
                 </div>
+
                 <div className="text-right">
-                  <span className="text-[10px] text-emerald-700 font-semibold uppercase block">Refundable Escrow</span>
-                  <span className="text-base font-bold text-emerald-800">₹{selectedItem.security_deposit}</span>
+                  <span className="text-[10px] text-emerald-700 font-black uppercase tracking-wider block">Refundable Escrow</span>
+                  <span className="text-lg font-black text-emerald-800">₹{selectedItem.security_deposit}</span>
                 </div>
               </div>
 
