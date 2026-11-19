@@ -4,9 +4,12 @@ Dispatches high-security OTP emails for campus identity verification.
 Compatible with Gmail SMTP, university SMTP relays, or standard mail services.
 """
 
+import os
+import json
 import logging
 import threading
 import time
+import requests
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 
@@ -17,6 +20,46 @@ _RECENT_DISPATCHES = {}
 _DISPATCH_LOCK = threading.Lock()
 
 def _send_worker(subject, text_content, html_content, from_email, recipient_email, reply_to_email):
+    """
+    Sends email using Resend HTTPS REST API (Port 443) if configured,
+    with automatic fallback to Django SMTP backend.
+    """
+    # 1. Primary Cloud Delivery: Resend HTTPS API (Port 443 - never blocked by cloud firewalls)
+    resend_key = getattr(settings, 'RESEND_API_KEY', '') or os.getenv('RESEND_API_KEY', '').strip()
+    if resend_key:
+        resend_from = getattr(settings, 'RESEND_FROM_EMAIL', '') or os.getenv('RESEND_FROM_EMAIL', 'PeerGear Campus <noreply@chatme.in>').strip()
+        try:
+            payload = {
+                "from": resend_from,
+                "to": [recipient_email],
+                "subject": subject,
+                "html": html_content,
+                "text": text_content,
+                "reply_to": reply_to_email
+            }
+            resp = requests.post(
+                "https://api.resend.com/emails",
+                headers={
+                    "Authorization": f"Bearer {resend_key}",
+                    "Content-Type": "application/json"
+                },
+                json=payload,
+                timeout=12
+            )
+            if resp.status_code in (200, 201):
+                resp_data = resp.json() if resp.text else {}
+                email_id = resp_data.get('id', 'dispatched')
+                logger.info(f"[RESEND SUCCESS] Dispatched OTP to {recipient_email} (ID: {email_id})")
+                print(f"[RESEND SUCCESS] Delivered email to {recipient_email} via Resend HTTPS API (ID: {email_id})")
+                return True
+            else:
+                logger.warning(f"[RESEND HTTP {resp.status_code}] {resp.text}")
+                print(f"[RESEND NOTICE] Status {resp.status_code}: {resp.text}")
+        except Exception as e:
+            logger.error(f"[RESEND EXCEPTION] Failed to send via Resend HTTPS API: {e}")
+            print(f"[RESEND ERROR] {e}")
+
+    # 2. Fallback: Standard Django SMTP (for local development or unblocked SMTP environments)
     try:
         msg = EmailMultiAlternatives(
             subject=subject,
@@ -32,8 +75,12 @@ def _send_worker(subject, text_content, html_content, from_email, recipient_emai
         msg.attach_alternative(html_content, "text/html")
         msg.send(fail_silently=False)
         logger.info(f"Successfully dispatched OTP verification email to {recipient_email}")
+        print(f"[SMTP SUCCESS] Dispatched email to {recipient_email} via SMTP")
+        return True
     except Exception as e:
         logger.warning(f"SMTP dispatch note for {recipient_email}: {e}")
+        print(f"[SMTP NOTE] {e}")
+        return False
 
 def send_verification_email(recipient_email: str, otp: str, student_name: str = "Student", async_send: bool = True) -> bool:
     """

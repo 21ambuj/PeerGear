@@ -158,3 +158,8 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '').strip()
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', f'PeerGear Campus <{EMAIL_HOST_USER or "noreply.peergear@gmail.com"}>').strip()
 EMAIL_TIMEOUT = 10
 
+# Resend HTTPS API Configuration (Runs over Port 443; never blocked on cloud free tiers)
+RESEND_API_KEY = os.getenv('RESEND_API_KEY', '').strip()
+RESEND_FROM_EMAIL = os.getenv('RESEND_FROM_EMAIL', 'PeerGear Campus <noreply@chatme.in>').strip()
+
+
