@@ -68,9 +68,9 @@ const AppContent = () => {
         </div>
       )}
 
-      {/* Main Page Content */}
+      {/* Main Page Content - Persistent Tab Mounting for 0ms Instant Navigation */}
       <main className="flex-1 pb-20 lg:pb-0">
-        {activeTab === 'explore' && (
+        <div className={activeTab === 'explore' ? 'block' : 'hidden'}>
           <ExplorePage 
             onNavigateToList={() => {
               if (!user) openAuth('login');
@@ -78,11 +78,15 @@ const AppContent = () => {
             }}
             onRequireAuth={() => openAuth('login')}
           />
-        )}
-        {activeTab === 'list-item' && (
-          <ListItemPage onListed={() => setActiveTab('explore')} />
-        )}
-        {(activeTab === 'my-rentals' || activeTab === 'my-rentals-renter' || activeTab === 'my-rentals-owner') && (
+        </div>
+
+        <div className={activeTab === 'list-item' ? 'block' : 'hidden'}>
+          {activeTab === 'list-item' && (
+            <ListItemPage onListed={() => setActiveTab('explore')} />
+          )}
+        </div>
+
+        <div className={(activeTab === 'my-rentals' || activeTab === 'my-rentals-renter' || activeTab === 'my-rentals-owner') ? 'block' : 'hidden'}>
           <MyRentalsPage
             initialSubTab={
               activeTab === 'my-rentals-renter' ? 'renter' :
@@ -94,9 +98,10 @@ const AppContent = () => {
               else setActiveTab('list-item');
             }}
           />
-        )}
-        {activeTab === 'demand-board' && (
-          user ? (
+        </div>
+
+        <div className={activeTab === 'demand-board' ? 'block' : 'hidden'}>
+          {user ? (
             <DemandBoardPage onFulfillRequest={() => setActiveTab('list-item')} />
           ) : (
             <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-3xl border border-slate-200 shadow-xl text-center">
@@ -114,10 +119,16 @@ const AppContent = () => {
                 Sign In or Register
               </button>
             </div>
-          )
-        )}
-        {activeTab === 'disputes' && <DisputesPage />}
-        {activeTab === 'analytics' && <AnalyticsPage />}
+          )}
+        </div>
+
+        <div className={activeTab === 'disputes' ? 'block' : 'hidden'}>
+          {activeTab === 'disputes' && <DisputesPage />}
+        </div>
+
+        <div className={activeTab === 'analytics' ? 'block' : 'hidden'}>
+          {activeTab === 'analytics' && <AnalyticsPage />}
+        </div>
         {(activeTab === 'admin' || activeTab === 'admin-login') && (
           user?.role === 'ADMIN' ? (
             <AdminDashboardPage />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { itemsApi, analyticsApi } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { dataCache } from '../utils/dataCache';
 import ItemCard from '../components/ItemCard';
 import BookingModal from '../components/BookingModal';
 import EditItemModal from '../components/EditItemModal';
@@ -53,11 +54,27 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth }) => {
     fetchDynamicCategories();
   }, [selectedCategory, sortBy, user]);
 
+  // Listen for real-time item creation/updates to refresh cache
+  useEffect(() => {
+    const handleItemCreated = () => {
+      dataCache.invalidate('items_');
+      fetchItems(true);
+    };
+    window.addEventListener('campusshare-item-created', handleItemCreated);
+    return () => window.removeEventListener('campusshare-item-created', handleItemCreated);
+  }, [selectedCategory, sortBy, searchQuery]);
+
   const fetchDynamicCategories = async () => {
+    const cached = dataCache.get('categories_list');
+    if (cached) {
+      setCategories(cached);
+      if (dataCache.isFresh('categories_list')) return;
+    }
     try {
       const res = await itemsApi.getCategories();
       if (res.data?.categories) {
         const unique = ["All", ...res.data.categories.filter(c => c !== "All")];
+        dataCache.set('categories_list', unique, 10 * 60 * 1000);
         setCategories(unique);
       }
     } catch (e) {
@@ -65,9 +82,20 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth }) => {
     }
   };
 
-  const fetchItems = async () => {
-    try {
+  const fetchItems = async (forceRefresh = false) => {
+    const cacheKey = `items_${selectedCategory}_${sortBy}_${searchQuery.trim()}`;
+    const cached = dataCache.get(cacheKey);
+
+    if (cached && !forceRefresh) {
+      setItems(cached);
+      setLoading(false);
+      // If cached data is fresh (< 2 mins), don't block UI with skeletons
+      if (dataCache.isFresh(cacheKey)) return;
+    } else if (!cached) {
       setLoading(true);
+    }
+
+    try {
       const params = {
         category: selectedCategory,
         sort: sortBy,
@@ -76,7 +104,9 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth }) => {
         params.q = searchQuery.trim();
       }
       const res = await itemsApi.list(params);
-      setItems(res.data.items || []);
+      const fetchedItems = res.data.items || [];
+      dataCache.set(cacheKey, fetchedItems);
+      setItems(fetchedItems);
     } catch (e) {
       console.error(e);
     } finally {
@@ -85,6 +115,12 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth }) => {
   };
 
   const fetchRecommendations = async () => {
+    const recKey = `recs_${selectedCategory}_${user?._id || 'anon'}`;
+    const cached = dataCache.get(recKey);
+    if (cached) {
+      setRecommendations(cached);
+      if (dataCache.isFresh(recKey)) return;
+    }
     try {
       const res = await analyticsApi.getRecommendations({
         category: selectedCategory === "All" ? "" : selectedCategory,
@@ -94,6 +130,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth }) => {
       const filteredRecs = user
         ? allRecs.filter(it => String(it.owner_info?.id || it.owner_id) !== String(user._id))
         : allRecs;
+      dataCache.set(recKey, filteredRecs, 5 * 60 * 1000);
       setRecommendations(filteredRecs);
     } catch (e) {
       console.error(e);

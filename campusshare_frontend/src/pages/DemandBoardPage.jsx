@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { requestsApi, itemsApi } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { dataCache } from '../utils/dataCache';
 import BookingModal from '../components/BookingModal';
 import { 
   Bell, 
@@ -50,11 +51,23 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
     fetchRequests();
   }, []);
 
-  const fetchRequests = async () => {
-    try {
+  const fetchRequests = async (forceRefresh = false) => {
+    const cacheKey = 'demand_requests_list';
+    const cached = dataCache.get(cacheKey);
+
+    if (cached && !forceRefresh) {
+      setRequests(cached);
+      setLoading(false);
+      if (dataCache.isFresh(cacheKey)) return;
+    } else if (!cached) {
       setLoading(true);
+    }
+
+    try {
       const res = await requestsApi.list();
-      setRequests(res.data.requests || []);
+      const fetchedRequests = res.data.requests || [];
+      dataCache.set(cacheKey, fetchedRequests);
+      setRequests(fetchedRequests);
     } catch (e) {
       console.error(e);
       showToast("Failed to fetch campus requests.", "error", "Network Error");
