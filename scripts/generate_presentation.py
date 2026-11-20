@@ -12,24 +12,23 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
     prs.slide_height = Inches(7.5)
     blank_layout = prs.slide_layouts[6]
 
-    # Color Palette (Professional, modern, clean, human-designed)
-    DARK_BG = RGBColor(15, 23, 42)      # Slate 900
-    LIGHT_BG = RGBColor(248, 250, 252)  # Slate 50
-    CARD_BG = RGBColor(255, 255, 255)   # White
+    # Color Palette (Clean, human-designed, academic & student-friendly)
+    DARK_BG = RGBColor(15, 23, 42)        # Slate 900
+    LIGHT_BG = RGBColor(248, 250, 252)    # Slate 50
+    CARD_BG = RGBColor(255, 255, 255)     # White
     CARD_BORDER = RGBColor(226, 232, 240) # Slate 200
-    PRIMARY = RGBColor(79, 70, 229)     # Indigo 600
-    PRIMARY_DARK = RGBColor(49, 46, 129) # Indigo 900
-    TEXT_MAIN = RGBColor(30, 41, 59)    # Slate 800
-    TEXT_MUTED = RGBColor(100, 116, 139) # Slate 500
-    TEXT_LIGHT = RGBColor(241, 245, 249) # Slate 100
+    PRIMARY = RGBColor(79, 70, 229)       # Indigo 600
+    PRIMARY_DARK = RGBColor(49, 46, 129)  # Indigo 900
+    TEXT_MAIN = RGBColor(30, 41, 59)      # Slate 800
+    TEXT_MUTED = RGBColor(100, 116, 139)  # Slate 500
     ACCENT_GREEN = RGBColor(16, 185, 129) # Emerald 500
     ACCENT_AMBER = RGBColor(217, 119, 6)  # Amber 600
-    TAG_BG = RGBColor(238, 242, 255)    # Indigo 50
-    TAG_TEXT = RGBColor(67, 56, 202)    # Indigo 700
+    ACCENT_ROSE = RGBColor(225, 29, 72)   # Rose 600
+    ACCENT_CYAN = RGBColor(14, 165, 233)  # Sky 500
 
     def add_header(slide, tag_text, title_text, subtitle_text=None):
         # Category Tag
-        tag_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.45), Inches(8), Inches(0.4))
+        tag_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.42), Inches(10), Inches(0.35))
         tf_tag = tag_box.text_frame
         tf_tag.word_wrap = True
         tf_tag.margin_left = tf_tag.margin_top = tf_tag.margin_right = tf_tag.margin_bottom = 0
@@ -41,7 +40,7 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
         p_tag.font.name = "Arial"
 
         # Main Title
-        title_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.8), Inches(11), Inches(0.6))
+        title_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.78), Inches(11.5), Inches(0.55))
         tf_title = title_box.text_frame
         tf_title.word_wrap = True
         tf_title.margin_left = tf_title.margin_top = tf_title.margin_right = tf_title.margin_bottom = 0
@@ -53,7 +52,7 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
         p_title.font.name = "Arial"
 
         if subtitle_text:
-            sub_box = slide.shapes.add_textbox(Inches(0.8), Inches(1.4), Inches(11.5), Inches(0.4))
+            sub_box = slide.shapes.add_textbox(Inches(0.8), Inches(1.35), Inches(11.5), Inches(0.45))
             tf_sub = sub_box.text_frame
             tf_sub.word_wrap = True
             tf_sub.margin_left = tf_sub.margin_top = tf_sub.margin_right = tf_sub.margin_bottom = 0
@@ -68,7 +67,6 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
         bg.fill.solid()
         bg.fill.fore_color.rgb = color
         bg.line.color.rgb = color
-        # send to back via order
 
     # =========================================================================
     # SLIDE 1: Title Slide (Dark Theme)
@@ -77,23 +75,23 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
     set_slide_background(slide1, DARK_BG)
 
     # Accent Top Stripe
-    stripe = slide1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(13.333), Inches(0.15))
-    stripe.fill.solid()
-    stripe.fill.fore_color.rgb = PRIMARY
-    stripe.line.color.rgb = PRIMARY
+    stripe1 = slide1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(13.333), Inches(0.15))
+    stripe1.fill.solid()
+    stripe1.fill.fore_color.rgb = PRIMARY
+    stripe1.line.color.rgb = PRIMARY
 
     # Title box
-    tbox = slide1.shapes.add_textbox(Inches(1.0), Inches(1.6), Inches(11.3), Inches(2.2))
+    tbox = slide1.shapes.add_textbox(Inches(1.0), Inches(1.5), Inches(11.3), Inches(2.3))
     tf1 = tbox.text_frame
     tf1.word_wrap = True
 
     p0 = tf1.paragraphs[0]
-    p0.text = "CAMPUS PEER-TO-PEER RESOURCE SHARING PLATFORM"
-    p0.font.size = Pt(12)
+    p0.text = "COLLEGE CAPSTONE PROJECT PRESENTATION"
+    p0.font.size = Pt(11)
     p0.font.bold = True
     p0.font.color.rgb = RGBColor(129, 140, 248) # Indigo 400
     p0.font.name = "Arial"
-    p0.space_after = Pt(12)
+    p0.space_after = Pt(10)
 
     p1 = tf1.add_paragraph()
     p1.text = "PeerGear"
@@ -103,13 +101,21 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
     p1.font.name = "Arial"
 
     p2 = tf1.add_paragraph()
-    p2.text = "A Verified Campus Resource Exchange & Renting System with Escrow Security & Live QR Handover"
-    p2.font.size = Pt(16)
-    p2.font.color.rgb = RGBColor(203, 213, 225) # Slate 300
+    p2.text = "Campus Resource Sharing & Student Equipment Rental System"
+    p2.font.size = Pt(17)
+    p2.font.bold = True
+    p2.font.color.rgb = RGBColor(224, 231, 255) # Indigo 100
     p2.font.name = "Arial"
+    p2.space_after = Pt(6)
+
+    p3 = tf1.add_paragraph()
+    p3.text = "A safe, closed-campus platform for students to share, rent, and monetize semester gear with verified trust and deposit protection."
+    p3.font.size = Pt(13)
+    p3.font.color.rgb = RGBColor(148, 163, 184) # Slate 400
+    p3.font.name = "Arial"
 
     # Presenter Card Box
-    card1 = slide1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.0), Inches(4.3), Inches(5.4), Inches(2.3))
+    card1 = slide1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.0), Inches(4.2), Inches(5.4), Inches(2.4))
     card1.fill.solid()
     card1.fill.fore_color.rgb = RGBColor(30, 41, 59)
     card1.line.color.rgb = RGBColor(51, 65, 85)
@@ -118,13 +124,15 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
     tf_c1.word_wrap = True
     tf_c1.margin_left = Inches(0.3)
     tf_c1.margin_top = Inches(0.25)
+    tf_c1.margin_right = Inches(0.3)
 
     pc1_0 = tf_c1.paragraphs[0]
-    pc1_0.text = "STUDENT DEVELOPER"
+    pc1_0.text = "PROJECT CANDIDATE"
     pc1_0.font.size = Pt(10)
     pc1_0.font.bold = True
     pc1_0.font.color.rgb = RGBColor(148, 163, 184)
     pc1_0.font.name = "Arial"
+    pc1_0.space_after = Pt(4)
 
     pc1_1 = tf_c1.add_paragraph()
     pc1_1.text = "Ambuj Kumar Maurya"
@@ -132,15 +140,16 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
     pc1_1.font.bold = True
     pc1_1.font.color.rgb = RGBColor(255, 255, 255)
     pc1_1.font.name = "Arial"
+    pc1_1.space_after = Pt(4)
 
     pc1_2 = tf_c1.add_paragraph()
-    pc1_2.text = "B.Tech Computer Science & Engineering\nFinal Project Showcase • Academic Session 2025–2026"
+    pc1_2.text = "B.Tech in Computer Science & Engineering\nFinal Semester Project Evaluation • Session 2025–2026"
     pc1_2.font.size = Pt(12)
     pc1_2.font.color.rgb = RGBColor(203, 213, 225)
     pc1_2.font.name = "Arial"
 
-    # Tech Stack Box
-    card2 = slide1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(6.7), Inches(4.3), Inches(5.6), Inches(2.3))
+    # Project Scope Box
+    card2 = slide1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(6.7), Inches(4.2), Inches(5.6), Inches(2.4))
     card2.fill.solid()
     card2.fill.fore_color.rgb = RGBColor(30, 41, 59)
     card2.line.color.rgb = RGBColor(51, 65, 85)
@@ -149,46 +158,48 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
     tf_c2.word_wrap = True
     tf_c2.margin_left = Inches(0.3)
     tf_c2.margin_top = Inches(0.25)
+    tf_c2.margin_right = Inches(0.3)
 
     pc2_0 = tf_c2.paragraphs[0]
-    pc2_0.text = "CORE ARCHITECTURE & INFRASTRUCTURE"
+    pc2_0.text = "PROJECT OBJECTIVE & FOCUS"
     pc2_0.font.size = Pt(10)
     pc2_0.font.bold = True
     pc2_0.font.color.rgb = RGBColor(148, 163, 184)
     pc2_0.font.name = "Arial"
+    pc2_0.space_after = Pt(4)
 
     pc2_1 = tf_c2.add_paragraph()
-    pc2_1.text = "Full-Stack Cloud Implementation"
+    pc2_1.text = "Safe & Affordable Campus Resource Exchange"
     pc2_1.font.size = Pt(16)
     pc2_1.font.bold = True
     pc2_1.font.color.rgb = RGBColor(255, 255, 255)
     pc2_1.font.name = "Arial"
+    pc2_1.space_after = Pt(4)
 
     pc2_2 = tf_c2.add_paragraph()
-    pc2_2.text = "• Frontend: React 19, Tailwind CSS v4, Vite\n• Backend: Django 4.2 REST, Python 3.12, PyJWT\n• Database: MongoDB Atlas Cloud Cluster\n• Services: Resend HTTPS Mail API, Vercel & Render"
+    pc2_2.text = "• Solves high temporary equipment costs for college students\n• Verified student-only access with College ID authentication\n• 100% refundable security deposit protection\n• Contactless in-person QR pass handover and instant return"
     pc2_2.font.size = Pt(11.5)
     pc2_2.font.color.rgb = RGBColor(203, 213, 225)
     pc2_2.font.name = "Arial"
 
     # =========================================================================
-    # SLIDE 2: Problem Statement & Campus Motivation
+    # SLIDE 2: The Campus Problem
     # =========================================================================
     slide2 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide2, LIGHT_BG)
-    add_header(slide2, "Background & Motivation", "The Student Problem: High Costs & Zero Campus Trust", 
-               "Understanding the economic and trust barriers college students face with specialized equipment.")
+    add_header(slide2, "Need Analysis & Motivation", "The Student Problem: High Expenses & Zero Campus Trust", 
+               "Understanding the financial strain and social awkwardness college students face with short-term equipment.")
 
-    # 3 Problem Columns
     problems = [
         ("1. Expensive Temporary Needs", 
-         "• College students frequently require expensive tools for just a few days or weeks (e.g., scientific calculators, lab coats, drafters, DSLR cameras, sports kits, cycles).\n• Purchasing new gear for a single semester or exam causes unnecessary financial strain on students and parents.",
-         RGBColor(239, 68, 68)), # Rose
-        ("2. Vast Idle Hostel Assets", 
-         "• Senior students already own these exact tools, but after coursework completes, the items sit idle in dorm rooms for 85–90% of the year.\n• No organized college marketplace exists to safely monetize or share these assets within the campus community.",
-         RGBColor(245, 158, 11)), # Amber
-        ("3. Breakdown of Informal Sharing", 
-         "• Informal hostel borrowing often leads to damaged or unreturned equipment with zero financial recourse.\n• Asking friends for security deposits or late fees is socially awkward, creating fear of theft and reluctance to lend to peers.",
-         RGBColor(99, 102, 241)) # Indigo
+         "• Students frequently need costly items for only a few days or weeks (e.g. engineering drafters, scientific calculators, lab coats, DSLR cameras, sports gear, cycles).\n\n• Buying brand-new equipment for a single semester or exam causes heavy financial strain on students and their families.",
+         ACCENT_ROSE),
+        ("2. Idle Gear Lying in Hostels", 
+         "• Senior students already own these exact tools, but once their course is over, the items sit idle in dorm cupboards for 85–90% of the academic year.\n\n• There is no organized, trustworthy campus platform for seniors to safely rent out their idle gear and earn pocket money.",
+         ACCENT_AMBER),
+        ("3. Broken Informal Borrowing", 
+         "• Loaning items informally to hostel mates often results in delayed returns, damage, or unreturned gear with zero financial recovery.\n\n• Asking friends for security deposits or late fees is socially awkward, causing students to refuse lending to peers altogether.",
+         PRIMARY)
     ]
 
     for i, (p_title, p_body, accent) in enumerate(problems):
@@ -226,22 +237,22 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
         pb.font.name = "Arial"
 
     # =========================================================================
-    # SLIDE 3: Proposed Solution - PeerGear Architecture
+    # SLIDE 3: System Overview (The Solution)
     # =========================================================================
     slide3 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide3, LIGHT_BG)
-    add_header(slide3, "System Solution", "PeerGear: Closed-Loop Trust & Automated Escrow", 
+    add_header(slide3, "System Solution", "PeerGear: Safe, Closed-Loop Campus Sharing", 
                "Four foundational pillars designed specifically to make peer equipment sharing safe, automated, and dispute-free.")
 
     solutions = [
-        ("1. Closed-Campus Identity Verification",
-         "• Two-tier validation: 6-digit email OTP verification + Student ID Card photo/PDF upload.\n• Administrative moderation dashboard confirms legitimate campus enrollment before lending permissions are granted."),
-        ("2. Automated Escrow Security Deposit",
-         "• 100% refundable security deposit is locked in escrow during checkout.\n• Owner is guaranteed compensation if equipment is damaged, while responsible borrowers receive an automated 100% instant refund upon verified return."),
-        ("3. Dynamic QR Pass Handover & Return",
-         "• In-person exchange is secured with a real-time dynamic QR code containing a cryptographically checked 4-digit handover OTP.\n• Owner scans the pass using their camera; borrower's screen auto-verifies and auto-closes in real time."),
-        ("4. Community Demand Board & Smart Alerts",
-         "• When students cannot find equipment, they post a request with category and daily budget.\n• Platform monitors new listings and automatically dispatches real-time alerts to students matching the category.")
+        ("1. Closed-Campus Verification",
+         "• Exclusive access: Only registered college students can browse, rent, or list gear.\n• Two-step security: College email confirmation code + physical College ID card upload.\n• Eliminates strangers and keeps the community safe within college boundaries."),
+        ("2. 100% Refundable Deposit Escrow",
+         "• A refundable security deposit is safely held by the platform during the entire rental.\n• Owners are protected against damage or loss without having to ask friends for cash.\n• Honest borrowers receive their full deposit back immediately upon verified return."),
+        ("3. Dynamic QR Pass Handover",
+         "• Physical exchange is confirmed using a dynamic QR pass shown on the borrower's phone.\n• The owner scans the pass using their camera when meeting at the hostel or campus hub.\n• Prevents fake claims, confirms identity, and auto-closes in real time upon successful scan."),
+        ("4. Campus Demand / Request Board",
+         "• Can't find an item? Students post a 'Wanted Gear' request with their daily budget.\n• Other campus students who own the item receive an instant alert and can list it right away.\n• Ensures students get the exact equipment they need for projects and labs.")
     ]
 
     for i, (s_title, s_body) in enumerate(solutions):
@@ -277,29 +288,29 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
         pb.font.name = "Arial"
 
     # =========================================================================
-    # SLIDE 4: Technology Stack & Cloud Infrastructure
+    # SLIDE 4: Feature 1 - Student Verification & Trust Badges
     # =========================================================================
     slide4 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide4, LIGHT_BG)
-    add_header(slide4, "Technology Architecture", "Modern Full-Stack Cloud Implementation", 
-               "Production-grade technologies selected for high performance, mobile responsiveness, and zero maintenance overhead.")
+    add_header(slide4, "Core Functionality: Trust & Safety", "Student Identity Verification & Safe Campus Badges", 
+               "Multi-tier verification system that ensures only legitimate, accountable college students trade on campus.")
 
-    tech_cards = [
-        ("Client Layer (Frontend)", 
-         "React 19 & Tailwind CSS v4", 
-         "• Vite high-speed bundler for sub-second build times\n• In-memory SWR cache for 0ms instant tab navigation\n• HTML5 QR Code scanner & client canvas image compression\n• Responsive mobile-first design with bottom navigation",
+    verify_steps = [
+        ("Step 1: College Email Verification", 
+         "Instant Email Security Code", 
+         "• Students register using their college email address.\n\n• A 6-digit verification code is instantly delivered to their inbox to verify email ownership.\n\n• Blocks fake accounts, automated bots, and unauthorized outside signups.",
          PRIMARY),
-        ("Application Layer (Backend)", 
-         "Django 4.2 REST & Python 3.12", 
-         "• Stateless PyJWT token authentication & salted password hashing\n• BOLA / IDOR defense verifying user ownership on all endpoints\n• Resend HTTPS REST API mail dispatcher (Port 443)\n• Dual URL routing supporting both /api/ and direct endpoints",
-         RGBColor(16, 185, 129)),
-        ("Data & Cloud Infrastructure", 
-         "MongoDB Atlas & Cloud Hosting", 
-         "• MongoDB Atlas M0 Cluster (campusshare_db) with TLS certifi\n• PyMongo document modeling with compound text search indexes\n• Vercel Edge Network for frontend static distribution\n• Render Gunicorn container service for Python backend",
-         RGBColor(217, 119, 6))
+        ("Step 2: Student ID Card Upload", 
+         "Official ID & Registration Check", 
+         "• Students upload a clear photo or document of their physical College ID Card.\n\n• College administrators inspect the student's name, roll number, and enrolled branch on an internal review panel.\n\n• Confirms authentic campus enrollment before lending permissions are granted.",
+         ACCENT_CYAN),
+        ("Step 3: Visible Trust Badges", 
+         "Transparent Campus Reputation", 
+         "• Verified students receive a prominent 'Campus ID Verified' shield badge on their profile and items.\n\n• Listing cards clearly display the student's Registration Number, Hostel Block, and community Trust Rating.\n\n• Borrowers know exactly who they are meeting before booking.",
+         ACCENT_GREEN)
     ]
 
-    for i, (layer, tech, details, accent) in enumerate(tech_cards):
+    for i, (layer, tech, details, accent) in enumerate(verify_steps):
         x = Inches(0.8 + i * 3.95)
         box = slide4.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, Inches(2.0), Inches(3.75), Inches(4.8))
         box.fill.solid()
@@ -339,234 +350,96 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
         pd.font.name = "Arial"
 
     # =========================================================================
-    # SLIDE 5: Database Modeling & MongoDB Schema Design
+    # SLIDE 5: Feature 2 - Item Discovery & Listing
     # =========================================================================
     slide5 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide5, LIGHT_BG)
-    add_header(slide5, "Data Layer Modeling", "MongoDB Schema Design: Embedding vs. Referencing", 
-               "Strategic NoSQL document modeling balancing atomicity, query performance, and relational integrity.")
+    add_header(slide5, "Core Functionality: Exploration & Listing", "Finding Gear in Seconds & Listing Idle Items", 
+               "Designed for ease of use on smartphones: intuitive catalog discovery for borrowers and a 1-minute listing flow for owners.")
 
-    schemas = [
-        ("users Collection", 
-         "Stores campus credentials, verification tiers, and financial escrow balances.",
-         "• _id: ObjectId, name, email, college_id (Unique Index)\n• password_hash: PBKDF2/SHA-256 salted hash\n• role: STUDENT | ADMIN, trust_score: float (5.0 default)\n• is_verified, verification_tier, wallet_balance: float\n• id_card_status: NOT_UPLOADED | PENDING | VERIFIED | REJECTED"),
-        ("items Collection", 
-         "Resource catalog with compound full-text search indexes.",
-         "• _id: ObjectId, owner_id (Referenced ObjectId -> users)\n• title, category, description, tags: list[str]\n• rental_rate_per_day: float, security_deposit: float\n• pickup_location: str (e.g., 'Hostel Block B Room 302')\n• specifications: dict (Embedded key-value attributes)\n• images: list[str] (Sanitized image URLs / Base64)\n• Compound Text Index: title + description + tags"),
-        ("rentals Collection", 
-         "Transactional contract linking borrower, owner, item, and escrow status.",
-         "• _id: ObjectId, item_id, owner_id, renter_id (Referenced IDs)\n• start_date, end_date, rental_days, rental_fee, security_deposit\n• status: BOOKED -> ACTIVE -> RETURN_REQUESTED -> COMPLETED\n• deposit_status: HELD -> REFUNDED | DISPUTED\n• handover_otp: 4-digit token (Hidden from owner before physical meetup)\n• condition_tracking: Embedded pickup & return inspection logs + photos"),
-        ("Supporting Collections", 
-         "Dedicated collections ensuring decoupled, resilient campus microservices.",
-         "• item_requests: Student demand board (category, keyword, max_budget)\n• email_otps: 6-digit codes with 10-min TTL & intelligent deduplication\n• categories: Dynamic category registry with custom student tags\n• notifications: In-app real-time alert logs with unread counters")
+    cards_s5 = [
+        ("FOR BORROWERS: SMART CATALOG EXPLORATION",
+         "How Students Find Exactly What They Need",
+         "• One-Tap Category Filters: Quick navigation across Academics, Electronics, Lab Gear, Cycles, Sports Equipment, and Textbooks.\n\n"
+         "• Real-Time Search & Price Slider: Instant keyword matching and budget filters to discover items under specific daily rental rates.\n\n"
+         "• Transparent Item Details: View high-resolution photos, condition tags (Brand New, Excellent, Good), technical specs, daily rental fees, and refundable deposit amounts.\n\n"
+         "• Prominent Pickup Location: Clear indication of where the equipment is located (e.g. Hostel Block B, Common Room, or Library Gate) before booking.",
+         PRIMARY),
+        ("FOR OWNERS: 1-MINUTE SMART LISTING FLOW",
+         "Monetizing Idle Dorm Gear with Ease",
+         "• Mobile Photo Upload: Take or select photos directly from a smartphone with automatic image optimization for fast loading.\n\n"
+         "• Custom Rates & Deposits: Owners set their own fair daily rental fee (e.g. ₹20/day) and security deposit (e.g. ₹200).\n\n"
+         "• Clear Condition & Notes: Add accurate descriptions, included accessories (chargers, cases, cables), and special usage rules.\n\n"
+         "• Convenient Campus Pickup Point: Designate a comfortable, safe spot on campus for item collection.\n\n"
+         "• Instant Campus Availability: Listed items go live immediately to the campus student directory.",
+         ACCENT_GREEN)
     ]
 
-    for i, (s_name, s_desc, s_fields) in enumerate(schemas):
-        row = i // 2
-        col = i % 2
-        x = Inches(0.8 + col * 5.95)
-        y = Inches(2.0 + row * 2.45)
-
-        card = slide5.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.75), Inches(2.25))
-        card.fill.solid()
-        card.fill.fore_color.rgb = CARD_BG
-        card.line.color.rgb = CARD_BORDER
-
-        tf = card.text_frame
-        tf.word_wrap = True
-        tf.margin_left = Inches(0.25)
-        tf.margin_top = Inches(0.2)
-        tf.margin_right = Inches(0.25)
-
-        p = tf.paragraphs[0]
-        p.text = s_name
-        p.font.size = Pt(14)
-        p.font.bold = True
-        p.font.color.rgb = PRIMARY_DARK
-        p.font.name = "Arial"
-
-        pd = tf.add_paragraph()
-        pd.text = s_desc
-        pd.font.size = Pt(10.5)
-        pd.font.color.rgb = TEXT_MUTED
-        pd.font.name = "Arial"
-        pd.space_after = Pt(4)
-
-        pf = tf.add_paragraph()
-        pf.text = s_fields
-        pf.font.size = Pt(10)
-        pf.font.color.rgb = TEXT_MAIN
-        pf.font.name = "Courier New"
-
-    # =========================================================================
-    # SLIDE 6: End-to-End Operational Workflow
-    # =========================================================================
-    slide6 = prs.slides.add_slide(blank_layout)
-    set_slide_background(slide6, LIGHT_BG)
-    add_header(slide6, "Operational Workflow", "Complete Peer-to-Peer Rental Lifecycle", 
-               "Step-by-step transaction walkthrough from discovery to automated deposit return.")
-
-    steps = [
-        ("Step 1: Discover", "Browse catalog or search with instant category filters; inspect item condition, specs, and owner's verified trust badge."),
-        ("Step 2: Book & Escrow", "Borrower selects rental dates; rental fee and refundable deposit are transferred into secure escrow balance."),
-        ("Step 3: Meet at Hub", "Both students meet in person at the agreed pickup point (e.g. Campus Hostel Block, Room, or Common Center)."),
-        ("Step 4: QR Scan", "Borrower presents dynamic QR pass; Owner scans with camera or verifies the 4-digit OTP."),
-        ("Step 5: Active Rental", "Contract transitions to ACTIVE in real time; borrower's screen auto-closes and equipment condition is locked."),
-        ("Step 6: Return & Refund", "Owner inspects returned item; 100% deposit is automatically refunded to borrower's wallet instantly.")
-    ]
-
-    for i, (st_title, st_body) in enumerate(steps):
-        row = i // 3
-        col = i % 3
-        x = Inches(0.8 + col * 3.95)
-        y = Inches(2.0 + row * 2.45)
-
-        card = slide6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(3.75), Inches(2.25))
-        card.fill.solid()
-        card.fill.fore_color.rgb = CARD_BG
-        card.line.color.rgb = CARD_BORDER
-
-        # Step Number Badge
-        num_badge = slide6.shapes.add_shape(MSO_SHAPE.OVAL, x + Inches(0.25), y + Inches(0.2), Inches(0.35), Inches(0.35))
-        num_badge.fill.solid()
-        num_badge.fill.fore_color.rgb = PRIMARY
-        num_badge.line.color.rgb = PRIMARY
-        tf_n = num_badge.text_frame
-        p_n = tf_n.paragraphs[0]
-        p_n.text = str(i + 1)
-        p_n.font.size = Pt(11)
-        p_n.font.bold = True
-        p_n.font.color.rgb = RGBColor(255, 255, 255)
-        p_n.alignment = PP_ALIGN.CENTER
-
-        tf = card.text_frame
-        tf.word_wrap = True
-        tf.margin_left = Inches(0.7)
-        tf.margin_top = Inches(0.2)
-        tf.margin_right = Inches(0.25)
-
-        p = tf.paragraphs[0]
-        p.text = st_title
-        p.font.size = Pt(13)
-        p.font.bold = True
-        p.font.color.rgb = TEXT_MAIN
-        p.font.name = "Arial"
-        p.space_after = Pt(6)
-
-        pb = tf.add_paragraph()
-        pb.text = st_body
-        pb.font.size = Pt(11)
-        pb.font.color.rgb = TEXT_MUTED
-        pb.font.name = "Arial"
-
-    # =========================================================================
-    # SLIDE 7: Real-World Engineering Challenges & Solutions
-    # =========================================================================
-    slide7 = prs.slides.add_slide(blank_layout)
-    set_slide_background(slide7, LIGHT_BG)
-    add_header(slide7, "Engineering Case Studies", "Technical Challenges Overcome During Development", 
-               "Key production hurdles encountered and the technical architectural solutions engineered to resolve them.")
-
-    challenges = [
-        ("Cloud SMTP Firewall Port 587 Block",
-         "The Problem:",
-         "Render's free tier blocks outbound TCP ports 25, 465, and 587 to prevent spam abuse, causing standard Gmail SMTP connections to silently time out with ETIMEDOUT.",
-         "The Architectural Solution:",
-         "Integrated Resend's HTTPS REST API communicating over standard Port 443 (which cloud firewalls never block). Configured DNS TXT (DKIM), CNAME (SPF), and DMARC records on verified domain chatme.in for reliable sub-2s email OTP deliverability.",
-         RGBColor(239, 68, 68)),
-        ("Mobile 4K Camera Upload Crashes",
-         "The Problem:",
-         "Smartphone cameras take 12MP-48MP photos (4MB-15MB). Converting raw photos to Base64 exceeded Django's default 2.5MB DATA_UPLOAD_MAX_MEMORY_SIZE, truncating payloads and returning 'Invalid JSON body' 400 errors.",
-         "The Architectural Solution:",
-         "Engineered client-side HTML5 canvas compression in React before upload (auto-scales photos to max 1200px at 0.82 JPEG quality, reducing 10MB images to ~200KB in 0.1s). Increased server upload memory limit to 15MB as safety margin.",
-         RGBColor(245, 158, 11)),
-        ("Tab Navigation Latency & Skeletons",
-         "The Problem:",
-         "Conditional tab rendering ({activeTab === 'explore' && <ExplorePage />}) destroyed components on tab switch. Switching back unmounted state and triggered full-page loading skeletons every time.",
-         "The Architectural Solution:",
-         "Designed persistent tab mounting via CSS display toggles (keeping loaded components in DOM). Implemented in-memory SWR (Stale-While-Revalidate) cache store with concurrent Promise.all fetching, achieving instant 0ms tab navigation.",
-         RGBColor(16, 185, 129))
-    ]
-
-    for i, (c_title, c_label1, c_prob, c_label2, c_sol, accent) in enumerate(challenges):
-        x = Inches(0.8 + i * 3.95)
-        box = slide7.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, Inches(2.0), Inches(3.75), Inches(4.8))
+    for i, (tag, title, body, accent) in enumerate(cards_s5):
+        x = Inches(0.8 + i * 5.95)
+        box = slide5.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, Inches(2.0), Inches(5.75), Inches(4.8))
         box.fill.solid()
         box.fill.fore_color.rgb = CARD_BG
         box.line.color.rgb = CARD_BORDER
 
-        top_bar = slide7.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, Inches(2.0), Inches(3.75), Inches(0.1))
+        top_bar = slide5.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, Inches(2.0), Inches(5.75), Inches(0.1))
         top_bar.fill.solid()
         top_bar.fill.fore_color.rgb = accent
         top_bar.line.color.rgb = accent
 
         tf = box.text_frame
         tf.word_wrap = True
-        tf.margin_left = Inches(0.25)
+        tf.margin_left = Inches(0.3)
         tf.margin_top = Inches(0.25)
-        tf.margin_right = Inches(0.25)
+        tf.margin_right = Inches(0.3)
 
         p = tf.paragraphs[0]
-        p.text = c_title
-        p.font.size = Pt(13)
+        p.text = tag
+        p.font.size = Pt(10)
         p.font.bold = True
-        p.font.color.rgb = TEXT_MAIN
+        p.font.color.rgb = accent
         p.font.name = "Arial"
-        p.space_after = Pt(8)
 
-        p_l1 = tf.add_paragraph()
-        p_l1.text = c_label1
-        p_l1.font.size = Pt(10)
-        p_l1.font.bold = True
-        p_l1.font.color.rgb = accent
-        p_l1.font.name = "Arial"
+        pt = tf.add_paragraph()
+        pt.text = title
+        pt.font.size = Pt(16)
+        pt.font.bold = True
+        pt.font.color.rgb = TEXT_MAIN
+        pt.font.name = "Arial"
+        pt.space_after = Pt(10)
 
-        p_p = tf.add_paragraph()
-        p_p.text = c_prob
-        p_p.font.size = Pt(10.5)
-        p_p.font.color.rgb = TEXT_MUTED
-        p_p.font.name = "Arial"
-        p_p.space_after = Pt(8)
-
-        p_l2 = tf.add_paragraph()
-        p_l2.text = c_label2
-        p_l2.font.size = Pt(10)
-        p_l2.font.bold = True
-        p_l2.font.color.rgb = PRIMARY
-        p_l2.font.name = "Arial"
-
-        p_s = tf.add_paragraph()
-        p_s.text = c_sol
-        p_s.font.size = Pt(10.5)
-        p_s.font.color.rgb = TEXT_MAIN
-        p_s.font.name = "Arial"
+        pd = tf.add_paragraph()
+        pd.text = body
+        pd.font.size = Pt(11.5)
+        pd.font.color.rgb = TEXT_MUTED
+        pd.font.name = "Arial"
 
     # =========================================================================
-    # SLIDE 8: Security & Campus Trust Architecture
+    # SLIDE 6: Feature 3 - Booking & Deposit Escrow Protection
     # =========================================================================
-    slide8 = prs.slides.add_slide(blank_layout)
-    set_slide_background(slide8, LIGHT_BG)
-    add_header(slide8, "Security Engineering", "Security Defenses & Campus Trust Infrastructure", 
-               "Multi-layered safeguards protecting student identity, financial balances, and database integrity.")
+    slide6 = prs.slides.add_slide(blank_layout)
+    set_slide_background(slide6, LIGHT_BG)
+    add_header(slide6, "Core Functionality: Financial Safety", "Fair Rental Booking & Automated Escrow Protection", 
+               "Eliminating social awkwardness and money disputes through automated security deposit protection.")
 
-    sec_items = [
-        ("BOLA / IDOR Authorization Guardrails",
-         "• Strict ownership verification on every endpoint (e.g. only the legitimate item owner can verify pickup or return).\n• Renter's 4-digit handover OTP is completely redacted from the owner's API payload until in-person physical verification."),
-        ("NoSQL Injection Defense",
-         "• Sanitized inputs rejecting operator objects ($gt, $ne, $where) to prevent authentication bypass.\n• Type-strict validation enforcing strings and positive numbers across rates and deposits."),
-        ("Salted Cryptographic Hashing",
-         "• Passwords secured using PBKDF2 algorithm with SHA-256 and unique per-user cryptographic salts.\n• Defense against rainbow table and offline dictionary analysis."),
-        ("Visual Trust Badges & Verified Transparency",
-         "• Listing cards highlight 'Campus ID Verified' shield badges, student registration IDs, and hostel blocks.\n• Transparent community trust scores (1.0 to 5.0 stars) foster accountability across hostel communities.")
+    escrow_cards = [
+        ("1. Transparent Cost Calculation",
+         "• Before confirming a booking, students see an exact financial summary: Rental Days × Daily Rate + Refundable Deposit.\n• No hidden platform commissions or surprise charges at checkout.\n• Both borrower and owner have full clarity on fees before meeting."),
+        ("2. Integrated Digital Wallet",
+         "• Every registered student has a secure campus wallet balance.\n• Seamlessly handles rental payments, payouts from rented items, and deposit holds.\n• Eliminates messy cash exchanges and change issues in hostel rooms."),
+        ("3. Automated Escrow Holding",
+         "• The refundable security deposit is securely locked in escrow by the platform when booking is confirmed.\n• The owner cannot withhold it unfairly, and the borrower cannot default on damage.\n• Guaranteed protection for both parties during the entire rental period."),
+        ("4. Win-Win Peace of Mind",
+         "• Owners feel 100% confident renting valuable electronics or lab kits to peers.\n• Borrowers know their deposit is safe and will be refunded immediately upon return.\n• Protects campus friendships and avoids uncomfortable debt discussions.")
     ]
 
-    for i, (s_title, s_body) in enumerate(sec_items):
+    for i, (e_title, e_body) in enumerate(escrow_cards):
         row = i // 2
         col = i % 2
         x = Inches(0.8 + col * 5.95)
         y = Inches(2.0 + row * 2.45)
 
-        card = slide8.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.75), Inches(2.25))
+        card = slide6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.75), Inches(2.25))
         card.fill.solid()
         card.fill.fore_color.rgb = CARD_BG
         card.line.color.rgb = CARD_BORDER
@@ -574,56 +447,183 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
         tf = card.text_frame
         tf.word_wrap = True
         tf.margin_left = Inches(0.3)
-        tf.margin_top = Inches(0.25)
+        tf.margin_top = Inches(0.22)
         tf.margin_right = Inches(0.3)
 
         p = tf.paragraphs[0]
-        p.text = s_title
-        p.font.size = Pt(14)
+        p.text = e_title
+        p.font.size = Pt(15)
         p.font.bold = True
         p.font.color.rgb = PRIMARY_DARK
         p.font.name = "Arial"
         p.space_after = Pt(6)
 
         pb = tf.add_paragraph()
-        pb.text = s_body
+        pb.text = e_body
         pb.font.size = Pt(11.5)
         pb.font.color.rgb = TEXT_MUTED
         pb.font.name = "Arial"
 
     # =========================================================================
-    # SLIDE 9: Conclusion & Future Scope (Dark Theme)
+    # SLIDE 7: Feature 4 - In-Person QR Pass Handover
+    # =========================================================================
+    slide7 = prs.slides.add_slide(blank_layout)
+    set_slide_background(slide7, LIGHT_BG)
+    add_header(slide7, "Core Functionality: Physical Handover", "In-Person Exchange via Dynamic QR Code Pass", 
+               "A fast, contactless verification process when students meet on campus, featuring real-time auto-close.")
+
+    qr_steps = [
+        ("Step 1: Meet at Campus Hub", 
+         "Borrower & Owner Meetup", 
+         "• Students meet at the designated pickup spot (e.g. Hostel B Lobby or Library).\n\n• Both verify each other's identity on their PeerGear profile.",
+         PRIMARY),
+        ("Step 2: Show Dynamic Pass", 
+         "Secure Handover QR Code", 
+         "• Borrower opens their booking pass on their phone.\n\n• Displays a dynamic QR code and a 4-digit backup code (hidden from owner until meetup).",
+         ACCENT_CYAN),
+        ("Step 3: Owner Camera Scan", 
+         "Instant Mobile Verification", 
+         "• Owner opens the PeerGear camera scanner.\n\n• Scans the borrower's screen to verify authenticity in less than 1 second.",
+         ACCENT_AMBER),
+        ("Step 4: Live Auto-Close", 
+         "Real-Time Confirmation", 
+         "• A celebration checkmark appears on both screens.\n\n• The QR pass auto-closes instantly, and the rental status transitions to 'Active'.",
+         ACCENT_GREEN)
+    ]
+
+    for i, (step_num, step_title, step_body, accent) in enumerate(qr_steps):
+        x = Inches(0.8 + i * 2.95)
+        box = slide7.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, Inches(2.0), Inches(2.8), Inches(4.8))
+        box.fill.solid()
+        box.fill.fore_color.rgb = CARD_BG
+        box.line.color.rgb = CARD_BORDER
+
+        top_bar = slide7.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, Inches(2.0), Inches(2.8), Inches(0.1))
+        top_bar.fill.solid()
+        top_bar.fill.fore_color.rgb = accent
+        top_bar.line.color.rgb = accent
+
+        tf = box.text_frame
+        tf.word_wrap = True
+        tf.margin_left = Inches(0.2)
+        tf.margin_top = Inches(0.25)
+        tf.margin_right = Inches(0.2)
+
+        p = tf.paragraphs[0]
+        p.text = step_num
+        p.font.size = Pt(11)
+        p.font.bold = True
+        p.font.color.rgb = accent
+        p.font.name = "Arial"
+
+        pt = tf.add_paragraph()
+        pt.text = step_title
+        pt.font.size = Pt(14)
+        pt.font.bold = True
+        pt.font.color.rgb = TEXT_MAIN
+        pt.font.name = "Arial"
+        pt.space_after = Pt(8)
+
+        pd = tf.add_paragraph()
+        pd.text = step_body
+        pd.font.size = Pt(11)
+        pd.font.color.rgb = TEXT_MUTED
+        pd.font.name = "Arial"
+
+    # =========================================================================
+    # SLIDE 8: Feature 5 - Return Inspection & Instant Refund
+    # =========================================================================
+    slide8 = prs.slides.add_slide(blank_layout)
+    set_slide_background(slide8, LIGHT_BG)
+    add_header(slide8, "Core Functionality: Return & Refund", "Hassle-Free Returns & Automated Instant Deposit Refund", 
+               "Closing the rental cycle with simple condition verification, instant automated refunds, and community trust building.")
+
+    return_cards = [
+        ("1. Return Meetup & Condition Inspection", 
+         "Fast 1-Minute Inspection", 
+         "• When the rental period concludes, students meet back at the campus pickup point.\n\n• The owner inspects the returned equipment to ensure it is in the original condition with all accessories intact.\n\n• Fast, straightforward in-person verification without paperwork.",
+         ACCENT_AMBER),
+        ("2. Instant Automated Deposit Refund", 
+         "Zero Waiting Time for Money", 
+         "• The owner taps 'Confirm Return Received' on their PeerGear dashboard.\n\n• The system immediately unlocks the escrow security deposit.\n\n• 100% of the deposit is credited back to the borrower's digital wallet in real time—no waiting days for manual bank settlements.",
+         ACCENT_GREEN),
+        ("3. Mutual Ratings & Reviews", 
+         "Building Campus Reputation", 
+         "• Both the borrower and owner rate their experience from 1 to 5 stars and leave brief feedback.\n\n• Honest, punctual students increase their campus Trust Rating.\n\n• Fosters a self-regulating, high-trust community where dependable students receive priority bookings.",
+         PRIMARY)
+    ]
+
+    for i, (r_tag, r_title, r_body, accent) in enumerate(return_cards):
+        x = Inches(0.8 + i * 3.95)
+        box = slide8.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, Inches(2.0), Inches(3.75), Inches(4.8))
+        box.fill.solid()
+        box.fill.fore_color.rgb = CARD_BG
+        box.line.color.rgb = CARD_BORDER
+
+        top_bar = slide8.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, Inches(2.0), Inches(3.75), Inches(0.1))
+        top_bar.fill.solid()
+        top_bar.fill.fore_color.rgb = accent
+        top_bar.line.color.rgb = accent
+
+        tf = box.text_frame
+        tf.word_wrap = True
+        tf.margin_left = Inches(0.3)
+        tf.margin_top = Inches(0.3)
+        tf.margin_right = Inches(0.3)
+
+        p = tf.paragraphs[0]
+        p.text = r_tag
+        p.font.size = Pt(11)
+        p.font.bold = True
+        p.font.color.rgb = accent
+        p.font.name = "Arial"
+
+        pt = tf.add_paragraph()
+        pt.text = r_title
+        pt.font.size = Pt(16)
+        pt.font.bold = True
+        pt.font.color.rgb = TEXT_MAIN
+        pt.font.name = "Arial"
+        pt.space_after = Pt(10)
+
+        pd = tf.add_paragraph()
+        pd.text = r_body
+        pd.font.size = Pt(11.5)
+        pd.font.color.rgb = TEXT_MUTED
+        pd.font.name = "Arial"
+
+    # =========================================================================
+    # SLIDE 9: Feature 6 & Campus Impact (Dark Theme)
     # =========================================================================
     slide9 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide9, DARK_BG)
 
-    # Accent Top Stripe
     stripe9 = slide9.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(13.333), Inches(0.15))
     stripe9.fill.solid()
     stripe9.fill.fore_color.rgb = ACCENT_GREEN
     stripe9.line.color.rgb = ACCENT_GREEN
 
     # Header Box
-    th_box = slide9.shapes.add_textbox(Inches(1.0), Inches(0.7), Inches(11.3), Inches(1.2))
+    th_box = slide9.shapes.add_textbox(Inches(1.0), Inches(0.65), Inches(11.3), Inches(1.2))
     tf_th = th_box.text_frame
     tf_th.word_wrap = True
     p9_tag = tf_th.paragraphs[0]
-    p9_tag.text = "PROJECT SUMMARY & ROADMAP"
+    p9_tag.text = "ADDITIONAL FUNCTIONALITY & REAL-WORLD VALUE"
     p9_tag.font.size = Pt(11)
     p9_tag.font.bold = True
     p9_tag.font.color.rgb = RGBColor(52, 211, 153) # Emerald 400
     p9_tag.font.name = "Arial"
-    p9_tag.space_after = Pt(6)
+    p9_tag.space_after = Pt(4)
 
     p9_t = tf_th.add_paragraph()
-    p9_t.text = "Conclusion & Future Scalability"
-    p9_t.font.size = Pt(26)
+    p9_t.text = "Campus Demand Board & Real-World Student Impact"
+    p9_t.font.size = Pt(24)
     p9_t.font.bold = True
     p9_t.font.color.rgb = RGBColor(255, 255, 255)
     p9_t.font.name = "Arial"
 
-    # Left Box: Key Achievements
-    c_left = slide9.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.0), Inches(2.2), Inches(5.4), Inches(4.5))
+    # Left Box: Demand Board Feature
+    c_left = slide9.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.0), Inches(2.1), Inches(5.4), Inches(4.7))
     c_left.fill.solid()
     c_left.fill.fore_color.rgb = RGBColor(30, 41, 59)
     c_left.line.color.rgb = RGBColor(51, 65, 85)
@@ -635,21 +635,38 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
     tf_l.margin_right = Inches(0.35)
 
     pl_0 = tf_l.paragraphs[0]
-    pl_0.text = "KEY PROJECT OUTCOMES"
+    pl_0.text = "FEATURE 6: CAMPUS DEMAND BOARD"
     pl_0.font.size = Pt(11)
     pl_0.font.bold = True
-    pl_0.font.color.rgb = RGBColor(52, 211, 153)
+    pl_0.font.color.rgb = RGBColor(129, 140, 248)
     pl_0.font.name = "Arial"
-    pl_0.space_after = Pt(10)
+    pl_0.space_after = Pt(8)
 
     pl_1 = tf_l.add_paragraph()
-    pl_1.text = "• Fully Functional Campus Platform: Successfully deployed live full-stack system connecting students securely.\n\n• Solves Real Campus Friction: Eliminates unnecessary personal expenditure on temporary equipment while monetizing idle dorm gear.\n\n• Verified Trust & Reliability: Zero payment defaults via automated deposit escrow, sub-2s email OTPs, and real-time QR handover auto-close.\n\n• Mobile-Optimized Performance: 0ms cached page transitions and client-side canvas compression for smooth smartphone use."
-    pl_1.font.size = Pt(12)
-    pl_1.font.color.rgb = RGBColor(226, 232, 240)
+    pl_1.text = "Fulfilling Unlisted Student Needs:"
+    pl_1.font.size = Pt(14)
+    pl_1.font.bold = True
+    pl_1.font.color.rgb = RGBColor(255, 255, 255)
     pl_1.font.name = "Arial"
+    pl_1.space_after = Pt(8)
 
-    # Right Box: Future Roadmap
-    c_right = slide9.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(6.8), Inches(2.2), Inches(5.5), Inches(4.5))
+    pl_2 = tf_l.add_paragraph()
+    pl_2.text = (
+        "• Post 'Wanted Gear' Requests:\n"
+        "  If an item isn't currently listed, a student posts a request with the required category, needed dates, and maximum daily budget.\n\n"
+        "• Instant Alerts to Campus Peers:\n"
+        "  Students who own the item receive an immediate in-app notification about the demand.\n\n"
+        "• One-Click Fulfillment:\n"
+        "  Owners can list the requested equipment with a single tap, directly connecting with the requester.\n\n"
+        "• High Resource Utilization:\n"
+        "  Ensures no student gets stuck before exams or project submissions."
+    )
+    pl_2.font.size = Pt(11.5)
+    pl_2.font.color.rgb = RGBColor(226, 232, 240)
+    pl_2.font.name = "Arial"
+
+    # Right Box: Real-World Campus Impact
+    c_right = slide9.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(6.8), Inches(2.1), Inches(5.5), Inches(4.7))
     c_right.fill.solid()
     c_right.fill.fore_color.rgb = RGBColor(30, 41, 59)
     c_right.line.color.rgb = RGBColor(51, 65, 85)
@@ -661,18 +678,35 @@ def create_presentation(output_path="PeerGear_Presentation.pptx"):
     tf_r.margin_right = Inches(0.35)
 
     pr_0 = tf_r.paragraphs[0]
-    pr_0.text = "FUTURE ENHANCEMENTS"
+    pr_0.text = "REAL-WORLD CAMPUS BENEFITS"
     pr_0.font.size = Pt(11)
     pr_0.font.bold = True
-    pr_0.font.color.rgb = RGBColor(129, 140, 248)
+    pr_0.font.color.rgb = RGBColor(52, 211, 153)
     pr_0.font.name = "Arial"
-    pr_0.space_after = Pt(10)
+    pr_0.space_after = Pt(8)
 
     pr_1 = tf_r.add_paragraph()
-    pr_1.text = "1. Campus UPI Dynamic QR Integration\nDirect in-app UPI QR payment intents for instantaneous wallet deposit top-ups without third-party gateways.\n\n2. Geofenced Smart Campus Lockers\nIntegration with IoT hostel drop-boxes enabling contactless 24/7 equipment handover and return.\n\n3. AI-Driven Visual Condition Analysis\nComputer vision comparison between pre-pickup and post-return photos to automatically identify scratches or damage differentials.\n\n4. Multi-College Federation\nCross-campus federated access allowing student exchange across affiliated colleges within the same university city."
-    pr_1.font.size = Pt(12)
-    pr_1.font.color.rgb = RGBColor(226, 232, 240)
+    pr_1.text = "Direct Economic & Community Impact:"
+    pr_1.font.size = Pt(14)
+    pr_1.font.bold = True
+    pr_1.font.color.rgb = RGBColor(255, 255, 255)
     pr_1.font.name = "Arial"
+    pr_1.space_after = Pt(8)
+
+    pr_2 = tf_r.add_paragraph()
+    pr_2.text = (
+        "• 85–90% Student Cost Savings:\n"
+        "  Drastically reduces out-of-pocket expenses for equipment used only for a semester or single lab practical.\n\n"
+        "• Monetizing Idle Assets:\n"
+        "  Seniors earn pocket money from calculators, lab aprons, and sports kits that would otherwise gather dust.\n\n"
+        "• Zero Stolen or Disputed Items:\n"
+        "  Escrow deposit holding and verified ID authentication eliminate theft, defaults, and hostel friction.\n\n"
+        "• Eco-Friendly & Sustainable Campus:\n"
+        "  Promotes circular economy and resource reuse, cutting down electronic and plastic waste on campus."
+    )
+    pr_2.font.size = Pt(11.5)
+    pr_2.font.color.rgb = RGBColor(226, 232, 240)
+    pr_2.font.name = "Arial"
 
     prs.save(output_path)
     print(f"Presentation successfully saved to: {output_path}")
