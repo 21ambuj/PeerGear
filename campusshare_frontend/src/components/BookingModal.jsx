@@ -20,6 +20,7 @@ import {
   Upload,
   Clock
 } from 'lucide-react';
+import CampusPaymentModal from './CampusPaymentModal';
 
 const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
   const { user, refreshUser, topupWallet } = useAuth();
@@ -36,6 +37,7 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [toppingUp, setToppingUp] = useState(false);
+  const [showUpiGatewayModal, setShowUpiGatewayModal] = useState(false);
   const [error, setError] = useState('');
   const [bookingResult, setBookingResult] = useState(null);
 
@@ -68,6 +70,50 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
       showToast('Failed to top up wallet. Please try again.', 'error', 'Top-Up Failed');
     } finally {
       setToppingUp(false);
+    }
+  };
+
+  const handleUpiPaymentSuccess = async (txnReceipt) => {
+    try {
+      setSubmitting(true);
+      setError('');
+      // If student has a balance deficit, record the wallet topup with full txn audit trail
+      if (walletBalance < totalPayable) {
+        const topupAmt = Math.max(deficit, suggestedTopup);
+        await topupWallet(topupAmt, {
+          payment_method: txnReceipt.payment_method,
+          transaction_ref: txnReceipt.transaction_ref,
+          gateway_app: txnReceipt.gateway_app,
+          utr_number: txnReceipt.utr_number,
+          escrow_lock_id: txnReceipt.escrow_lock_id
+        });
+        await refreshUser();
+      }
+
+      // Complete booking with escrow lock
+      const res = await rentalsApi.book({
+        item_id: item._id,
+        start_date: startDate,
+        end_date: endDate,
+        notes: notes,
+        payment_method: txnReceipt.payment_method,
+        transaction_ref: txnReceipt.transaction_ref,
+        gateway_app: txnReceipt.gateway_app,
+        utr_number: txnReceipt.utr_number,
+        escrow_lock_id: txnReceipt.escrow_lock_id
+      });
+
+      setBookingResult(res.data);
+      setShowUpiGatewayModal(false);
+      await refreshUser();
+      showToast(`Reserved '${item.title}'! Handover OTP: ${res.data.handover_otp}`, 'success', 'Booking Confirmed');
+      if (onSuccess) onSuccess();
+    } catch (err) {
+      const errMsg = err.response?.data?.error || 'Failed to complete booking after UPI authorization.';
+      setError(errMsg);
+      showToast(errMsg, 'error', 'Reservation Failed');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -348,25 +394,24 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
                   </span>
                 </div>
                 <p className="text-[11px] text-amber-700 leading-relaxed mb-3">
-                  This rental requires a 100% refundable security deposit of ₹{securityDeposit}. Add funds with 1 click:
+                  This rental requires a 100% refundable security deposit of ₹{securityDeposit}. Add funds or checkout directly via Campus UPI:
                 </p>
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    disabled={toppingUp}
-                    onClick={() => handleQuickTopup(suggestedTopup)}
-                    className="flex-1 py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-xl shadow-xs transition flex items-center justify-center space-x-1.5 cursor-pointer disabled:opacity-50"
+                    onClick={() => setShowUpiGatewayModal(true)}
+                    className="flex-1 py-2 px-3 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-700 hover:to-indigo-700 text-white font-black text-xs rounded-xl shadow-xs transition flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
-                    <PlusCircle className="w-3.5 h-3.5" />
-                    <span>{toppingUp ? 'Adding...' : `+ Add ₹${suggestedTopup} (Recommended)`}</span>
+                    <Smartphone className="w-3.5 h-3.5 text-amber-300" />
+                    <span>Pay with Campus UPI Gateway →</span>
                   </button>
                   <button
                     type="button"
                     disabled={toppingUp}
-                    onClick={() => handleQuickTopup(500)}
+                    onClick={() => handleQuickTopup(suggestedTopup)}
                     className="py-2 px-3 bg-white hover:bg-indigo-50 text-indigo-700 font-bold text-xs rounded-xl border border-indigo-200 transition cursor-pointer shadow-2xs"
                   >
-                    <span>+ ₹500</span>
+                    <span>+ ₹{suggestedTopup}</span>
                   </button>
                 </div>
               </div>
@@ -419,35 +464,56 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
               </div>
             )}
 
-            {/* Submit Action */}
-            <button
-              type="submit"
-              disabled={submitting || user?.is_blocked || (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED')}
-              className={`w-full py-3 rounded-xl font-black text-xs sm:text-sm transition flex items-center justify-center space-x-2 shadow-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
-                hasEnoughBalance
-                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-500/25'
-                  : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/20'
-              }`}
-            >
-              <ShieldCheck className="w-4 h-4" />
-              <span>
-                {submitting
-                  ? 'Confirming with Escrow...'
-                  : user?.is_blocked
-                  ? 'Account Suspended'
-                  : (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED')
-                  ? 'ID Card Verification Required'
-                  : hasEnoughBalance
-                  ? `Pay & Reserve (₹${totalPayable.toFixed(0)})`
-                  : `Top Up ₹${suggestedTopup} & Reserve Now`}
-              </span>
-            </button>
+            {/* Submit Actions Grid */}
+            <div className="space-y-2.5">
+              {/* Primary UPI Checkout Button */}
+              <button
+                type="button"
+                disabled={submitting || user?.is_blocked || (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED')}
+                onClick={() => setShowUpiGatewayModal(true)}
+                className="w-full py-3 bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white rounded-xl font-black text-xs sm:text-sm shadow-md shadow-emerald-500/20 transition-all cursor-pointer flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Smartphone className="w-4 h-4 text-amber-300" />
+                <span>Pay via Campus UPI Sandbox (₹{totalPayable.toFixed(2)})</span>
+              </button>
+
+              {/* Wallet Direct Booking Button */}
+              {hasEnoughBalance && (
+                <button
+                  type="submit"
+                  disabled={submitting || user?.is_blocked || (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED')}
+                  className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs transition flex items-center justify-center space-x-2 border border-slate-200 cursor-pointer disabled:opacity-50"
+                >
+                  <Wallet className="w-3.5 h-3.5 text-slate-600" />
+                  <span>
+                    {submitting ? 'Confirming with Escrow...' : `Debit from Campus Wallet (₹${totalPayable.toFixed(2)})`}
+                  </span>
+                </button>
+              )}
+            </div>
+
             <p className="text-[10px] text-center text-slate-400 mt-2">
               100% of the ₹{securityDeposit} deposit is instantly refunded upon returning the item in agreed condition.
             </p>
           </form>
         )}
       </div>
+
+      {/* Campus UPI Sandbox Gateway Modal */}
+      <CampusPaymentModal
+        isOpen={showUpiGatewayModal}
+        onClose={() => setShowUpiGatewayModal(false)}
+        item={item}
+        amount={totalPayable}
+        rentalDetails={{
+          rentalDays,
+          rentalFee,
+          securityDeposit,
+          totalPayable
+        }}
+        mode="CHECKOUT"
+        onPaymentSuccess={handleUpiPaymentSuccess}
+      />
     </div>
   );
 };

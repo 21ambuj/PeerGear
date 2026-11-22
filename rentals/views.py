@@ -12,6 +12,7 @@ Aligned with:
 
 import json
 import random
+import secrets
 from datetime import datetime, timezone
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -113,6 +114,13 @@ def create_rental_booking(request):
             "total_payable": total_payable
         }, status=400)
 
+    # Capture payment gateway and escrow metadata
+    payment_method = str(data.get("payment_method") or "CAMPUS_WALLET")
+    transaction_ref = str(data.get("transaction_ref") or f"TXN_ESCROW_{int(datetime.now(timezone.utc).timestamp())}")
+    gateway_app = str(data.get("gateway_app") or data.get("upi_app") or "Campus Wallet")
+    utr_number = str(data.get("utr_number") or f"43{random.randint(1000000000, 9999999999)}")
+    escrow_lock_id = str(data.get("escrow_lock_id") or f"ESC_{secrets.token_hex(4).upper()}")
+
     # Deduct total_payable from renter wallet
     users_col.update_one({"_id": user["_id"]}, {"$inc": {"wallet_balance": -total_payable}})
 
@@ -130,6 +138,11 @@ def create_rental_booking(request):
         "rental_fee": rental_fee,
         "security_deposit": security_deposit,
         "total_paid": total_payable,
+        "payment_method": payment_method,
+        "transaction_ref": transaction_ref,
+        "gateway_app": gateway_app,
+        "utr_number": utr_number,
+        "escrow_lock_id": escrow_lock_id,
         "status": "BOOKED",
         "deposit_status": "HELD",
         "handover_otp": handover_otp,
@@ -178,7 +191,12 @@ def create_rental_booking(request):
             "rental_fee": rental_fee,
             "security_deposit": security_deposit,
             "item_title": item.get("title"),
-            "description": f"Reserved '{item.get('title')}' (Fee: ₹{rental_fee} + Deposit: ₹{security_deposit})",
+            "payment_method": payment_method,
+            "transaction_ref": transaction_ref,
+            "gateway_app": gateway_app,
+            "utr_number": utr_number,
+            "escrow_lock_id": escrow_lock_id,
+            "description": f"Reserved '{item.get('title')}' (Fee: ₹{rental_fee} + Deposit: ₹{security_deposit}) via {gateway_app}",
             "status": "COMPLETED",
             "created_at": datetime.now(timezone.utc)
         })

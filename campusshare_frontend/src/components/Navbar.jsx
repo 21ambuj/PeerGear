@@ -23,6 +23,7 @@ import {
   X,
   History
 } from 'lucide-react';
+import CampusPaymentModal from './CampusPaymentModal';
 
 const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) => {
   const { user, logout, topupWallet, unreadNotifications } = useAuth();
@@ -100,20 +101,22 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
     }
   };
 
-  const handleTopup = async (e) => {
-    e.preventDefault();
-    if (topupAmount && !isNaN(topupAmount)) {
-      try {
-        await topupWallet(parseFloat(topupAmount));
-        setShowWalletModal(false);
-        showToast(
-          `₹${topupAmount} added to your campus wallet for security deposits.`,
-          'success',
-          'Wallet Recharged'
-        );
-      } catch (err) {
-        showToast('Failed to top up wallet.', 'error', 'Transaction Error');
-      }
+  const handleUpiTopupSuccess = async (txnReceipt) => {
+    try {
+      await topupWallet(txnReceipt.amount, {
+        payment_method: txnReceipt.payment_method,
+        transaction_ref: txnReceipt.transaction_ref,
+        gateway_app: txnReceipt.gateway_app,
+        utr_number: txnReceipt.utr_number,
+        escrow_lock_id: txnReceipt.escrow_lock_id
+      });
+      showToast(
+        `₹${txnReceipt.amount.toFixed(2)} added to your campus wallet via ${txnReceipt.gateway_app} (Ref: ${txnReceipt.transaction_ref})`,
+        'success',
+        'Wallet Recharged'
+      );
+    } catch (err) {
+      showToast('Failed to record wallet recharge.', 'error', 'Transaction Error');
     }
   };
 
@@ -568,90 +571,14 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
         </div>
       </header>
 
-      {/* Campus Escrow Wallet Modal - Viewport Centered with Click-Away Backdrop */}
-      {showWalletModal && (
-        <div 
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-150"
-          onClick={() => setShowWalletModal(false)}
-        >
-          <div 
-            className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 animate-in zoom-in-95 duration-150 relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Top Close Button */}
-            <button
-              type="button"
-              onClick={() => setShowWalletModal(false)}
-              className="absolute top-5 right-5 text-slate-400 hover:text-slate-600 p-1.5 rounded-full hover:bg-slate-100 transition cursor-pointer"
-              title="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="flex items-center space-x-3 text-emerald-700 mb-4 pr-6">
-              <div className="p-2.5 bg-emerald-100 rounded-2xl">
-                <Wallet className="w-6 h-6 text-emerald-600" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-900">Campus Escrow Wallet</h3>
-                <p className="text-xs text-slate-500">For Rentals & Refundable Security Deposits</p>
-              </div>
-            </div>
-
-            <form onSubmit={handleTopup}>
-              <div className="mb-4">
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Select Amount (₹)</label>
-                <div className="grid grid-cols-3 gap-2 mb-3">
-                  {[200, 500, 1000].map((amt) => (
-                    <button
-                      type="button"
-                      key={amt}
-                      onClick={() => setTopupAmount(String(amt))}
-                      className={`py-2 text-xs font-bold rounded-xl border cursor-pointer transition ${
-                        topupAmount === String(amt)
-                          ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                      }`}
-                    >
-                      ₹{amt}
-                    </button>
-                  ))}
-                </div>
-                <input
-                  type="number"
-                  value={topupAmount}
-                  onChange={(e) => setTopupAmount(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
-                  placeholder="Enter custom amount"
-                  min="50"
-                  required
-                />
-              </div>
-
-              <div className="bg-emerald-50/70 border border-emerald-100 p-3 rounded-2xl text-xs text-emerald-900 mb-4 flex items-center space-x-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-                <span>Security deposits are locked in escrow and automatically refunded to your wallet when you return items undamaged.</span>
-              </div>
-
-              <div className="flex space-x-3">
-                <button
-                  type="button"
-                  onClick={() => setShowWalletModal(false)}
-                  className="flex-1 py-2.5 border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-md cursor-pointer"
-                >
-                  Top-Up Wallet
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      {/* Campus Escrow UPI Gateway Modal */}
+      <CampusPaymentModal
+        isOpen={showWalletModal}
+        onClose={() => setShowWalletModal(false)}
+        mode="TOPUP"
+        amount={Number(topupAmount) || 500}
+        onPaymentSuccess={handleUpiTopupSuccess}
+      />
 
       {/* Logout Confirmation Animated Modal */}
       <LogoutConfirmModal

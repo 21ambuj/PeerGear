@@ -589,13 +589,25 @@ def wallet_view(request):
         users_col.update_one({"_id": user["_id"]}, {"$inc": {"wallet_balance": amount}})
         updated_user = users_col.find_one({"_id": user["_id"]})
 
+        # Capture payment gateway and escrow metadata
+        payment_method = safe_str(data.get("payment_method", "CAMPUS_UPI"), max_length=50)
+        gateway_app = safe_str(data.get("gateway_app") or data.get("upi_app", "Campus UPI"), max_length=100)
+        transaction_ref = safe_str(data.get("transaction_ref") or f"TXN_UPI_{int(datetime.now(timezone.utc).timestamp())}", max_length=100)
+        utr_number = safe_str(data.get("utr_number") or f"43{random.randint(1000000000, 9999999999)}", max_length=50)
+        escrow_lock_id = safe_str(data.get("escrow_lock_id", ""), max_length=50)
+
         # Record topup transaction in wallet_transactions & notify student
         try:
             get_wallet_transactions_collection().insert_one({
                 "user_id": user["_id"],
                 "type": "TOPUP",
                 "amount": amount,
-                "description": "Campus Escrow Wallet Recharge",
+                "payment_method": payment_method,
+                "gateway_app": gateway_app,
+                "transaction_ref": transaction_ref,
+                "utr_number": utr_number,
+                "escrow_lock_id": escrow_lock_id,
+                "description": f"Campus Escrow Wallet Recharge via {gateway_app} ({transaction_ref})",
                 "balance_after": updated_user.get("wallet_balance", 0.0),
                 "status": "SUCCESS",
                 "created_at": datetime.now(timezone.utc)
@@ -604,7 +616,7 @@ def wallet_view(request):
                 "recipient_id": user["_id"],
                 "type": "WALLET_TOPUP",
                 "title": "Wallet Recharged 💳",
-                "message": f"₹{amount:.2f} successfully credited to your campus escrow wallet.",
+                "message": f"₹{amount:.2f} successfully credited to your campus escrow wallet via {gateway_app} (UTR: {utr_number}).",
                 "is_read": False,
                 "created_at": datetime.now(timezone.utc)
             })
@@ -613,7 +625,10 @@ def wallet_view(request):
 
         return JsonResponse({
             "message": f"Successfully added ₹{amount:.2f} to your campus wallet.",
-            "wallet_balance": updated_user.get("wallet_balance", 0.0)
+            "wallet_balance": updated_user.get("wallet_balance", 0.0),
+            "transaction_ref": transaction_ref,
+            "utr_number": utr_number,
+            "escrow_lock_id": escrow_lock_id
         }, status=200)
 
     return JsonResponse({"error": "Method not allowed."}, status=405)

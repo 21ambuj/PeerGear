@@ -6,6 +6,7 @@ import ConditionTrackerModal from '../components/ConditionTrackerModal';
 import QrHandoverModal from '../components/QrHandoverModal';
 import PickupVerifyModal from '../components/PickupVerifyModal';
 import ReturnVerifyModal from '../components/ReturnVerifyModal';
+import CampusPaymentModal from '../components/CampusPaymentModal';
 import { 
   History, 
   Wallet, 
@@ -28,7 +29,8 @@ import {
   TrendingUp,
   Receipt,
   User,
-  PlusCircle
+  PlusCircle,
+  Smartphone
 } from 'lucide-react';
 
 const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
@@ -49,6 +51,24 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
   const [selectedRentalForQr, setSelectedRentalForQr] = useState(null);
   const [pickupModalRental, setPickupModalRental] = useState(null);
   const [returnModalRental, setReturnModalRental] = useState(null);
+  const [showUpiModal, setShowUpiModal] = useState(false);
+
+  const handleUpiTopupSuccess = async (txnReceipt) => {
+    try {
+      await authApi.topupWallet(txnReceipt.amount, {
+        payment_method: txnReceipt.payment_method,
+        transaction_ref: txnReceipt.transaction_ref,
+        gateway_app: txnReceipt.gateway_app,
+        utr_number: txnReceipt.utr_number,
+        escrow_lock_id: txnReceipt.escrow_lock_id
+      });
+      await refreshUser();
+      await fetchHistoryData();
+      showToast(`₹${txnReceipt.amount} added to your campus wallet via ${txnReceipt.gateway_app}`, 'success', 'Wallet Recharged');
+    } catch (err) {
+      showToast('Failed to record wallet recharge.', 'error', 'Error');
+    }
+  };
 
   useEffect(() => {
     fetchHistoryData();
@@ -541,8 +561,18 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
               <p className="text-xs text-slate-500">Real-time audit trail of wallet recharges, security deposit refunds, and payouts</p>
             </div>
 
-            {/* Filter Pills */}
-            <div className="flex flex-wrap gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200/80 text-xs">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowUpiModal(true)}
+                className="py-1.5 px-3 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center space-x-1.5 cursor-pointer shrink-0"
+              >
+                <Smartphone className="w-3.5 h-3.5 text-amber-300" />
+                <span>+ Add Funds (Campus UPI)</span>
+              </button>
+
+              {/* Filter Pills */}
+              <div className="flex flex-wrap gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200/80 text-xs">
               {[
                 { id: 'ALL', label: 'All Transactions' },
                 { id: 'TOPUP', label: 'Top-Ups' },
@@ -564,6 +594,7 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
               ))}
             </div>
           </div>
+        </div>
 
           {loading ? (
             <div className="space-y-3">
@@ -689,6 +720,15 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
           }}
         />
       )}
+
+      {/* Campus UPI Sandbox Top-Up Modal */}
+      <CampusPaymentModal
+        isOpen={showUpiModal}
+        onClose={() => setShowUpiModal(false)}
+        mode="TOPUP"
+        amount={500}
+        onPaymentSuccess={handleUpiTopupSuccess}
+      />
 
     </div>
   );

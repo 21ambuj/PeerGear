@@ -114,8 +114,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const topupWallet = async (amount) => {
-    const res = await authApi.topupWallet(amount);
+  const topupWallet = async (amount, metadata = {}) => {
+    const res = await authApi.topupWallet(amount, metadata);
     if (user) {
       setUser({ ...user, wallet_balance: res.data.wallet_balance });
     }
