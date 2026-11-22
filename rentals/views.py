@@ -26,7 +26,11 @@ from campusshare_backend.db import (
     serialize_doc,
     to_object_id
 )
-from accounts.utils import get_current_user_from_request
+from accounts.utils import (
+    get_current_user_from_request,
+    check_user_blocked,
+    check_user_id_verified
+)
 from campusshare_backend.security import sanitize_text, safe_str, safe_float, sanitize_image_list
 
 @csrf_exempt
@@ -41,6 +45,16 @@ def create_rental_booking(request):
     user = get_current_user_from_request(request)
     if not user:
         return JsonResponse({"error": "Authentication required to book an item."}, status=401)
+
+    # Enforce account suspension check
+    blocked_err = check_user_blocked(user)
+    if blocked_err:
+        return blocked_err
+
+    # Enforce Student ID Card verification check
+    id_err = check_user_id_verified(user, "rent equipment on PeerGear")
+    if id_err:
+        return id_err
 
     try:
         data = json.loads(request.body.decode("utf-8"))
@@ -187,6 +201,10 @@ def my_rentals_view(request):
     if not user:
         return JsonResponse({"error": "Authentication required."}, status=401)
 
+    blocked_err = check_user_blocked(user)
+    if blocked_err:
+        return blocked_err
+
     rentals_col = get_rentals_collection()
     items_col = get_items_collection()
     users_col = get_users_collection()
@@ -277,6 +295,10 @@ def pickup_verification_view(request, rental_id):
     if not user:
         return JsonResponse({"error": "Authentication required."}, status=401)
 
+    blocked_err = check_user_blocked(user)
+    if blocked_err:
+        return blocked_err
+
     obj_id = to_object_id(rental_id)
     rentals_col = get_rentals_collection()
     rental = rentals_col.find_one({"_id": obj_id})
@@ -364,6 +386,10 @@ def return_verification_view(request, rental_id):
     user = get_current_user_from_request(request)
     if not user:
         return JsonResponse({"error": "Authentication required."}, status=401)
+
+    blocked_err = check_user_blocked(user)
+    if blocked_err:
+        return blocked_err
 
     obj_id = to_object_id(rental_id)
     rentals_col = get_rentals_collection()
@@ -706,6 +732,10 @@ def submit_review_view(request, rental_id):
     if not user:
         return JsonResponse({"error": "Authentication required."}, status=401)
 
+    blocked_err = check_user_blocked(user)
+    if blocked_err:
+        return blocked_err
+
     obj_id = to_object_id(rental_id)
     rentals_col = get_rentals_collection()
     items_col = get_items_collection()
@@ -758,6 +788,10 @@ def rental_status_view(request, rental_id):
     user = get_current_user_from_request(request)
     if not user:
         return JsonResponse({"error": "Authentication required."}, status=401)
+
+    blocked_err = check_user_blocked(user)
+    if blocked_err:
+        return blocked_err
 
     obj_id = to_object_id(rental_id)
     rentals_col = get_rentals_collection()

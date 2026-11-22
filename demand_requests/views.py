@@ -18,7 +18,11 @@ from campusshare_backend.db import (
     serialize_doc,
     to_object_id
 )
-from accounts.utils import get_current_user_from_request
+from accounts.utils import (
+    get_current_user_from_request,
+    check_user_blocked,
+    check_user_id_verified
+)
 from campusshare_backend.security import sanitize_text, safe_str, safe_float
 
 @csrf_exempt
@@ -66,6 +70,16 @@ def list_create_requests_view(request):
         user = get_current_user_from_request(request)
         if not user:
             return JsonResponse({"error": "Authentication required to post a request."}, status=401)
+
+        # Enforce account suspension check
+        blocked_err = check_user_blocked(user)
+        if blocked_err:
+            return blocked_err
+
+        # Enforce Student ID Card verification check
+        id_err = check_user_id_verified(user, "post equipment requests")
+        if id_err:
+            return id_err
 
         try:
             data = json.loads(request.body.decode("utf-8"))

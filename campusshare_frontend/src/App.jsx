@@ -43,6 +43,25 @@ const AppContent = () => {
         onOpenAuth={openAuth}
       />
 
+      {/* Account Suspended Persistent Banner */}
+      {user && user.is_blocked && (
+        <div className="bg-red-600 text-white px-4 py-3 text-xs shadow-md animate-in slide-in-from-top-2 duration-200">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
+            <div className="flex items-center space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse shrink-0"></span>
+              <span className="font-extrabold uppercase tracking-wide">Account Suspended:</span>
+              <span>
+                Your campus account has been suspended by administration.
+                {user.blocked_reason && (
+                  <strong className="ml-1 text-red-100 font-semibold italic">"{user.blocked_reason}"</strong>
+                )}
+                {' '}Listing, renting, and booking permissions are disabled. Please contact campus administration to resolve.
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Student ID Rejection Action Banner */}
       {user && user.id_card_status === 'REJECTED' && (
         <div className="bg-rose-50 border-b border-rose-200 px-4 py-2.5 text-xs text-rose-900 shadow-2xs animate-in slide-in-from-top-2 duration-200">
@@ -77,12 +96,16 @@ const AppContent = () => {
               else setActiveTab('list-item');
             }}
             onRequireAuth={() => openAuth('login')}
+            onOpenAuth={openAuth}
           />
         </div>
 
         <div className={activeTab === 'list-item' ? 'block' : 'hidden'}>
           {activeTab === 'list-item' && (
-            <ListItemPage onListed={() => setActiveTab('explore')} />
+            <ListItemPage 
+              onListed={() => setActiveTab('explore')} 
+              onOpenAuth={openAuth}
+            />
           )}
         </div>
 

@@ -502,6 +502,13 @@ def profile_view(request):
     if not user:
         return JsonResponse({"error": "Unauthorized. Please login."}, status=401)
 
+    if user.get("is_blocked", False):
+        reason = user.get("blocked_reason") or "Violation of campus community guidelines"
+        return JsonResponse({
+            "error": f"Your campus account has been suspended by administration. Reason: {reason}",
+            "is_blocked": True
+        }, status=403)
+
     if not user.get("is_email_verified", False):
         return JsonResponse({
             "error": "Account email is not verified. Please complete OTP verification.",
@@ -548,6 +555,13 @@ def wallet_view(request):
     user = get_current_user_from_request(request)
     if not user:
         return JsonResponse({"error": "Unauthorized. Please login."}, status=401)
+
+    if user.get("is_blocked", False):
+        reason = user.get("blocked_reason") or "Violation of campus community guidelines"
+        return JsonResponse({
+            "error": f"Your campus account has been suspended by administration. Reason: {reason}",
+            "is_blocked": True
+        }, status=403)
 
     users_col = get_users_collection()
 
@@ -614,6 +628,13 @@ def wallet_history_view(request):
     user = get_current_user_from_request(request)
     if not user:
         return JsonResponse({"error": "Unauthorized. Please login."}, status=401)
+
+    if user.get("is_blocked", False):
+        reason = user.get("blocked_reason") or "Violation of campus community guidelines"
+        return JsonResponse({
+            "error": f"Your campus account has been suspended by administration. Reason: {reason}",
+            "is_blocked": True
+        }, status=403)
 
     user_id = user["_id"]
     wallet_tx_col = get_wallet_transactions_collection()

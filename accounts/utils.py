@@ -100,6 +100,52 @@ def require_auth(view_func):
         return view_func(request, *args, **kwargs)
     return wrapper
 
+def check_user_blocked(user):
+    """
+    Utility check: Verifies if a student's account has been suspended by administration.
+    Returns JsonResponse(..., status=403) if blocked, otherwise None.
+    """
+    if not user:
+        return None
+    if user.get("is_blocked", False):
+        reason = user.get("blocked_reason") or "Violation of campus community guidelines"
+        return JsonResponse({
+            "error": f"Your campus account has been suspended by administration. Reason: {reason}",
+            "is_blocked": True,
+            "blocked_reason": reason
+        }, status=403)
+    return None
+
+def check_user_id_verified(user, action_name="perform this action"):
+    """
+    Utility check: Enforces that a student has completed Student ID Card verification
+    before listing resources, booking rentals, or posting requests.
+    Campus administrators (role == 'ADMIN') are automatically exempt.
+    Returns JsonResponse(..., status=403) if unverified, otherwise None.
+    """
+    if not user:
+        return None
+    if user.get("role") == "ADMIN":
+        return None
+    
+    id_status = user.get("id_card_status", "NOT_UPLOADED")
+    if id_status != "VERIFIED":
+        if id_status == "PENDING_VERIFICATION":
+            msg = f"Your College ID card is currently under review by campus administration. Once approved, you can {action_name}."
+        elif id_status == "REJECTED":
+            reason = user.get("id_card_rejection_reason") or "Invalid or unreadable document"
+            msg = f"Your College ID card was rejected by administration: '{reason}'. Please re-upload a valid ID to {action_name}."
+        else:
+            msg = f"College ID Card verification required: Please upload your physical College ID card to unlock permissions to {action_name}."
+        
+        return JsonResponse({
+            "error": msg,
+            "requires_id_verification": True,
+            "id_card_status": id_status,
+            "rejection_reason": user.get("id_card_rejection_reason")
+        }, status=403)
+    return None
+
 def require_admin(view_func):
     """
     View decorator that enforces administrative privileges (role == 'ADMIN').

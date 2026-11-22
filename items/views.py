@@ -25,7 +25,12 @@ from campusshare_backend.db import (
     serialize_doc, 
     to_object_id
 )
-from accounts.utils import get_current_user_from_request, require_auth
+from accounts.utils import (
+    get_current_user_from_request, 
+    require_auth, 
+    check_user_blocked, 
+    check_user_id_verified
+)
 from campusshare_backend.security import sanitize_text, safe_str, safe_float, sanitize_image_list
 
 DEFAULT_CATEGORIES = [
@@ -130,6 +135,16 @@ def items_list_create_view(request):
         user = get_current_user_from_request(request)
         if not user:
             return JsonResponse({"error": "Authentication required to list an item."}, status=401)
+
+        # Enforce account suspension check
+        blocked_err = check_user_blocked(user)
+        if blocked_err:
+            return blocked_err
+
+        # Enforce Student ID Card verification check
+        id_err = check_user_id_verified(user, "list resources on PeerGear")
+        if id_err:
+            return id_err
 
         try:
             body_text = request.body.decode("utf-8")
@@ -314,6 +329,10 @@ def item_detail_view(request, item_id):
     user = get_current_user_from_request(request)
     if not user:
         return JsonResponse({"error": "Authentication required to modify or delete listings."}, status=401)
+
+    blocked_err = check_user_blocked(user)
+    if blocked_err:
+        return blocked_err
 
     if str(item.get("owner_id")) != str(user["_id"]) and user.get("role") != "ADMIN":
         return JsonResponse({"error": "Permission denied. You can only modify or delete your own listings."}, status=403)

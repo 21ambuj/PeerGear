@@ -34,7 +34,7 @@ const CATEGORIES = [
   "Project Kits"
 ];
 
-const ExplorePage = ({ onNavigateToList, onRequireAuth }) => {
+const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   const { user } = useAuth();
   const [categories, setCategories] = useState(CATEGORIES);
   const [items, setItems] = useState([]);
@@ -446,6 +446,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth }) => {
         <BookingModal
           item={bookingItem}
           onClose={() => setBookingItem(null)}
+          onOpenAuth={onOpenAuth}
           onSuccess={() => {
             fetchItems();
             fetchRecommendations();

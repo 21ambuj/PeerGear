@@ -5,6 +5,7 @@ import { useToast } from '../context/ToastContext';
 import { 
   PlusCircle, 
   ShieldCheck, 
+  ShieldAlert,
   Camera, 
   CheckCircle2, 
   AlertCircle, 
@@ -17,7 +18,10 @@ import {
   X,
   Sparkles,
   Tag,
-  FolderPlus
+  FolderPlus,
+  Lock,
+  Clock,
+  RefreshCw
 } from 'lucide-react';
 
 const DEFAULT_CATEGORIES = [
@@ -31,7 +35,7 @@ const DEFAULT_CATEGORIES = [
   "Project Kits"
 ];
 
-const ListItemPage = ({ onListed }) => {
+const ListItemPage = ({ onListed, onOpenAuth }) => {
   const { user } = useAuth();
   const { showToast } = useToast();
 
@@ -261,6 +265,144 @@ const ListItemPage = ({ onListed }) => {
       setSubmitting(false);
     }
   };
+
+  // Case 1: Unauthenticated
+  if (!user) {
+    return (
+      <div className="max-w-md mx-auto my-16 px-4">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-8 text-center animate-in fade-in duration-200">
+          <div className="w-16 h-16 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-indigo-600 shadow-inner">
+            <Lock className="w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Sign In to List Items</h2>
+          <p className="text-xs text-slate-500 leading-relaxed mb-6">
+            PeerGear is a closed-campus platform. Please sign in with your college account to publish listings for other students.
+          </p>
+          <button
+            type="button"
+            onClick={() => onOpenAuth && onOpenAuth('login')}
+            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition cursor-pointer"
+          >
+            Sign In or Register
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Case 2: Account Suspended / Blocked
+  if (user?.is_blocked) {
+    return (
+      <div className="max-w-md mx-auto my-16 px-4">
+        <div className="bg-white rounded-3xl border border-red-200 shadow-xl p-8 text-center animate-in fade-in duration-200">
+          <div className="w-16 h-16 bg-red-50 border border-red-200 rounded-2xl flex items-center justify-center mx-auto mb-4 text-red-600 shadow-inner">
+            <AlertCircle className="w-8 h-8" />
+          </div>
+          <div className="inline-block px-3 py-1 bg-red-100 text-red-800 text-[10px] font-extrabold uppercase rounded-full mb-3 tracking-wider">
+            Account Suspended
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Listing Permissions Disabled</h2>
+          <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            Your campus account has been suspended by administration.
+            {user.blocked_reason && (
+              <span className="block mt-2 font-semibold italic text-red-700">"Reason: {user.blocked_reason}"</span>
+            )}
+          </p>
+          <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-500 text-left space-y-1">
+            <p className="font-semibold text-slate-700">Why am I seeing this?</p>
+            <p>Campus administrators restrict accounts that violate community safety or return policies. Please visit the admin desk to appeal your status.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Case 3: Student ID Card Not Verified (Admins are exempt)
+  if (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED') {
+    const isPending = user?.id_card_status === 'PENDING_VERIFICATION';
+    const isRejected = user?.id_card_status === 'REJECTED';
+
+    return (
+      <div className="max-w-lg mx-auto my-12 px-4">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden animate-in fade-in duration-200">
+          
+          {/* Header Banner */}
+          <div className="bg-gradient-to-r from-amber-600 to-orange-600 text-white p-6 sm:p-7 text-center">
+            <div className="w-14 h-14 bg-white/15 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
+              <ShieldAlert className="w-7 h-7 text-white" />
+            </div>
+            <h2 className="text-xl font-bold">College ID Verification Required</h2>
+            <p className="text-xs text-amber-100 mt-1">
+              To keep our campus community safe and prevent equipment theft, only verified students can list items.
+            </p>
+          </div>
+
+          {/* Status Box & Actions */}
+          <div className="p-6 sm:p-8 space-y-5">
+            {isPending ? (
+              <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 space-y-2">
+                <div className="flex items-center space-x-2 font-bold text-amber-800">
+                  <Clock className="w-4 h-4 text-amber-600" />
+                  <span>Document Under Review</span>
+                </div>
+                <p className="text-xs leading-relaxed text-amber-800/90">
+                  Your submitted College ID card is currently awaiting administrative approval. Campus coordinators verify student enrollment to maintain campus safety.
+                </p>
+                <p className="text-[11px] font-semibold text-amber-700">
+                  ⏳ Review usually takes a few hours. Once approved, listing will automatically be unlocked!
+                </p>
+              </div>
+            ) : isRejected ? (
+              <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-xs text-rose-900 space-y-3">
+                <div className="flex items-center space-x-2 font-bold text-rose-800">
+                  <AlertCircle className="w-4 h-4 text-rose-600" />
+                  <span>Submission Rejected by Administration</span>
+                </div>
+                <p className="text-xs leading-relaxed text-rose-800/90">
+                  Your College ID card could not be verified:
+                  <span className="block mt-1 font-semibold italic text-rose-950">
+                    "{user.id_card_rejection_reason || 'Unreadable document or invalid student registration number'}"
+                  </span>
+                </p>
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth && onOpenAuth('register', 'ID_CARD')}
+                  className="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center justify-center space-x-1.5 cursor-pointer"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span>Re-upload Valid College ID Proof</span>
+                </button>
+              </div>
+            ) : (
+              <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-2xl text-xs text-indigo-900 space-y-3">
+                <div className="flex items-center space-x-2 font-bold text-indigo-800">
+                  <ShieldCheck className="w-4 h-4 text-indigo-600" />
+                  <span>Step 2: Upload Your Student ID</span>
+                </div>
+                <p className="text-xs leading-relaxed text-indigo-800/90">
+                  You haven't uploaded your Student ID card yet. It only takes 30 seconds to snap a photo and verify your student registration.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth && onOpenAuth('register', 'ID_CARD')}
+                  className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center justify-center space-x-1.5 cursor-pointer"
+                >
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>Upload College ID Card Now</span>
+                </button>
+              </div>
+            )}
+
+            <div className="border-t border-slate-100 pt-4 text-center">
+              <p className="text-[11px] text-slate-400">
+                Logged in as <strong className="text-slate-600">{user?.name}</strong> ({user?.college_id})
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 animate-in fade-in duration-150">

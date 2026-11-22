@@ -7,6 +7,7 @@ import {
   X, 
   Calendar, 
   ShieldCheck, 
+  ShieldAlert,
   Wallet, 
   AlertCircle, 
   CheckCircle2, 
@@ -15,10 +16,12 @@ import {
   QrCode,
   Smartphone,
   Sparkles,
-  PlusCircle
+  PlusCircle,
+  Upload,
+  Clock
 } from 'lucide-react';
 
-const BookingModal = ({ item, onClose, onSuccess }) => {
+const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
   const { user, refreshUser, topupWallet } = useAuth();
   const { showToast } = useToast();
   
@@ -71,6 +74,23 @@ const BookingModal = ({ item, onClose, onSuccess }) => {
   const handleBooking = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (user?.is_blocked) {
+      const errMsg = `Account Suspended: ${user.blocked_reason || 'Access restricted by campus administration'}`;
+      setError(errMsg);
+      showToast(errMsg, 'error', 'Action Restricted');
+      return;
+    }
+
+    if (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED') {
+      const isPending = user?.id_card_status === 'PENDING_VERIFICATION';
+      const errMsg = isPending
+        ? 'Your Student ID Card is currently pending administrative approval. You cannot book equipment yet.'
+        : 'Student ID Verification Required: Please upload your College ID card to reserve gear.';
+      setError(errMsg);
+      showToast(errMsg, 'error', 'ID Verification Required');
+      return;
+    }
 
     if (isOwner) {
       const errMsg = 'You are the owner of this resource. You cannot rent your own item.';
@@ -352,11 +372,58 @@ const BookingModal = ({ item, onClose, onSuccess }) => {
               </div>
             )}
 
+            {/* Account Suspended Notice */}
+            {user?.is_blocked && (
+              <div className="mb-4 p-3.5 bg-red-50 border border-red-200 rounded-2xl text-xs text-red-900 flex items-start space-x-2.5">
+                <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <span className="font-bold text-red-800">Account Suspended</span>
+                  <p className="text-[11px] text-red-700 leading-relaxed">
+                    Your campus account is suspended by administration.
+                    {user?.blocked_reason && <span className="italic block mt-0.5">"{user.blocked_reason}"</span>}
+                    You cannot reserve or rent equipment.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Student ID Card Verification Warning */}
+            {user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED' && (
+              <div className="mb-4 p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-2xl text-xs space-y-2">
+                <div className="flex items-center space-x-1.5 font-bold text-amber-900">
+                  <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>College ID Card Required to Rent</span>
+                </div>
+                <p className="text-[11px] text-amber-800/90 leading-relaxed">
+                  {user?.id_card_status === 'PENDING_VERIFICATION' ? (
+                    '⏳ Your submitted College ID card is under review by campus administration. Equipment renting will unlock as soon as moderation approves it.'
+                  ) : user?.id_card_status === 'REJECTED' ? (
+                    `❌ Your ID card was rejected (${user?.id_card_rejection_reason || 'Unreadable document'}). Please upload a valid ID proof.`
+                  ) : (
+                    '🔒 For campus trust and theft prevention, all students must complete College ID Card verification before borrowing equipment.'
+                  )}
+                </p>
+                {user?.id_card_status !== 'PENDING_VERIFICATION' && onOpenAuth && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      onOpenAuth('register', 'ID_CARD');
+                    }}
+                    className="w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-1.5 shadow-xs"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload College ID Card Now →</span>
+                  </button>
+                )}
+              </div>
+            )}
+
             {/* Submit Action */}
             <button
               type="submit"
-              disabled={submitting}
-              className={`w-full py-3 rounded-xl font-black text-xs sm:text-sm transition flex items-center justify-center space-x-2 shadow-md cursor-pointer ${
+              disabled={submitting || user?.is_blocked || (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED')}
+              className={`w-full py-3 rounded-xl font-black text-xs sm:text-sm transition flex items-center justify-center space-x-2 shadow-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
                 hasEnoughBalance
                   ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-500/25'
                   : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/20'
@@ -366,6 +433,10 @@ const BookingModal = ({ item, onClose, onSuccess }) => {
               <span>
                 {submitting
                   ? 'Confirming with Escrow...'
+                  : user?.is_blocked
+                  ? 'Account Suspended'
+                  : (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED')
+                  ? 'ID Card Verification Required'
                   : hasEnoughBalance
                   ? `Pay & Reserve (₹${totalPayable.toFixed(0)})`
                   : `Top Up ₹${suggestedTopup} & Reserve Now`}
