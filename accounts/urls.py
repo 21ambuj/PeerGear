@@ -14,6 +14,8 @@ urlpatterns = [
     path('login/', views.login_view, name='account-login'),
     path('profile/', views.profile_view, name='account-profile'),
     path('wallet/', views.wallet_view, name='account-wallet'),
+    path('wallet/withdraw/', views.wallet_withdraw_view, name='account-wallet-withdraw'),
+    path('withdraw/', views.wallet_withdraw_view, name='account-withdraw'),
     path('wallet-history/', views.wallet_history_view, name='account-wallet-history'),
     path('students/', views.students_list_view, name='students-list'),
     

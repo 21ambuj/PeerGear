@@ -44,6 +44,7 @@ export const authApi = {
   updateProfile: (data) => api.put('/accounts/profile/', data),
   getWallet: () => api.get('/accounts/wallet/'),
   topupWallet: (amount, metadata = {}) => api.post('/accounts/wallet/', { amount, ...metadata }),
+  withdrawFunds: (data) => api.post('/accounts/withdraw/', data),
   getWalletHistory: () => api.get('/accounts/wallet-history/'),
   getStudentsList: () => api.get('/accounts/students/'),
 };

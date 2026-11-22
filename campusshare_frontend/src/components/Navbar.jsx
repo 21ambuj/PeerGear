@@ -24,6 +24,7 @@ import {
   History
 } from 'lucide-react';
 import CampusPaymentModal from './CampusPaymentModal';
+import ManageMoneyModal from './ManageMoneyModal';
 
 const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) => {
   const { user, logout, topupWallet, unreadNotifications } = useAuth();
@@ -31,6 +32,8 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
+  const [showManageMoneyModal, setShowManageMoneyModal] = useState(false);
+  const [moneyModalInitialView, setMoneyModalInitialView] = useState('CHOICE');
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [topupAmount, setTopupAmount] = useState('500');
   const [userListings, setUserListings] = useState([]);
@@ -236,11 +239,14 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                     )}
                   </button>
 
-                  {/* Modern Animated Escrow Wallet Pill */}
+                  {/* Modern Animated Escrow Wallet Pill -> B-Money Hub */}
                   <div 
-                    onClick={() => setShowWalletModal(true)}
+                    onClick={() => {
+                      setMoneyModalInitialView('CHOICE');
+                      setShowManageMoneyModal(true);
+                    }}
                     className="flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-emerald-500/10 border border-emerald-500/30 text-emerald-950 px-2 py-1 sm:px-3 sm:py-1.5 rounded-xl sm:rounded-2xl text-xs font-bold cursor-pointer hover:border-emerald-500/60 hover:shadow-md hover:shadow-emerald-500/10 hover:-translate-y-0.5 transition-all duration-200 select-none group"
-                    title="Click to manage deposit escrow balance"
+                    title="Click to open B-Money Portal (Add Money & Withdraw Earnings)"
                   >
                     {/* Glowing Live Escrow Status Pulse */}
                     <span className="relative flex h-2 w-2">
@@ -253,8 +259,8 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                       ₹{Number(user.wallet_balance || 0).toFixed(0)}
                     </span>
                     
-                    <span className="hidden sm:inline-block text-[10px] font-extrabold bg-emerald-600 text-white px-1.5 py-0.5 rounded-md shadow-xs group-hover:scale-105 group-hover:bg-emerald-700 transition-transform">
-                      + Add
+                    <span className="inline-block text-[10px] font-black bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white px-2 py-0.5 rounded-md shadow-xs group-hover:scale-105 transition-transform tracking-wide">
+                      B-Money
                     </span>
                   </div>
 
@@ -570,6 +576,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
           </div>
         </div>
       </header>
+
+      {/* Unified Campus B-Money Portal (Add Money & Instant Bank Withdrawal) */}
+      <ManageMoneyModal
+        isOpen={showManageMoneyModal}
+        onClose={() => setShowManageMoneyModal(false)}
+        initialView={moneyModalInitialView}
+      />
 
       {/* Campus Escrow UPI Gateway Modal */}
       <CampusPaymentModal

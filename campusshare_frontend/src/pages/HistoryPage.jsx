@@ -7,6 +7,7 @@ import QrHandoverModal from '../components/QrHandoverModal';
 import PickupVerifyModal from '../components/PickupVerifyModal';
 import ReturnVerifyModal from '../components/ReturnVerifyModal';
 import CampusPaymentModal from '../components/CampusPaymentModal';
+import ManageMoneyModal from '../components/ManageMoneyModal';
 import { 
   History, 
   Wallet, 
@@ -30,7 +31,8 @@ import {
   Receipt,
   User,
   PlusCircle,
-  Smartphone
+  Smartphone,
+  Building2
 } from 'lucide-react';
 
 const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
@@ -52,6 +54,8 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
   const [pickupModalRental, setPickupModalRental] = useState(null);
   const [returnModalRental, setReturnModalRental] = useState(null);
   const [showUpiModal, setShowUpiModal] = useState(false);
+  const [showManageMoneyModal, setShowManageMoneyModal] = useState(false);
+  const [manageMoneyInitialView, setManageMoneyInitialView] = useState('CHOICE');
 
   const handleUpiTopupSuccess = async (txnReceipt) => {
     try {
@@ -564,20 +568,36 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
-                onClick={() => setShowUpiModal(true)}
-                className="py-1.5 px-3 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center space-x-1.5 cursor-pointer shrink-0"
+                onClick={() => {
+                  setManageMoneyInitialView('ADD');
+                  setShowManageMoneyModal(true);
+                }}
+                className="py-1.5 px-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center space-x-1.5 cursor-pointer shrink-0"
               >
-                <Smartphone className="w-3.5 h-3.5 text-amber-300" />
-                <span>+ Add Funds (Campus UPI)</span>
+                <PlusCircle className="w-3.5 h-3.5 text-amber-300" />
+                <span>+ Add Funds</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setManageMoneyInitialView('WITHDRAW');
+                  setShowManageMoneyModal(true);
+                }}
+                className="py-1.5 px-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center space-x-1.5 cursor-pointer shrink-0"
+              >
+                <ArrowUpRight className="w-3.5 h-3.5" />
+                <span>↑ Withdraw Earnings</span>
               </button>
 
               {/* Filter Pills */}
               <div className="flex flex-wrap gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200/80 text-xs">
               {[
-                { id: 'ALL', label: 'All Transactions' },
+                { id: 'ALL', label: 'All' },
                 { id: 'TOPUP', label: 'Top-Ups' },
-                { id: 'ESCROW_REFUND', label: 'Deposit Refunds' },
-                { id: 'RENTAL_DEBIT', label: 'Rental Debits' },
+                { id: 'WITHDRAWAL', label: 'Payouts' },
+                { id: 'ESCROW_REFUND', label: 'Refunds' },
+                { id: 'RENTAL_DEBIT', label: 'Debits' },
                 { id: 'RENTAL_EARNING', label: 'Earnings' },
               ].map(f => (
                 <button
@@ -617,6 +637,7 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                   const isRefund = tx.type === 'ESCROW_REFUND';
                   const isEarning = tx.type === 'RENTAL_EARNING';
                   const isDebit = tx.type === 'RENTAL_DEBIT';
+                  const isWithdrawal = tx.type === 'WITHDRAWAL';
 
                   return (
                     <div 
@@ -628,11 +649,13 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                           isTopup ? 'bg-emerald-100 text-emerald-700' :
                           isRefund ? 'bg-teal-100 text-teal-700' :
                           isEarning ? 'bg-purple-100 text-purple-700' :
+                          isWithdrawal ? 'bg-indigo-100 text-indigo-700' :
                           'bg-slate-100 text-slate-600'
                         }`}>
                           {isTopup && <ArrowDownLeft className="w-5 h-5" />}
                           {isRefund && <ShieldCheck className="w-5 h-5 text-emerald-600" />}
                           {isEarning && <TrendingUp className="w-5 h-5" />}
+                          {isWithdrawal && <Building2 className="w-5 h-5 text-indigo-600" />}
                           {isDebit && <ArrowUpRight className="w-5 h-5" />}
                         </div>
 
@@ -642,11 +665,13 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                               isTopup ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' :
                               isRefund ? 'bg-teal-50 text-teal-800 border border-teal-200' :
                               isEarning ? 'bg-purple-50 text-purple-800 border border-purple-200' :
+                              isWithdrawal ? 'bg-indigo-50 text-indigo-800 border border-indigo-200' :
                               'bg-slate-100 text-slate-800 border border-slate-200'
                             }`}>
                               {isTopup ? 'Wallet Top-Up' :
                                isRefund ? '100% Escrow Refund' :
-                               isEarning ? 'Rental Earning' : 'Rental Payment'}
+                               isEarning ? 'Rental Earning' : 
+                               isWithdrawal ? 'Bank IMPS Payout' : 'Rental Payment'}
                             </span>
                             <span className="text-[10px] text-slate-400">
                               {tx.created_at ? new Date(tx.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent'}
@@ -720,6 +745,17 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
           }}
         />
       )}
+
+      {/* Campus B-Money Portal (Add Money & Withdraw Earnings) */}
+      <ManageMoneyModal
+        isOpen={showManageMoneyModal}
+        onClose={() => setShowManageMoneyModal(false)}
+        initialView={manageMoneyInitialView}
+        onSuccess={() => {
+          fetchHistoryData();
+          refreshUser();
+        }}
+      />
 
       {/* Campus UPI Sandbox Top-Up Modal */}
       <CampusPaymentModal

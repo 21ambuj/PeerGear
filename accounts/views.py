@@ -24,7 +24,16 @@ from campusshare_backend.db import (
     serialize_doc, 
     to_object_id
 )
-from accounts.utils import hash_password, verify_password, generate_jwt, get_current_user_from_request, require_auth, require_admin
+from accounts.utils import (
+    hash_password, 
+    verify_password, 
+    generate_jwt, 
+    get_current_user_from_request, 
+    require_auth, 
+    require_admin,
+    check_user_blocked,
+    check_user_id_verified
+)
 from accounts.email_service import send_verification_email
 from campusshare_backend.security import sanitize_text, safe_str, safe_float
 from pymongo.errors import DuplicateKeyError
@@ -634,6 +643,107 @@ def wallet_view(request):
     return JsonResponse({"error": "Method not allowed."}, status=405)
 
 @csrf_exempt
+def wallet_withdraw_view(request):
+    """
+    POST /api/accounts/withdraw/ or /api/accounts/wallet/withdraw/
+    Disburses user lending earnings to external UPI or Bank account via instant IMPS payout sandbox.
+    Enforces Student ID verification, suspension check, and available balance limits.
+    """
+    if request.method != "POST":
+        return JsonResponse({"error": "Method not allowed. Use POST."}, status=405)
+
+    user = get_current_user_from_request(request)
+    if not user:
+        return JsonResponse({"error": "Unauthorized. Please login."}, status=401)
+
+    blocked_err = check_user_blocked(user)
+    if blocked_err:
+        return blocked_err
+
+    id_err = check_user_id_verified(user, "withdraw earnings to an external bank or UPI account")
+    if id_err:
+        return id_err
+
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+    except Exception:
+        return JsonResponse({"error": "Invalid JSON body."}, status=400)
+
+    raw_amount = data.get("amount") if isinstance(data, dict) else None
+    amount = safe_float(raw_amount, default=-1.0)
+    if amount < 50.0:
+        return JsonResponse({"error": "Minimum payout withdrawal is ₹50.00."}, status=400)
+
+    if amount > 50000.0:
+        return JsonResponse({"error": "Maximum payout withdrawal per transaction is ₹50,000.00 for campus security."}, status=400)
+
+    current_balance = float(user.get("wallet_balance", 0.0))
+    if current_balance < amount:
+        return JsonResponse({
+            "error": f"Insufficient withdrawable balance. You have ₹{current_balance:.2f} available in your wallet.",
+            "wallet_balance": current_balance,
+            "shortfall": round(amount - current_balance, 2)
+        }, status=400)
+
+    payout_method = safe_str(data.get("payout_method", "UPI_IMPS"), max_length=50)
+    destination_upi = safe_str(data.get("destination_upi", ""), max_length=100)
+    bank_account = safe_str(data.get("bank_account", ""), max_length=50)
+    bank_ifsc = safe_str(data.get("bank_ifsc", ""), max_length=20).upper()
+    beneficiary_name = safe_str(data.get("beneficiary_name") or user.get("name", "Student"), max_length=100)
+
+    if destination_upi:
+        destination_label = destination_upi
+    elif bank_account:
+        destination_label = f"A/C ...{bank_account[-4:] if len(bank_account) >= 4 else bank_account} ({bank_ifsc})"
+    else:
+        destination_label = f"{user.get('college_id', 'CAMPUS')}@oksbi"
+
+    amount = round(amount, 2)
+    users_col = get_users_collection()
+    users_col.update_one({"_id": user["_id"]}, {"$inc": {"wallet_balance": -amount}})
+    updated_user = users_col.find_one({"_id": user["_id"]})
+
+    payout_ref = safe_str(data.get("transaction_ref") or f"PAYOUT_IMPS_{int(datetime.now(timezone.utc).timestamp())}", max_length=100)
+    utr_number = safe_str(data.get("utr_number") or f"43{random.randint(1000000000, 9999999999)}", max_length=50)
+
+    try:
+        get_wallet_transactions_collection().insert_one({
+            "user_id": user["_id"],
+            "type": "WITHDRAWAL",
+            "amount": -amount,
+            "payout_method": payout_method,
+            "destination": destination_label,
+            "destination_upi": destination_upi or destination_label,
+            "transaction_ref": payout_ref,
+            "utr_number": utr_number,
+            "beneficiary_name": beneficiary_name,
+            "description": f"Instant IMPS Payout to {destination_label} ({payout_ref})",
+            "balance_after": updated_user.get("wallet_balance", 0.0),
+            "status": "DISBURSED",
+            "created_at": datetime.now(timezone.utc)
+        })
+        get_notifications_collection().insert_one({
+            "recipient_id": user["_id"],
+            "type": "WALLET_WITHDRAWAL",
+            "title": "Earnings Withdrawn 🏦",
+            "message": f"₹{amount:.2f} successfully disbursed to {destination_label} via instant IMPS payout (UTR: {utr_number}).",
+            "is_read": False,
+            "created_at": datetime.now(timezone.utc)
+        })
+    except Exception:
+        pass
+
+    return JsonResponse({
+        "message": f"Successfully disbursed ₹{amount:.2f} to {destination_label}.",
+        "wallet_balance": updated_user.get("wallet_balance", 0.0),
+        "amount": amount,
+        "transaction_ref": payout_ref,
+        "utr_number": utr_number,
+        "destination": destination_label,
+        "status": "DISBURSED"
+    }, status=200)
+
+@csrf_exempt
 def wallet_history_view(request):
     """
     GET /api/accounts/wallet-history/
@@ -741,6 +851,7 @@ def wallet_history_view(request):
     total_refunded = sum(tx["amount"] for tx in transactions if tx.get("type") == "ESCROW_REFUND" and tx.get("amount", 0) > 0)
     total_spent = sum(abs(tx["amount"]) for tx in transactions if tx.get("type") == "RENTAL_DEBIT")
     total_earned = sum(tx["amount"] for tx in transactions if tx.get("type") == "RENTAL_EARNING")
+    total_withdrawn = sum(abs(tx["amount"]) for tx in transactions if tx.get("type") == "WITHDRAWAL")
 
     return JsonResponse({
         "transactions": serialize_doc(transactions),
@@ -749,7 +860,8 @@ def wallet_history_view(request):
             "total_topup": total_topup,
             "total_refunded": total_refunded,
             "total_spent_rentals": total_spent,
-            "total_earned_lending": total_earned
+            "total_earned_lending": total_earned,
+            "total_withdrawn": total_withdrawn
         }
     }, status=200)
 

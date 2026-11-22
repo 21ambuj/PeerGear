@@ -122,6 +122,14 @@ export const AuthProvider = ({ children }) => {
     return res.data;
   };
 
+  const withdrawFunds = async (data) => {
+    const res = await authApi.withdrawFunds(data);
+    if (user) {
+      setUser({ ...user, wallet_balance: res.data.wallet_balance });
+    }
+    return res.data;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -137,6 +145,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         refreshUser,
         topupWallet,
+        withdrawFunds,
         fetchNotifications
       }}
     >
