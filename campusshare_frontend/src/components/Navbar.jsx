@@ -28,7 +28,10 @@ import {
   Lock,
   CheckCircle2,
   Sun,
-  Moon
+  Moon,
+  Layers,
+  Zap,
+  CreditCard
 } from 'lucide-react';
 import CampusPaymentModal from './CampusPaymentModal';
 import ManageMoneyModal from './ManageMoneyModal';
@@ -156,47 +159,55 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/85 dark:bg-[#07080b]/85 backdrop-blur-2xl border-b border-zinc-200/60 dark:border-white/[0.07] shadow-[0_4px_24px_-4px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_36px_-8px_rgba(0,0,0,0.7)] transition-all duration-300">
-        {/* Sleek Ambient Top Laser Beam */}
-        <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-emerald-500/80 to-transparent"></div>
+      <header className="sticky top-0 z-40 bg-white/85 dark:bg-[#08090e]/85 backdrop-blur-2xl border-b border-zinc-200/75 dark:border-white/[0.08] shadow-[0_4px_24px_-4px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.7)] transition-colors duration-300">
+        {/* Luminous Multi-stop Top Laser Beam */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-emerald-400 via-teal-400 to-transparent opacity-90"></div>
 
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-[68px] gap-2 sm:gap-4 lg:gap-8">
+          <div className="flex items-center justify-between h-16 sm:h-[70px] gap-2 sm:gap-4 lg:gap-6">
             
-            {/* Precision Brand Mark & Live University Status */}
+            {/* LEFT: Distinctive Geometric Brand Mark */}
             <div 
               onClick={() => setActiveTab('explore')}
               className="flex items-center space-x-3 cursor-pointer group select-none shrink-0"
+              title="PeerGear • Campus Resource Exchange"
             >
-              <div className="relative">
-                {/* Ambient glow halo on hover */}
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-emerald-500/25 to-teal-500/25 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-950 to-black dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-950 text-white flex items-center justify-center shadow-md shadow-zinc-950/20 group-hover:scale-[1.04] transition-all duration-300 ring-1 ring-zinc-800 dark:ring-white/[0.12]">
-                  <svg className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M16 3h5v5" />
-                    <path d="M4 20L21 3" />
-                    <path d="M21 16v5h-5" />
-                    <path d="M15 15l6 6" />
-                    <path d="M4 4l5 5" />
+              <div className="relative shrink-0">
+                {/* Radiant Ambient Back-Glow */}
+                <div className="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-emerald-500/30 via-teal-500/20 to-cyan-500/30 blur-md opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                
+                {/* 3D Machined Icon Emblem */}
+                <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-950 to-black dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-950 text-white flex items-center justify-center shadow-lg shadow-zinc-950/20 group-hover:scale-105 transition-all duration-300 ring-1 ring-zinc-700/60 dark:ring-white/[0.14]">
+                  {/* Custom Interlocking Geometric Nodes SVG */}
+                  <svg className="w-5 h-5 text-emerald-400 group-hover:text-emerald-300 group-hover:rotate-6 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="18" cy="6" r="3" />
+                    <circle cx="6" cy="18" r="3" />
+                    <path d="M15.5 8.5L8.5 15.5" />
+                    <path d="M12 3a9 9 0 0 0-9 9" />
+                    <path d="M21 12a9 9 0 0 1-9 9" />
                   </svg>
                 </div>
+
                 {/* Live Campus Node Ping Dot */}
-                <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border-2 border-white dark:border-zinc-950"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 ring-2 ring-white dark:ring-[#08090e]"></span>
                 </span>
               </div>
 
+              {/* Brand Typography */}
               <div className="flex flex-col">
                 <div className="flex items-center space-x-1.5">
-                  <span className="text-lg sm:text-[19px] font-black tracking-[-0.03em] text-zinc-950 dark:text-white leading-none group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                    PeerGear
+                  <span className="text-xl sm:text-[21px] font-black tracking-[-0.035em] text-zinc-950 dark:text-white leading-none">
+                    Peer<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-400 dark:to-teal-300">Gear</span>
                   </span>
-                  <span className="text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded-md border border-emerald-500/20">
+                  <span className="text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded-md border border-emerald-500/25 shadow-2xs">
                     Campus
                   </span>
                 </div>
-                <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-medium tracking-tight mt-0.5">Verified Peer Exchange</span>
+                <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-medium tracking-tight mt-0.5 hidden xs:inline">
+                  Verified Student Exchange
+                </span>
               </div>
             </div>
 
@@ -206,18 +217,18 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 setActiveTab('explore');
                 window.dispatchEvent(new CustomEvent('campusshare-focus-search'));
               }}
-              className="hidden xl:flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-zinc-100/80 dark:bg-zinc-900/80 hover:bg-zinc-200/60 dark:hover:bg-zinc-850 border border-zinc-200/80 dark:border-white/[0.08] text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 text-xs transition-all duration-200 cursor-pointer group shadow-2xs hover:border-emerald-500/40"
-              title="Quick Search Gear (⌘K or Ctrl+K)"
+              className="hidden xl:flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-zinc-100/80 dark:bg-white/[0.05] hover:bg-zinc-200/70 dark:hover:bg-white/[0.1] border border-zinc-200/80 dark:border-white/[0.08] text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 text-xs transition-all duration-200 cursor-pointer group shadow-2xs hover:border-emerald-500/40 shrink-0"
+              title="Search Gear Across Campus (⌘K or Ctrl+K)"
             >
               <Search className="w-3.5 h-3.5 text-zinc-400 group-hover:text-emerald-500 transition-colors" />
               <span className="font-medium text-xs">Search gear...</span>
-              <kbd className="text-[10px] font-mono bg-white dark:bg-zinc-850 px-1.5 py-0.5 rounded-md border border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-400 font-bold shadow-2xs group-hover:border-emerald-500/40 transition-colors">
+              <kbd className="text-[10px] font-mono bg-white dark:bg-zinc-800 px-1.5 py-0.5 rounded-md border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 font-bold shadow-2xs group-hover:border-emerald-500/40 transition-colors">
                 ⌘K
               </kbd>
             </button>
 
-            {/* Modern Floating Dock Navigation Tabs */}
-            <nav className="hidden lg:flex items-center space-x-1 p-1 rounded-full bg-zinc-100/90 dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-white/[0.08] backdrop-blur-xl shadow-inner shrink-0">
+            {/* CENTER: Floating Glass Capsule Navigation Dock */}
+            <nav className="hidden lg:flex items-center space-x-1 p-1 rounded-full bg-zinc-100/90 dark:bg-white/[0.05] border border-zinc-200/80 dark:border-white/[0.08] backdrop-blur-xl shadow-inner shrink-0">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id || (item.id === 'my-rentals' && (activeTab === 'my-rentals-renter' || activeTab === 'my-rentals-owner'));
@@ -234,7 +245,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                     }}
                     className={`relative px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center space-x-1.5 cursor-pointer ${
                       isActive
-                        ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-sm ring-1 ring-black/[0.04] dark:ring-white/[0.06]'
+                        ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-sm ring-1 ring-zinc-200 dark:ring-white/[0.1]'
                         : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-white/60 dark:hover:bg-zinc-800/60'
                     }`}
                   >
@@ -255,7 +266,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 className={`ml-1 px-4 py-1.5 rounded-full text-xs font-black transition-all duration-200 flex items-center space-x-1.5 cursor-pointer shadow-md active:scale-95 group ${
                   activeTab === 'list-item'
                     ? 'bg-emerald-600 text-white shadow-emerald-600/30 ring-2 ring-emerald-500/40'
-                    : 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30'
+                    : 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-emerald-500/25 hover:shadow-lg hover:shadow-emerald-500/35'
                 }`}
               >
                 <PlusCircle className="w-3.5 h-3.5 stroke-[2.8] group-hover:rotate-90 transition-transform duration-300" />
@@ -263,15 +274,15 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
               </button>
             </nav>
 
-            {/* Right Action Bar (Fintech Wallet, Theme Switcher & User Avatar) */}
-            <div className="flex items-center space-x-2 shrink-0 ml-auto lg:ml-0">
+            {/* RIGHT: Action Bar (Theme, B-Money, Profile & Mobile Hamburger) */}
+            <div className="flex items-center space-x-2 sm:space-x-2.5 shrink-0 ml-auto lg:ml-0">
               
-              {/* Animated Theme Switcher Button (Sun / Moon) */}
+              {/* Tactile Theme Switcher Button */}
               <button
                 onClick={toggleTheme}
-                className="relative p-2 rounded-full bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200/80 dark:hover:bg-zinc-800 text-zinc-600 dark:text-amber-400 border border-zinc-200/80 dark:border-white/[0.08] transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 group"
-                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                aria-label="Toggle color theme"
+                className="relative p-2 rounded-full bg-zinc-100 dark:bg-white/[0.06] hover:bg-zinc-200/80 dark:hover:bg-white/[0.12] text-zinc-600 dark:text-amber-400 border border-zinc-200/80 dark:border-white/[0.08] transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 group shrink-0"
+                title={isDark ? "Switch to Daylight Mode" : "Switch to Night Mode"}
+                aria-label="Toggle visual theme"
               >
                 {isDark ? (
                   <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-90 transition-transform duration-500" />
@@ -282,10 +293,10 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
               {user ? (
                 <>
-                  {/* Notification Bell with Radiant Ping Badge */}
+                  {/* Notification Bell (Hidden on small mobile to give room to avatar) */}
                   <button
                     onClick={onOpenNotifications}
-                    className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] group"
+                    className="hidden sm:flex relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-white/[0.06] rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] group shrink-0"
                     title="Campus Activity Alerts"
                   >
                     <Bell className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
@@ -299,54 +310,60 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                     )}
                   </button>
 
-                  {/* High-End Fintech B-Money Pill (Revolut / Apple Pay grade) */}
+                  {/* Responsive Fintech B-Money Pill */}
                   <div 
                     onClick={() => {
                       setMoneyModalInitialView('CHOICE');
                       setShowManageMoneyModal(true);
                     }}
-                    className="flex items-center space-x-2 bg-gradient-to-r from-zinc-950 via-zinc-900 to-black dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-950 hover:from-zinc-900 hover:to-zinc-850 dark:hover:from-zinc-850 dark:hover:to-zinc-900 border border-zinc-800/90 dark:border-white/[0.12] text-white px-3.5 py-1.5 rounded-full text-xs font-bold cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md hover:border-emerald-500/50 active:scale-95 group select-none"
-                    title="Open B-Money Portal (Add Funds & Withdraw Earnings)"
+                    className="flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-zinc-950 via-zinc-900 to-black dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-950 hover:from-zinc-900 hover:to-zinc-850 dark:hover:from-zinc-850 dark:hover:to-zinc-900 border border-zinc-800/90 dark:border-white/[0.12] text-white px-2.5 sm:px-3.5 py-1.5 rounded-full text-xs font-bold cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md hover:border-emerald-500/50 active:scale-95 group select-none shrink-0"
+                    title="Open B-Money Portal (Recharge & Withdraw)"
                   >
                     {/* Concentric Animated Pulse Beacon */}
-                    <span className="relative flex h-2 w-2">
+                    <span className="relative flex h-2 w-2 shrink-0">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
 
-                    <span className="text-[10px] font-black text-emerald-400 tracking-wider uppercase">B-Money</span>
-                    <span className="w-px h-3 bg-zinc-800 dark:bg-zinc-700"></span>
+                    <span className="text-[10px] font-black text-emerald-400 tracking-wider uppercase hidden md:inline">B-Money</span>
+                    <span className="w-px h-3 bg-zinc-800 dark:bg-zinc-700 hidden md:inline"></span>
+                    
                     <span className="font-mono font-black text-xs text-zinc-100 group-hover:text-emerald-300 transition-colors">
                       ₹{Number(user.wallet_balance || 0).toFixed(0)}
                     </span>
-                    <span className="text-[10px] text-zinc-400 group-hover:text-white transition-colors">
+                    <span className="text-[10px] text-zinc-400 group-hover:text-white transition-colors pl-0.5">
                       +
                     </span>
                   </div>
 
-                  {/* Modern User Avatar with Holographic ID Card Dropdown */}
-                  <div className="relative" ref={profileContainerRef}>
+                  {/* High-Visibility User Profile Avatar Button */}
+                  <div className="relative shrink-0 overflow-visible" ref={profileContainerRef}>
                     <button
                       onClick={handleToggleProfileMenu}
-                      className="flex items-center space-x-2 bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200/80 dark:hover:bg-zinc-800 p-1 sm:pr-2.5 rounded-full text-xs font-bold text-zinc-800 dark:text-zinc-200 transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] group hover:scale-[1.02] active:scale-95"
-                      title="Profile and Account Settings"
+                      className="flex items-center space-x-2 p-1 sm:pr-2.5 rounded-full bg-zinc-100/90 dark:bg-white/[0.06] hover:bg-zinc-200/80 dark:hover:bg-white/[0.12] border border-zinc-200/80 dark:border-white/[0.1] text-zinc-800 dark:text-zinc-100 transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md shrink-0 group hover:scale-[1.02] active:scale-95"
+                      title="Profile and Campus Identity Settings"
                     >
-                      {/* Avatar */}
-                      <div className="relative">
-                        <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full bg-zinc-900 dark:bg-zinc-800 text-white font-black text-xs flex items-center justify-center shadow-xs ring-1 ring-white/10">
+                      {/* Avatar Circle (High contrast, vibrant campus gradient, never clipped) */}
+                      <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 aspect-square rounded-full">
+                        <div className="w-full h-full rounded-full bg-gradient-to-tr from-emerald-600 via-teal-600 to-cyan-500 text-white font-black text-xs sm:text-sm flex items-center justify-center shadow-md shadow-emerald-500/25 ring-2 ring-emerald-400/40 dark:ring-emerald-400/50 group-hover:ring-emerald-400 transition-all">
                           {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                         </div>
-                        <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border-2 border-white dark:border-zinc-900 rounded-full"></span>
+                        {/* Status beacon cleanly positioned on border */}
+                        <span className="absolute bottom-0 right-0 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#08090e] shadow-xs"></span>
                       </div>
 
-                      <div className="text-left hidden md:block leading-tight">
-                        <p className="font-extrabold text-zinc-900 dark:text-zinc-100 text-xs truncate max-w-20">
+                      {/* Desktop Name Tag */}
+                      <div className="text-left hidden xl:block leading-tight pr-0.5">
+                        <p className="font-extrabold text-zinc-900 dark:text-zinc-100 text-xs truncate max-w-24">
                           {user.name.split(' ')[0]}
+                        </p>
+                        <p className="text-[9px] font-bold text-emerald-600 dark:text-emerald-400">
+                          {user.id_card_status === 'VERIFIED' ? 'Verified ID' : 'Student'}
                         </p>
                       </div>
 
-                      <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${
-                        showProfileMenu ? 'rotate-180 text-emerald-600 dark:text-emerald-400' : 'group-hover:text-zinc-600 dark:group-hover:text-zinc-200'
+                      <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-200 shrink-0 transition-transform duration-200 hidden sm:block ${
+                        showProfileMenu ? 'rotate-180 text-emerald-600 dark:text-emerald-400' : ''
                       }`} />
                     </button>
 
@@ -360,15 +377,15 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
                     {/* Animated Glass Dropdown Menu */}
                     {showProfileMenu && (
-                      <div className="absolute right-0 mt-2 w-[calc(100vw-1.5rem)] sm:w-80 max-w-sm glass-panel dark:glass-panel-dark dark:bg-zinc-950/95 rounded-3xl shadow-2xl shadow-slate-900/15 dark:shadow-black/70 border border-slate-200/80 dark:border-zinc-800 py-2.5 z-50 animate-scale-in max-h-[82vh] overflow-y-auto no-scrollbar">
+                      <div className="absolute right-0 mt-2.5 w-[calc(100vw-2rem)] sm:w-80 max-w-sm glass-panel dark:glass-panel-dark dark:bg-zinc-950/95 rounded-3xl shadow-2xl shadow-slate-900/15 dark:shadow-black/80 border border-slate-200/80 dark:border-zinc-800 py-2.5 z-50 animate-scale-in max-h-[82vh] overflow-y-auto no-scrollbar">
                         
                         {/* Student Digital Identity Card (Obsidian Fintech Card) */}
                         <div className="mx-2 mb-2 p-3.5 bg-gradient-to-br from-zinc-950 via-zinc-900 to-slate-950 text-white rounded-2xl border border-zinc-800 shadow-md relative overflow-hidden">
                           <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
 
                           <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center space-x-2 min-w-0">
-                              <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-black text-xs text-emerald-400 shrink-0">
+                            <div className="flex items-center space-x-2.5 min-w-0">
+                              <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 border border-emerald-400/40 flex items-center justify-center font-black text-xs text-white shadow-xs shrink-0">
                                 {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                               </div>
                               <div className="min-w-0">
@@ -441,62 +458,64 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                           </div>
                         )}
 
-                        {/* SECTION: My Listed Items (Shows your listings right in the dropdown) */}
+                        {/* SECTION: My Listed Items */}
                         <div className="px-3 py-2.5 bg-slate-50/80 dark:bg-zinc-900/60 border-b border-slate-100 dark:border-zinc-800">
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center space-x-1.5 text-purple-700 dark:text-purple-400">
                               <Tag className="w-3.5 h-3.5" />
                               <span className="text-[11px] font-black uppercase tracking-wider">My Listed Items</span>
                             </div>
-                            <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300">
-                              {userListings.length} {userListings.length === 1 ? 'item' : 'items'}
-                            </span>
+                            <button
+                              onClick={() => {
+                                setShowProfileMenu(false);
+                                setActiveTab('my-rentals-owner');
+                              }}
+                              className="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold hover:underline cursor-pointer"
+                            >
+                              View All ({userListings.length})
+                            </button>
                           </div>
 
                           {loadingListings ? (
-                            <div className="py-3 text-center text-[11px] text-slate-400 animate-pulse">
-                              Loading listings...
-                            </div>
+                            <div className="py-3 text-center text-xs text-slate-400">Loading your gear...</div>
                           ) : userListings.length > 0 ? (
-                            <div className="max-h-44 overflow-y-auto space-y-1.5 no-scrollbar pr-0.5">
-                              {userListings.map((item) => (
+                            <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+                              {userListings.slice(0, 3).map((item) => (
                                 <div
-                                  key={item._id}
-                                  onClick={() => {
-                                    setActiveTab('my-rentals-owner');
-                                    setShowProfileMenu(false);
-                                  }}
-                                  className="flex items-center space-x-2.5 p-2 rounded-xl bg-white dark:bg-zinc-900 hover:bg-purple-50/80 dark:hover:bg-zinc-800 border border-slate-200/80 dark:border-zinc-800 hover:border-purple-200 transition cursor-pointer group shadow-2xs"
+                                  key={item._id || item.id}
+                                  className="flex items-center justify-between p-1.5 rounded-xl bg-white dark:bg-zinc-800/80 border border-slate-200/60 dark:border-zinc-700/60 text-xs shadow-2xs hover:border-indigo-300 transition"
                                 >
-                                  <img
-                                    src={item.images?.[0] || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
-                                    alt={item.title}
-                                    className="w-9 h-9 rounded-lg object-cover bg-slate-100 dark:bg-zinc-800 shrink-0"
-                                  />
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center justify-between">
-                                      <p className="text-xs font-bold text-slate-900 dark:text-zinc-100 truncate group-hover:text-purple-700 dark:group-hover:text-purple-400">{item.title}</p>
-                                      <span className="text-[9px] text-purple-600 dark:text-purple-400 font-bold group-hover:underline">Manage →</span>
-                                    </div>
-                                    <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5">
-                                      <span className="font-bold text-slate-800 dark:text-zinc-200">₹{item.rental_rate_per_day}/day</span>
-                                      <span className={`px-1.5 py-0.2 rounded font-black text-[9px] ${
-                                        item.availability_status === 'AVAILABLE' ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300'
-                                      }`}>
-                                        {item.availability_status}
-                                      </span>
+                                  <div className="flex items-center space-x-2 min-w-0">
+                                    <img
+                                      src={item.photo_url || item.images?.[0] || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=100&auto=format&fit=crop&q=60'}
+                                      alt={item.title}
+                                      className="w-7 h-7 rounded-lg object-cover shrink-0 bg-slate-100 dark:bg-zinc-700"
+                                      onError={(e) => {
+                                        e.target.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=100&auto=format&fit=crop&q=60';
+                                      }}
+                                    />
+                                    <div className="min-w-0">
+                                      <p className="font-bold text-slate-800 dark:text-zinc-200 truncate max-w-[120px]">{item.title}</p>
+                                      <p className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono">₹{item.rental_rate}/day</p>
                                     </div>
                                   </div>
+                                  <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-md ${
+                                    item.status === 'AVAILABLE' 
+                                      ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800'
+                                      : 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800'
+                                  }`}>
+                                    {item.status}
+                                  </span>
                                 </div>
                               ))}
                             </div>
                           ) : (
-                            <div className="p-3 text-center bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200/60 dark:border-zinc-800 shadow-2xs">
-                              <p className="text-[11px] text-slate-400 dark:text-zinc-500 font-medium">You haven't listed any campus items yet.</p>
+                            <div className="py-2.5 text-center">
+                              <p className="text-xs text-slate-400 dark:text-zinc-500">No items listed yet</p>
                               <button
                                 onClick={() => {
-                                  setActiveTab('list-item');
                                   setShowProfileMenu(false);
+                                  setActiveTab('list-item');
                                 }}
                                 className="mt-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold hover:underline block mx-auto cursor-pointer"
                               >
@@ -506,7 +525,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                           )}
                         </div>
 
-                        {/* SECTION: Remaining Navigation Options */}
+                        {/* SECTION: Navigation Options */}
                         <div className="p-1.5 space-y-0.5">
                           {user?.role === 'ADMIN' && (
                             <button
@@ -617,7 +636,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 <div className="flex items-center space-x-2 shrink-0">
                   <button
                     onClick={() => setActiveTab('admin-login')}
-                    className="p-1.5 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-all duration-200 cursor-pointer flex items-center space-x-1 border border-zinc-200 dark:border-white/[0.08] hover:scale-105 active:scale-95"
+                    className="p-1.5 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-white/[0.06] rounded-full transition-all duration-200 cursor-pointer flex items-center space-x-1 border border-zinc-200 dark:border-white/[0.08] hover:scale-105 active:scale-95 shrink-0"
                     title="Campus Administrator Portal"
                   >
                     <ShieldCheck className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400 shrink-0" />
@@ -625,13 +644,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                   </button>
                   <button
                     onClick={() => onOpenAuth('login')}
-                    className="px-3.5 py-1.5 text-xs font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-all duration-200 cursor-pointer whitespace-nowrap hover:scale-105 active:scale-95"
+                    className="px-3.5 py-1.5 text-xs font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/[0.06] rounded-full transition-all duration-200 cursor-pointer whitespace-nowrap hover:scale-105 active:scale-95 shrink-0"
                   >
                     Sign In
                   </button>
                   <button
                     onClick={() => onOpenAuth('register')}
-                    className="px-4 py-1.5 text-xs font-black bg-gradient-to-r from-zinc-950 via-zinc-900 to-black hover:from-zinc-900 hover:to-zinc-800 dark:from-emerald-600 dark:to-teal-600 dark:hover:from-emerald-500 dark:hover:to-teal-500 text-white rounded-full shadow-md hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-200 cursor-pointer whitespace-nowrap hover:scale-105 active:scale-95 ring-1 ring-white/10"
+                    className="px-4 py-1.5 text-xs font-black bg-gradient-to-r from-zinc-950 via-zinc-900 to-black hover:from-zinc-900 hover:to-zinc-800 dark:from-emerald-600 dark:to-teal-600 dark:hover:from-emerald-500 dark:hover:to-teal-500 text-white rounded-full shadow-md hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-200 cursor-pointer whitespace-nowrap hover:scale-105 active:scale-95 ring-1 ring-white/10 shrink-0"
                   >
                     Join Campus
                   </button>
@@ -641,7 +660,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
               {/* Mobile Menu Toggle Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] ml-1"
+                className="lg:hidden p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/[0.06] rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] ml-1 shrink-0"
                 aria-label="Toggle navigation menu"
               >
                 {mobileMenuOpen ? (
@@ -657,7 +676,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
         {/* Animated Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-zinc-200/80 dark:border-white/[0.08] bg-white/95 dark:bg-[#07080b]/95 backdrop-blur-2xl px-4 py-4 space-y-3 animate-fade-in-down shadow-2xl max-h-[82vh] overflow-y-auto">
+          <div className="lg:hidden border-t border-zinc-200/80 dark:border-white/[0.08] bg-white/95 dark:bg-[#08090e]/95 backdrop-blur-2xl px-4 py-4 space-y-3 animate-fade-in-down shadow-2xl max-h-[82vh] overflow-y-auto">
             
             {/* Quick Search Trigger */}
             <div 
@@ -681,14 +700,14 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                   <Sun className="w-4 h-4 text-amber-500" />
                 )}
                 <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
-                  {isDark ? 'Dark Mode Active' : 'Light Mode Active'}
+                  {isDark ? 'Night Mode Active' : 'Daylight Mode Active'}
                 </span>
               </div>
               <button
                 onClick={toggleTheme}
                 className="px-3.5 py-1 rounded-full text-xs font-bold bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs border border-zinc-200 dark:border-zinc-700 cursor-pointer"
               >
-                Switch to {isDark ? 'Light' : 'Dark'}
+                Switch to {isDark ? 'Day' : 'Night'}
               </button>
             </div>
 
