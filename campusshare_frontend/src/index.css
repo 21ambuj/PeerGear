@@ -110,9 +110,37 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes laserScan {
+  0%, 100% {
+    top: 5%;
+    opacity: 0.4;
+  }
+  50% {
+    top: 92%;
+    opacity: 1;
+  }
+}
+
+@keyframes floatCard {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(0.5deg);
+  }
+}
+
 /* Animation utilities */
 .animate-fade-in-up {
   animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-laser-scan {
+  animation: laserScan 2.6s ease-in-out infinite;
+}
+
+.animate-float-card {
+  animation: floatCard 4s ease-in-out infinite;
 }
 
 .animate-fade-in-down {
