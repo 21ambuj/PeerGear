@@ -35,53 +35,12 @@ const CATEGORIES = [
   "Project Kits"
 ];
 
-// Refined, human-curated multi-color subtle styling for each campus category
+// Cohesive 3-color palette styling (Slate foundation, Emerald brand accent, Warm Amber highlight)
 const getCategoryChipStyle = (cat, isSelected) => {
-  const colorMap = {
-    "All": {
-      active: "bg-white text-slate-950 font-bold border-white shadow-sm ring-1 ring-white/20",
-      inactive: "bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800 hover:text-white"
-    },
-    "Lab & Academic": {
-      active: "bg-emerald-500 text-slate-950 font-bold border-emerald-400 shadow-sm",
-      inactive: "bg-emerald-950/40 text-emerald-300 border-emerald-800/40 hover:bg-emerald-900/50 hover:border-emerald-600/50"
-    },
-    "Cycles & Mobility": {
-      active: "bg-sky-400 text-slate-950 font-bold border-sky-300 shadow-sm",
-      inactive: "bg-sky-950/40 text-sky-300 border-sky-800/40 hover:bg-sky-900/50 hover:border-sky-600/50"
-    },
-    "Electronics": {
-      active: "bg-indigo-400 text-slate-950 font-bold border-indigo-300 shadow-sm",
-      inactive: "bg-indigo-950/40 text-indigo-300 border-indigo-800/40 hover:bg-indigo-900/50 hover:border-indigo-600/50"
-    },
-    "Books": {
-      active: "bg-amber-400 text-slate-950 font-bold border-amber-300 shadow-sm",
-      inactive: "bg-amber-950/40 text-amber-300 border-amber-800/40 hover:bg-amber-900/50 hover:border-amber-600/50"
-    },
-    "Sports": {
-      active: "bg-orange-400 text-slate-950 font-bold border-orange-300 shadow-sm",
-      inactive: "bg-orange-950/40 text-orange-300 border-orange-800/40 hover:bg-orange-900/50 hover:border-orange-600/50"
-    },
-    "Audio & Music": {
-      active: "bg-rose-400 text-slate-950 font-bold border-rose-300 shadow-sm",
-      inactive: "bg-rose-950/40 text-rose-300 border-rose-800/40 hover:bg-rose-900/50 hover:border-rose-600/50"
-    },
-    "Project Kits": {
-      active: "bg-teal-400 text-slate-950 font-bold border-teal-300 shadow-sm",
-      inactive: "bg-teal-950/40 text-teal-300 border-teal-800/40 hover:bg-teal-900/50 hover:border-teal-600/50"
-    },
-    "Clothing & Costumes": {
-      active: "bg-purple-400 text-slate-950 font-bold border-purple-300 shadow-sm",
-      inactive: "bg-purple-950/40 text-purple-300 border-purple-800/40 hover:bg-purple-900/50 hover:border-purple-600/50"
-    }
-  };
-
-  const style = colorMap[cat] || {
-    active: "bg-white text-slate-950 font-bold border-white shadow-sm",
-    inactive: "bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800"
-  };
-
-  return isSelected ? style.active : style.inactive;
+  if (isSelected) {
+    return "bg-emerald-500 text-slate-950 font-bold border-emerald-400 shadow-sm shadow-emerald-500/10";
+  }
+  return "bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800 hover:text-white hover:border-slate-600";
 };
 
 const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
@@ -241,7 +200,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
             </div>
             <button
               type="submit"
-              className="bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl transition cursor-pointer shadow-sm shrink-0"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl transition cursor-pointer shadow-sm shrink-0"
             >
               Search
             </button>
@@ -271,14 +230,14 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
             ))}
           </div>
 
-          {/* Distinct, Subtle Multi-Color Trust Badges */}
+          {/* Disciplined 3-Color Trust Badges (Slate, Emerald, Amber) */}
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] font-semibold mt-6 mb-2">
             <span className="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 px-3 py-1 rounded-full shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>100% Refundable Escrow</span>
             </span>
-            <span className="flex items-center space-x-1.5 bg-sky-500/10 border border-sky-500/25 text-sky-300 px-3 py-1 rounded-full shadow-2xs">
-              <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+            <span className="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 px-3 py-1 rounded-full shadow-2xs">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>Verified College Students</span>
             </span>
             <span className="flex items-center space-x-1.5 bg-amber-500/10 border border-amber-500/25 text-amber-300 px-3 py-1 rounded-full shadow-2xs">
