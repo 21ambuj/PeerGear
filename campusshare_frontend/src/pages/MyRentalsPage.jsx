@@ -151,42 +151,42 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <div className="flex items-center space-x-2 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-1">
-            <ClipboardList className="w-4 h-4" />
+          <div className="inline-flex items-center space-x-1.5 text-emerald-700 text-[10px] font-black uppercase tracking-wider bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full mb-1.5">
+            <ClipboardList className="w-3.5 h-3.5 text-emerald-600" />
             <span>Campus Exchange Ledger</span>
           </div>
-          <h1 className="text-2xl font-black text-slate-900">My Rentals & Published Listings</h1>
-          <p className="text-xs text-slate-500">
+          <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight">My Rentals & Published Listings</h1>
+          <p className="text-xs text-zinc-500 font-medium mt-0.5">
             Manage items you are currently borrowing, track security deposit refunds, and oversee resources you have listed.
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/80 self-start sm:self-auto shadow-xs backdrop-blur-md">
+        <div className="flex bg-zinc-100 p-1 rounded-full border border-zinc-200/80 self-start sm:self-auto shadow-xs backdrop-blur-md">
           <button
             onClick={() => setActiveTab('all')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold btn-tactile cursor-pointer ${
-              activeTab === 'all' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            className={`px-4 py-1.5 rounded-full text-xs font-bold btn-tactile cursor-pointer ${
+              activeTab === 'all' ? 'bg-white text-zinc-950 shadow-xs border border-zinc-200/60' : 'text-zinc-600 hover:text-zinc-950'
             }`}
           >
             All Activity
           </button>
           <button
             onClick={() => setActiveTab('renter')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold btn-tactile cursor-pointer flex items-center space-x-1.5 ${
-              activeTab === 'renter' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            className={`px-4 py-1.5 rounded-full text-xs font-bold btn-tactile cursor-pointer flex items-center space-x-1.5 ${
+              activeTab === 'renter' ? 'bg-white text-zinc-950 shadow-xs border border-zinc-200/60' : 'text-zinc-600 hover:text-zinc-950'
             }`}
           >
-            <ShoppingBag className="w-3.5 h-3.5 text-indigo-500" />
+            <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
             <span>Items I'm Renting</span>
           </button>
           <button
             onClick={() => setActiveTab('owner')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold btn-tactile cursor-pointer flex items-center space-x-1.5 ${
-              activeTab === 'owner' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            className={`px-4 py-1.5 rounded-full text-xs font-bold btn-tactile cursor-pointer flex items-center space-x-1.5 ${
+              activeTab === 'owner' ? 'bg-white text-zinc-950 shadow-xs border border-zinc-200/60' : 'text-zinc-600 hover:text-zinc-950'
             }`}
           >
-            <Tag className="w-3.5 h-3.5 text-purple-500" />
+            <Tag className="w-3.5 h-3.5 text-zinc-500" />
             <span>My Listed Items ({myListedItems.length})</span>
           </button>
         </div>
@@ -194,15 +194,15 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
 
       {/* SECTION: When on "My Listed Items" (Owner) mode, show the Published Inventory grid */}
       {(activeTab === 'owner' || activeTab === 'all') && myListedItems.length > 0 && (
-        <div className="mb-8 bg-purple-50/50 border border-purple-100 rounded-3xl p-5 sm:p-6">
+        <div className="mb-8 bg-zinc-50/80 border border-zinc-200 rounded-3xl p-5 sm:p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-purple-100 rounded-xl text-purple-700">
-                <Package className="w-4 h-4" />
+            <div className="flex items-center space-x-2.5">
+              <div className="p-2 bg-zinc-950 rounded-xl text-white">
+                <Package className="w-4 h-4 text-emerald-400" />
               </div>
               <div>
-                <h3 className="font-extrabold text-slate-900 text-sm">Your Published Campus Listings</h3>
-                <p className="text-[11px] text-slate-500">Resources you made available for other students to rent ({myListedItems.length} active)</p>
+                <h3 className="font-extrabold text-zinc-950 text-sm">Your Published Campus Listings</h3>
+                <p className="text-[11px] text-zinc-500">Resources you made available for other students to rent ({myListedItems.length} active)</p>
               </div>
             </div>
             {onNavigateToList && (

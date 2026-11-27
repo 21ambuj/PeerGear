@@ -163,12 +163,12 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
       
       {/* Page Header */}
       <div className="mb-6">
-        <div className="flex items-center space-x-2 text-indigo-600 text-xs font-black uppercase tracking-wider mb-1">
-          <History className="w-4 h-4" />
+        <div className="inline-flex items-center space-x-1.5 text-emerald-700 text-[10px] font-black uppercase tracking-wider bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full mb-1.5">
+          <History className="w-3.5 h-3.5 text-emerald-600" />
           <span>PeerGear Exchange & Escrow Ledger</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Exchange & Financial History</h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
+        <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight">Exchange & Financial History</h1>
+        <p className="text-xs sm:text-sm text-zinc-500 mt-1 max-w-2xl leading-relaxed font-medium">
           Comprehensive records of resources you have borrowed, items peers rented from your inventory, and your live escrow wallet deposits and refunds.
         </p>
       </div>
@@ -177,25 +177,25 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         
         {/* Card 1: Total Spent on Rentals */}
-        <div className="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 card-interactive">
+        <div className="bg-white rounded-3xl p-5 border border-zinc-200/90 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-slate-500">Total Spent on Rentals</span>
-            <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+            <span className="text-xs font-bold text-zinc-500">Total Spent on Rentals</span>
+            <div className="p-2.5 bg-zinc-100 text-zinc-700 rounded-xl">
               <ShoppingBag className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-black text-slate-900 font-mono tracking-tight">
+          <p className="text-xl sm:text-2xl font-black text-zinc-950 font-mono tracking-tight">
             ₹{Number(walletData.summary?.total_spent_rentals || 0).toFixed(0)}
           </p>
-          <p className="text-[11px] text-slate-400 mt-1">
+          <p className="text-[11px] text-zinc-400 mt-1">
             Across {myRentedItems.length} borrowed resource{myRentedItems.length === 1 ? '' : 's'}
           </p>
         </div>
 
         {/* Card 2: Security Deposits 100% Refunded */}
-        <div className="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 card-interactive">
+        <div className="bg-white rounded-3xl p-5 border border-zinc-200/90 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-slate-500">Deposits 100% Refunded</span>
+            <span className="text-xs font-bold text-zinc-500">Deposits 100% Refunded</span>
             <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
               <ShieldCheck className="w-4 h-4" />
             </div>
@@ -209,34 +209,34 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
         </div>
 
         {/* Card 3: Earnings from Lending */}
-        <div className="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 card-interactive">
+        <div className="bg-white rounded-3xl p-5 border border-zinc-200/90 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-slate-500">Lending Earnings</span>
-            <div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl">
+            <span className="text-xs font-bold text-zinc-500">Lending Earnings</span>
+            <div className="p-2.5 bg-zinc-100 text-zinc-700 rounded-xl">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-black text-purple-700 font-mono tracking-tight">
+          <p className="text-xl sm:text-2xl font-black text-zinc-950 font-mono tracking-tight">
             ₹{Number(walletData.summary?.total_earned_lending || 0).toFixed(0)}
           </p>
-          <p className="text-[11px] text-slate-400 mt-1">
+          <p className="text-[11px] text-zinc-400 mt-1">
             From {peersRentedMyItems.length} peer rental{peersRentedMyItems.length === 1 ? '' : 's'}
           </p>
         </div>
 
         {/* Card 4: Current Wallet Balance */}
-        <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 text-white rounded-3xl p-5 border border-slate-800 shadow-xl shadow-slate-950/20 card-interactive">
+        <div className="bg-[#090a0f] text-white rounded-3xl p-5 border border-zinc-800 shadow-xl shadow-black/25 card-interactive">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-indigo-200">Current Wallet Balance</span>
-            <div className="p-2.5 bg-white/10 text-emerald-400 rounded-xl backdrop-blur-md">
+            <span className="text-xs font-bold text-zinc-400">Current Wallet Balance</span>
+            <div className="p-2.5 bg-zinc-900 text-emerald-400 rounded-xl border border-zinc-800">
               <Wallet className="w-4 h-4" />
             </div>
           </div>
           <p className="text-xl sm:text-2xl font-black text-emerald-400 font-mono tracking-tight">
             ₹{Number(user?.wallet_balance || 0).toFixed(0)}
           </p>
-          <p className="text-[11px] text-slate-300 mt-1 flex items-center space-x-1">
-            <Sparkles className="w-3 h-3 text-amber-400" />
+          <p className="text-[11px] text-zinc-400 mt-1 flex items-center space-x-1">
+            <Sparkles className="w-3 h-3 text-emerald-400" />
             <span>Ready for instant booking</span>
           </p>
         </div>

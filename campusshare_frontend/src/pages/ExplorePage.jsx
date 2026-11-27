@@ -20,7 +20,12 @@ import {
   CheckCircle2,
   MapPin,
   Star,
-  Lock
+  Lock,
+  KeyRound,
+  Camera,
+  Wallet,
+  ArrowRight,
+  Zap
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -154,137 +159,309 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   return (
     <div className="pb-16">
       
-      {/* Refined, Human-Crafted Architectural Campus Hero Banner */}
-      <div className="bg-slate-950 text-white py-10 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col justify-center border-b border-slate-800/80">
+      {/* ============================================================== */}
+      {/* ASYMMETRIC COMMAND HERO (Linear / Stripe / Vercel Grade)      */}
+      {/* ============================================================== */}
+      <div className="bg-[#090a0f] text-white pt-8 pb-12 sm:pt-14 sm:pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-zinc-800/80">
         
-        {/* Subtle Architectural Grid Texture (Structured, non-AI aesthetic) */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#33415518_1px,transparent_1px),linear-gradient(to_bottom,#33415518_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none"></div>
+        {/* Subtle Architectural Dark Grid & Radial Ambient Lighting */}
+        <div className="absolute inset-0 bg-dark-grid opacity-35 pointer-events-none"></div>
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-emerald-500/[0.04] rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-indigo-500/[0.03] rounded-full blur-[100px] pointer-events-none"></div>
 
-        {/* Soft, Restrained Ambient Vignettes (Subtle warm amber & cool teal) */}
-        <div className="absolute top-0 left-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="max-w-4xl mx-auto text-center relative z-10 w-full">
+        <div className="max-w-7xl mx-auto relative z-10 w-full">
           
-          {/* Authentic Live Campus Network Beacon */}
-          <div className="inline-flex items-center space-x-2 bg-slate-900/90 border border-slate-700/80 px-3.5 py-1.5 rounded-full text-slate-300 text-xs font-semibold mb-4 backdrop-blur-md shadow-xs">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-[11px] font-bold text-slate-200">Campus Peer Network</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-[11px] font-medium text-emerald-400">100% Escrow Protected</span>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left Column: Headline, Command Search, Categories */}
+            <div className="lg:col-span-7 flex flex-col items-start">
+              
+              {/* Protocol Badge */}
+              <div className="inline-flex items-center space-x-2 bg-zinc-900/90 border border-zinc-800 px-3.5 py-1.5 rounded-full text-zinc-300 text-xs font-semibold mb-4 backdrop-blur-md shadow-xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="text-[11px] font-bold text-zinc-200">Campus Escrow Protocol</span>
+                <span className="text-zinc-600">•</span>
+                <span className="text-[11px] font-medium text-emerald-400">Zero Theft • Verified Students</span>
+              </div>
 
-          {/* Clean, High-Impact Headline without Generic AI Rainbow Gradient */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-3 sm:mb-4 leading-tight px-1">
-            Rent What You Need, <span className="text-amber-300 font-serif italic font-normal">Share What You Have</span>
-          </h1>
+              {/* Headline */}
+              <h1 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-black tracking-[-0.035em] text-white mb-4 leading-[1.08]">
+                Campus Gear, <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200">On Demand.</span>
+              </h1>
 
-          <p className="max-w-2xl mx-auto text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-normal px-2">
-            Scientific calculators, lab coats, cycles, DSLR cameras, and robotics kits — securely exchanged with verified university peers.
-          </p>
+              {/* Subtitle */}
+              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-6 max-w-xl font-normal">
+                Scientific calculators, lab coats, geared cycles, cameras, and robotics hardware — securely rented from verified students in your university halls.
+              </p>
 
-          {/* Solid Elevated High-Contrast Search Box */}
-          <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto flex items-center gap-2 p-2 bg-white rounded-2xl shadow-xl shadow-slate-950/20 border border-slate-200 text-slate-900 focus-within:ring-2 focus-within:ring-emerald-500/40">
-            <div className="flex-1 flex items-center px-3 text-slate-800 min-w-0">
-              <Search className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 shrink-0 mr-2.5" />
-              <input
-                type="text"
-                placeholder="Search calculators, lab coats, geared cycles, drafters..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-slate-900 placeholder-slate-400 text-xs sm:text-sm focus:outline-hidden font-medium"
-              />
+              {/* Elevated Floating Command Search Box */}
+              <form onSubmit={handleSearchSubmit} className="w-full max-w-xl flex items-center gap-2 p-1.5 bg-white rounded-2xl shadow-2xl shadow-black/40 border border-zinc-200 text-zinc-900 focus-within:ring-2 focus-within:ring-emerald-500/40">
+                <div className="flex-1 flex items-center px-3 text-zinc-800 min-w-0">
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 shrink-0 mr-2.5" />
+                  <input
+                    type="text"
+                    placeholder="Search Casio calculators, drafters, geared cycles, DSLR..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-transparent text-zinc-900 placeholder-zinc-400 text-xs sm:text-sm focus:outline-hidden font-medium"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition cursor-pointer shadow-sm shrink-0 btn-tactile flex items-center space-x-1.5"
+                >
+                  <span>Search</span>
+                </button>
+              </form>
+
+              {/* Quick Popular Queries */}
+              <div className="flex flex-wrap items-center gap-1.5 mt-3 text-[11px] text-zinc-400">
+                <span className="font-semibold text-zinc-500">Quick:</span>
+                {[
+                  { label: 'Casio fx-991CW', query: 'Casio' },
+                  { label: 'Mini Drafter', query: 'Drafter' },
+                  { label: 'Geared Cycle', query: 'Cycle' },
+                  { label: 'Lab Coat', query: 'Lab Coat' },
+                  { label: 'Arduino Kit', query: 'Arduino' }
+                ].map(item => (
+                  <button
+                    type="button"
+                    key={item.label}
+                    onClick={() => {
+                      setSearchQuery(item.query);
+                      setSelectedCategory('All');
+                    }}
+                    className="px-2.5 py-0.5 rounded-md bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 text-[10px] font-medium border border-zinc-800 hover:border-zinc-700 transition cursor-pointer btn-tactile"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Category Pills */}
+              <div className="flex overflow-x-auto items-center gap-1.5 mt-6 max-w-full pb-1 no-scrollbar">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`text-xs px-3.5 py-1.5 rounded-full font-bold transition-all shrink-0 cursor-pointer btn-tactile ${
+                      selectedCategory === cat
+                        ? "bg-emerald-500 text-zinc-950 shadow-sm shadow-emerald-500/20"
+                        : "bg-zinc-900/90 text-zinc-400 border border-zinc-800 hover:text-white hover:border-zinc-700"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
             </div>
-            <button
-              type="submit"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl transition cursor-pointer shadow-sm shrink-0"
-            >
-              Search
-            </button>
-          </form>
 
-          {/* Quick Clickable Popular Queries */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2.5 text-[11px] text-slate-400">
-            <span className="font-medium text-slate-500">Popular:</span>
-            {[
-              { label: 'Casio fx-991EX', query: 'Casio' },
-              { label: 'Mini Drafter', query: 'Drafter' },
-              { label: 'Geared Cycle', query: 'Cycle' },
-              { label: 'Lab Coat', query: 'Lab Coat' },
-              { label: 'Arduino Kit', query: 'Arduino' }
-            ].map(item => (
-              <button
-                type="button"
-                key={item.label}
-                onClick={() => {
-                  setSearchQuery(item.query);
-                  setSelectedCategory('All');
-                }}
-                className="px-2 py-0.5 rounded-md bg-slate-900/90 hover:bg-slate-800 text-slate-300 text-[10px] font-medium border border-slate-700/60 transition cursor-pointer"
-              >
-                {item.label}
-              </button>
-            ))}
+            {/* Right Column: Live Campus Activity Card (Interactive tech showcase) */}
+            <div className="lg:col-span-5 hidden lg:block">
+              <div className="glass-panel-dark rounded-3xl p-6 border border-zinc-800 relative shadow-2xl">
+                
+                {/* Header of pulse widget */}
+                <div className="flex items-center justify-between pb-3.5 border-b border-zinc-800/80 mb-3.5">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="text-xs font-bold text-zinc-200 uppercase tracking-wider">Live Campus Handover Feed</span>
+                  </div>
+                  <span className="text-[10px] font-mono text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">REALTIME</span>
+                </div>
+
+                {/* Simulated live exchange events */}
+                <div className="space-y-2.5">
+                  
+                  {/* Event 1 */}
+                  <div className="p-3 bg-zinc-900/80 rounded-2xl border border-zinc-800/90 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-9 h-9 rounded-xl bg-zinc-800 flex items-center justify-center text-emerald-400 font-black text-xs">
+                        991
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-zinc-100">Casio fx-991CW Calculator</p>
+                        <p className="text-[10px] text-zinc-400">Ramanujan Block • 2-Day Practical Exam</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs font-black text-emerald-400 font-mono">₹30/d</span>
+                      <span className="text-[9px] block text-emerald-500 font-bold">Escrow Locked ✓</span>
+                    </div>
+                  </div>
+
+                  {/* Event 2 */}
+                  <div className="p-3 bg-zinc-900/80 rounded-2xl border border-zinc-800/90 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-9 h-9 rounded-xl bg-zinc-800 flex items-center justify-center text-teal-400 font-black text-xs">
+                        DSLR
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-zinc-100">Sony Alpha A6400 Camera</p>
+                        <p className="text-[10px] text-zinc-400">Aryabhatta Hostel • Campus Fest Shoot</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs font-black text-emerald-400 font-mono">₹350/d</span>
+                      <span className="text-[9px] block text-blue-400 font-bold">QR Verified ✓</span>
+                    </div>
+                  </div>
+
+                  {/* Event 3 */}
+                  <div className="p-3 bg-zinc-900/80 rounded-2xl border border-zinc-800/90 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-9 h-9 rounded-xl bg-zinc-800 flex items-center justify-center text-amber-400 font-black text-xs">
+                        BIKE
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-zinc-100">Hero Sprint 21-Speed Cycle</p>
+                        <p className="text-[10px] text-zinc-400">Main Campus Gate • Weekly Commute</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs font-black text-emerald-400 font-mono">₹45/d</span>
+                      <span className="text-[9px] block text-emerald-500 font-bold">Deposit Refunded ✓</span>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Footer security promise */}
+                <div className="mt-3.5 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-400">
+                  <div className="flex items-center space-x-1.5 text-emerald-400 font-medium">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Dual-Party Condition Ledger</span>
+                  </div>
+                  <span className="text-zinc-500">100% P2P Handover</span>
+                </div>
+
+              </div>
+            </div>
+
           </div>
 
-          {/* Disciplined 3-Color Trust Badges (Slate, Emerald, Amber) */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] font-semibold mt-6 mb-2">
-            <span className="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 px-3 py-1 rounded-full shadow-2xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>100% Refundable Escrow</span>
-            </span>
-            <span className="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 px-3 py-1 rounded-full shadow-2xs">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>Verified College Students</span>
-            </span>
-            <span className="flex items-center space-x-1.5 bg-amber-500/10 border border-amber-500/25 text-amber-300 px-3 py-1 rounded-full shadow-2xs">
-              <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span>Dynamic QR Handover Pass</span>
-            </span>
-          </div>
-
-          {/* Categories Bar with Tailored Multi-Color Subtle Styling */}
-          <div className="flex overflow-x-auto sm:flex-wrap items-center justify-start sm:justify-center gap-1.5 sm:gap-2 mt-5 max-w-4xl mx-auto px-1 py-1 no-scrollbar">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`text-[11px] sm:text-xs px-3 sm:px-3.5 py-1.5 rounded-xl font-semibold border transition shrink-0 cursor-pointer ${getCategoryChipStyle(cat, selectedCategory === cat)}`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        
-        {/* Catalog Explorer */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pt-2">
+      {/* ============================================================== */}
+      {/* THE PEERGEAR TRUST ENGINE (Bento Grid Showcase)               */}
+      {/* ============================================================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6">
           <div>
-            <h2 className="text-lg font-bold text-slate-900">
-              {selectedCategory === "All" ? "Explore Campus Resources" : `${selectedCategory}`}
+            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-600 block mb-1">
+              Campus Verification Architecture
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-zinc-950">
+              Why Campus Students Trust PeerGear
             </h2>
-            <p className="text-xs text-slate-500">
-              {items.length} item{items.length === 1 ? '' : 's'} available for rent
+          </div>
+          <p className="text-xs text-zinc-500 max-w-sm mt-1 sm:mt-0 font-medium">
+            Automated bank-grade escrow locks, in-person QR handovers, and zero platform theft.
+          </p>
+        </div>
+
+        {/* 4-Card Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          {/* Bento Card 1: Escrow Lock */}
+          <div className="bento-card p-5 flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3.5">
+                <Lock className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <h3 className="font-extrabold text-zinc-900 text-sm mb-1">100% Refundable Escrow</h3>
+              <p className="text-xs text-zinc-500 leading-relaxed">
+                Deposit is securely locked in campus escrow and auto-refunded to your wallet the minute the gear is returned.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] font-bold text-emerald-700">
+              <span>Automatic Settlement</span>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+            </div>
+          </div>
+
+          {/* Bento Card 2: Handover Pass */}
+          <div className="bento-card p-5 flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center mb-3.5">
+                <KeyRound className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <h3 className="font-extrabold text-zinc-900 text-sm mb-1">Dynamic Handover Pass</h3>
+              <p className="text-xs text-zinc-500 leading-relaxed">
+                Encrypted QR pass and 4-digit OTP ensure equipment only changes hands between verified university students.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] font-bold text-indigo-700">
+              <span>OTP Handover Protocol</span>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+            </div>
+          </div>
+
+          {/* Bento Card 3: Condition Inspector */}
+          <div className="bento-card p-5 flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mb-3.5">
+                <Camera className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <h3 className="font-extrabold text-zinc-900 text-sm mb-1">Condition Inspector</h3>
+              <p className="text-xs text-zinc-500 leading-relaxed">
+                Time-stamped photos recorded before and after rental. Zero disputes, complete equipment transparency.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] font-bold text-amber-700">
+              <span>Damage Proof Ledger</span>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+            </div>
+          </div>
+
+          {/* Bento Card 4: B-Money Payouts */}
+          <div className="bento-card p-5 flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center mb-3.5">
+                <Wallet className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <h3 className="font-extrabold text-zinc-900 text-sm mb-1">Instant B-Money Payouts</h3>
+              <p className="text-xs text-zinc-500 leading-relaxed">
+                Earn money from your idle lab gear and cycles. Withdraw directly to Google Pay, PhonePe, or Bank in seconds.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] font-bold text-purple-700">
+              <span>Instant IMPS & UPI</span>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+        
+        {/* Catalog Explorer Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-zinc-200/80">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-zinc-950">
+              {selectedCategory === "All" ? "Available Campus Inventory" : `${selectedCategory}`}
+            </h2>
+            <p className="text-xs text-zinc-500 font-medium mt-0.5">
+              Showing {items.length} verified item{items.length === 1 ? '' : 's'} available for peer rental
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <SlidersHorizontal className="w-4 h-4 text-slate-400" />
+          <div className="flex items-center space-x-2.5">
+            <SlidersHorizontal className="w-4 h-4 text-zinc-400" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-slate-300 text-xs font-semibold rounded-xl px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+              className="bg-white border border-zinc-200 text-xs font-bold text-zinc-700 rounded-full px-4 py-2 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 cursor-pointer shadow-xs btn-tactile"
             >
-              <option value="newest">Newest First</option>
+              <option value="newest">Sort: Newest First</option>
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
-              <option value="rating_desc">Highest Rated</option>
+              <option value="rating_desc">Highest Peer Rating</option>
             </select>
           </div>
         </div>
@@ -293,22 +470,22 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="h-72 bg-slate-100 rounded-2xl animate-pulse"></div>
+              <div key={n} className="h-80 bg-zinc-100 rounded-3xl animate-pulse"></div>
             ))}
           </div>
         ) : items.length === 0 ? (
           /* Empty State for Real User Uploads */
-          <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8 shadow-xs max-w-xl mx-auto my-6">
-            <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-indigo-600">
-              <PackageOpen className="w-8 h-8 stroke-[1.5]" />
+          <div className="text-center py-16 bg-white rounded-3xl border border-zinc-200 p-8 shadow-xs max-w-xl mx-auto my-8">
+            <div className="w-14 h-14 bg-zinc-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-zinc-600">
+              <PackageOpen className="w-7 h-7 stroke-[1.8]" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-1">No items listed yet</h3>
-            <p className="text-xs text-slate-500 max-w-md mx-auto mb-6">
-              Be the first student to list a calculator, textbook, lab coat, cycle, or project kit. Start sharing with your campus community!
+            <h3 className="text-lg font-black text-zinc-900 mb-1 tracking-tight">No campus items found</h3>
+            <p className="text-xs text-zinc-500 max-w-md mx-auto mb-6 leading-relaxed">
+              Be the first student to list a scientific calculator, textbook, lab coat, cycle, or project kit. Start sharing with your university halls!
             </p>
             <button
               onClick={onNavigateToList}
-              className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs px-6 py-3 rounded-xl shadow-md shadow-emerald-500/25 transition-all hover:scale-105 cursor-pointer"
+              className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3 rounded-full shadow-md shadow-emerald-600/20 btn-tactile cursor-pointer"
             >
               <PlusCircle className="w-4 h-4 stroke-[2.5]" />
               <span>List Your First Item</span>

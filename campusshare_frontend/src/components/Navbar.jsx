@@ -140,18 +140,18 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/70 shadow-xs transition-all">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-zinc-200/70 shadow-[0_1px_3px_0_rgba(0,0,0,0.02)] transition-all">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 gap-2 sm:gap-6 lg:gap-8">
             
-            {/* Logo & Modern Interactive Brand */}
+            {/* Logo & Modern Tech Brand */}
             <div 
               onClick={() => setActiveTab('explore')}
-              className="flex items-center space-x-2 sm:space-x-3 cursor-pointer group select-none shrink-0 mr-2 sm:mr-6 lg:mr-8 xl:mr-10"
+              className="flex items-center space-x-2.5 cursor-pointer group select-none shrink-0"
             >
               <div className="relative">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:scale-105 group-hover:rotate-3 transition-all duration-300">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-zinc-950 text-white flex items-center justify-center shadow-md shadow-zinc-950/15 group-hover:scale-105 transition-all duration-200 border border-zinc-800">
+                  <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M16 3h5v5" />
                     <path d="M4 20L21 3" />
                     <path d="M21 16v5h-5" />
@@ -162,15 +162,21 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-emerald-500 rounded-full border-2 border-white shadow-xs"></div>
               </div>
 
-              <div>
-                <span className="text-lg sm:text-xl font-black tracking-tight bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-700 bg-clip-text text-transparent block leading-none">
-                  PeerGear
-                </span>
+              <div className="flex flex-col">
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-lg font-black tracking-[-0.03em] text-zinc-950 leading-none">
+                    PeerGear
+                  </span>
+                  <span className="text-[9px] font-black uppercase tracking-wider bg-zinc-100 text-zinc-600 px-1.5 py-0.2 rounded-md border border-zinc-200/80">
+                    Campus
+                  </span>
+                </div>
+                <span className="text-[10px] text-zinc-400 font-medium tracking-tight">Verified P2P Network</span>
               </div>
             </div>
 
-            {/* Modern Animated Navigation Tabs */}
-            <nav className="hidden lg:flex items-center space-x-1 bg-slate-100/70 p-1.5 rounded-2xl border border-slate-200/60 backdrop-blur-md shrink-0">
+            {/* Modern Dock Navigation Tabs */}
+            <nav className="hidden lg:flex items-center space-x-1 bg-zinc-100/80 p-1 rounded-full border border-zinc-200/80 backdrop-blur-md shrink-0">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id || (item.id === 'my-rentals' && (activeTab === 'my-rentals-renter' || activeTab === 'my-rentals-owner'));
@@ -185,83 +191,75 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                         setActiveTab(item.id);
                       }
                     }}
-                    className={`relative px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 flex items-center space-x-1.5 cursor-pointer ${
+                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center space-x-1.5 cursor-pointer ${
                       isActive
-                        ? 'bg-white text-indigo-700 shadow-sm shadow-indigo-500/10 -translate-y-0.2'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 hover:-translate-y-0.2'
+                        ? 'bg-white text-zinc-950 shadow-xs border border-zinc-200/60'
+                        : 'text-zinc-600 hover:text-zinc-950 hover:bg-white/60'
                     }`}
                   >
-                    <Icon className={`w-3.5 h-3.5 transition-colors duration-200 ${
-                      isActive ? 'text-indigo-600 stroke-[2.5]' : 'text-slate-400'
+                    <Icon className={`w-3.5 h-3.5 transition-colors duration-150 ${
+                      isActive ? 'text-emerald-600 stroke-[2.5]' : 'text-zinc-400'
                     }`} />
                     <span>{item.label}</span>
-
-                    {/* Active glowing micro-indicator */}
-                    {isActive && (
-                      <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3.5 h-0.5 bg-indigo-600 rounded-full"></span>
-                    )}
                   </button>
                 );
               })}
 
-              {/* Dedicated "List an Item" Action Button (GREEN) */}
+              {/* Dedicated "List an Item" Action Button (Emerald Accent) */}
               <button
                 onClick={() => {
                   if (!user) onOpenAuth('login');
                   else setActiveTab('list-item');
                 }}
-                className={`ml-1.5 px-3.5 py-2 rounded-xl text-xs font-black transition-all duration-200 flex items-center space-x-1.5 cursor-pointer shadow-sm ${
+                className={`ml-1 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center space-x-1.5 cursor-pointer shadow-xs btn-tactile ${
                   activeTab === 'list-item'
-                    ? 'bg-emerald-600 text-white shadow-emerald-600/30 -translate-y-0.5'
-                    : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20 hover:shadow-md hover:shadow-emerald-500/25 hover:-translate-y-0.5 active:translate-y-0'
+                    ? 'bg-emerald-600 text-white shadow-emerald-600/30'
+                    : 'bg-emerald-600 hover:bg-emerald-500 text-white'
                 }`}
               >
                 <PlusCircle className="w-3.5 h-3.5 stroke-[2.8]" />
-                <span>List Item</span>
+                <span>+ List Gear</span>
               </button>
             </nav>
 
             {/* Right Action Bar (Fintech-Grade Wallet & User Avatar) */}
-            <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0 ml-auto lg:ml-0">
+            <div className="flex items-center space-x-2 shrink-0 ml-auto lg:ml-0">
               
               {user ? (
                 <>
                   {/* Notification Bell with Badge */}
                   <button
                     onClick={onOpenNotifications}
-                    className="relative p-1.5 sm:p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100/80 rounded-xl transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95"
+                    className="relative p-2 text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100 rounded-full transition-all duration-150 cursor-pointer btn-tactile"
                     title="Campus Activity Alerts"
                   >
                     <Bell className="w-4 h-4" />
                     {unreadNotifications > 0 && (
-                      <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center animate-pulse shadow-xs">
+                      <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-rose-500 text-white text-[8px] font-black rounded-full flex items-center justify-center shadow-xs">
                         {unreadNotifications}
                       </span>
                     )}
                   </button>
 
-                  {/* Modern Animated Escrow Wallet Pill -> B-Money Hub */}
+                  {/* Modern Fintech B-Money Pill (Revolut / Apple Pay style) */}
                   <div 
                     onClick={() => {
                       setMoneyModalInitialView('CHOICE');
                       setShowManageMoneyModal(true);
                     }}
-                    className="flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-emerald-500/10 border border-emerald-500/30 text-emerald-950 px-2 py-1 sm:px-3 sm:py-1.5 rounded-xl sm:rounded-2xl text-xs font-bold cursor-pointer hover:border-emerald-500/60 hover:shadow-md hover:shadow-emerald-500/10 hover:-translate-y-0.5 transition-all duration-200 select-none group"
-                    title="Click to open B-Money Portal (Add Money & Withdraw Earnings)"
+                    className="flex items-center space-x-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-white px-3 py-1.5 rounded-full text-xs font-bold cursor-pointer btn-tactile select-none group shadow-xs"
+                    title="Open B-Money Portal (Add Funds & Withdraw Earnings)"
                   >
-                    {/* Glowing Live Escrow Status Pulse */}
+                    {/* Live Pulse Dot */}
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
 
-                    <Wallet className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span className="font-mono font-black text-xs text-slate-900 tracking-tight">
+                    <span className="text-[10px] font-black text-emerald-400 tracking-wider uppercase">B-Money</span>
+                    <span className="w-px h-3 bg-zinc-800"></span>
+                    <span className="font-mono font-bold text-xs text-zinc-100">
                       ₹{Number(user.wallet_balance || 0).toFixed(0)}
-                    </span>
-                    
-                    <span className="inline-block text-[10px] font-black bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white px-2 py-0.5 rounded-md shadow-xs group-hover:scale-105 transition-transform tracking-wide">
-                      B-Money
                     </span>
                   </div>
 
@@ -269,28 +267,25 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                   <div className="relative" ref={profileContainerRef}>
                     <button
                       onClick={handleToggleProfileMenu}
-                      className="flex items-center space-x-1.5 sm:space-x-2 bg-slate-100/80 hover:bg-slate-200/70 p-1 sm:pr-2.5 rounded-xl sm:rounded-2xl text-xs font-bold text-slate-800 transition-all duration-200 cursor-pointer border border-slate-200/80 hover:-translate-y-0.2 group"
+                      className="flex items-center space-x-2 bg-zinc-100 hover:bg-zinc-200/80 p-1 sm:pr-2.5 rounded-full text-xs font-bold text-zinc-800 transition-all duration-150 cursor-pointer border border-zinc-200 btn-tactile group"
                       title="Profile and Account Settings"
                     >
-                      {/* Gradient Avatar */}
+                      {/* Avatar */}
                       <div className="relative">
-                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-purple-600 text-white font-black text-xs flex items-center justify-center shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+                        <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full bg-zinc-900 text-white font-black text-xs flex items-center justify-center shadow-xs">
                           {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                         </div>
-                        <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-emerald-500 border-2 border-white rounded-full"></span>
+                        <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border-2 border-white rounded-full"></span>
                       </div>
 
                       <div className="text-left hidden md:block leading-tight">
-                        <p className="font-extrabold text-slate-900 text-xs truncate max-w-24">
+                        <p className="font-extrabold text-zinc-900 text-xs truncate max-w-20">
                           {user.name.split(' ')[0]}
-                        </p>
-                        <p className="text-[10px] text-slate-400 font-medium truncate max-w-24">
-                          {user.hostel_block ? user.hostel_block.split(',')[0] : 'Campus'}
                         </p>
                       </div>
 
-                      <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
-                        showProfileMenu ? 'rotate-180 text-indigo-600' : 'group-hover:text-slate-600'
+                      <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-150 ${
+                        showProfileMenu ? 'rotate-180 text-emerald-600' : 'group-hover:text-zinc-600'
                       }`} />
                     </button>
 
@@ -548,27 +543,27 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                   </div>
                 </>
               ) : (
-                /* Sleek Sign In / Register Buttons */
-                <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+                /* Sleek Tech Sign In / Register Buttons */
+                <div className="flex items-center space-x-2 shrink-0">
                   <button
                     onClick={() => setActiveTab('admin-login')}
-                    className="p-1.5 sm:px-3 sm:py-2 text-[11px] sm:text-xs font-bold text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/60 rounded-xl transition-all duration-200 cursor-pointer flex items-center space-x-1 border border-slate-200"
+                    className="p-1.5 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-all duration-150 cursor-pointer flex items-center space-x-1 border border-zinc-200 btn-tactile"
                     title="Campus Administrator Portal"
                   >
-                    <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-zinc-600 shrink-0" />
                     <span className="hidden sm:inline">Admin</span>
                   </button>
                   <button
                     onClick={() => onOpenAuth('login')}
-                    className="px-2.5 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-xs font-bold text-slate-700 hover:text-indigo-600 hover:bg-slate-100/70 rounded-xl transition-all duration-200 cursor-pointer whitespace-nowrap"
+                    className="px-3.5 py-1.5 text-xs font-bold text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 rounded-full transition-all duration-150 cursor-pointer whitespace-nowrap btn-tactile"
                   >
                     Sign In
                   </button>
                   <button
                     onClick={() => onOpenAuth('register')}
-                    className="px-3 py-1.5 sm:px-4 sm:py-2 text-[11px] sm:text-xs font-black bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl shadow-md shadow-indigo-500/25 hover:shadow-lg hover:-translate-y-0.2 transition-all duration-200 cursor-pointer whitespace-nowrap"
+                    className="px-4 py-1.5 text-xs font-bold bg-zinc-950 hover:bg-zinc-800 text-white rounded-full shadow-sm hover:shadow transition-all duration-150 cursor-pointer whitespace-nowrap btn-tactile"
                   >
-                    Get Started
+                    Join Campus
                   </button>
                 </div>
               )}

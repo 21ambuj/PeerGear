@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-800 font-sans antialiased;
+    @apply bg-[#fbfbfc] text-zinc-900 font-sans antialiased;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -37,21 +37,20 @@
     }
   }
 
-  /* Native touch momentum scrolling */
   * {
     -webkit-overflow-scrolling: touch;
   }
 }
 
 /* -------------------------------------------------------------
-   HIGH-LEVEL PROFESSIONAL ANIMATIONS & TRANSITIONS
-   Cubic-bezier timing curves inspired by Linear, Stripe & Vercel
+   INDUSTRY-GRADE ANIMATIONS & SPRING CURVES
+   Tailored cubic-bezier physics (Linear / Stripe / Vercel grade)
    ------------------------------------------------------------- */
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
@@ -62,7 +61,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-14px);
+    transform: translateY(-16px);
   }
   to {
     opacity: 1;
@@ -73,7 +72,7 @@
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.96);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
@@ -101,16 +100,17 @@
   }
 }
 
-@keyframes shimmerSweep {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
-/* Animation utility classes */
+@keyframes shimmerSweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Animation utilities */
 .animate-fade-in-up {
   animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -120,45 +120,74 @@
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: scaleIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-float {
-  animation: floatSlow 4s ease-in-out infinite;
+  animation: floatSlow 5s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
   animation: pulseGlow 2.5s infinite;
 }
 
-/* Stagger delays for grid items */
-.delay-1 { animation-delay: 60ms; }
-.delay-2 { animation-delay: 120ms; }
-.delay-3 { animation-delay: 180ms; }
-.delay-4 { animation-delay: 240ms; }
-.delay-5 { animation-delay: 300ms; }
-.delay-6 { animation-delay: 360ms; }
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Stagger delay classes */
+.delay-1 { animation-delay: 50ms; }
+.delay-2 { animation-delay: 100ms; }
+.delay-3 { animation-delay: 150ms; }
+.delay-4 { animation-delay: 200ms; }
+.delay-5 { animation-delay: 250ms; }
+.delay-6 { animation-delay: 300ms; }
 
 /* -------------------------------------------------------------
-   MODERN COMPONENT UTILITIES (Glassmorphism & Tactile Feedback)
+   MODERN SURFACE & BENTO UTILITIES
    ------------------------------------------------------------- */
 
-/* Frosted glass surface */
+/* Glass surfaces with ultra-crisp borders */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(228, 228, 231, 0.8);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
 }
 
 .glass-panel-dark {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(51, 65, 85, 0.6);
+  background: rgba(18, 18, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
 }
 
-/* Buttery smooth card hover */
+/* Modern Bento Card */
+.bento-card {
+  background: #ffffff;
+  border: 1px solid rgba(228, 228, 231, 0.9);
+  border-radius: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 212, 216, 1);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
+}
+
+/* High-end interactive card */
 .card-interactive {
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
@@ -171,9 +200,9 @@
               0 8px 16px -6px rgba(15, 23, 42, 0.04);
 }
 
-/* Physical tactile button press */
+/* Tactile button feedback */
 .btn-tactile {
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-tactile:active {
@@ -184,17 +213,37 @@
   transform: translateY(-1px);
 }
 
-/* Subtle Shimmer highlight */
-.shimmer-badge {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
-  background-size: 200% 100%;
-  animation: shimmerSweep 3s infinite;
+/* Architectural background grids */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(228, 228, 231, 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(228, 228, 231, 0.6) 1px, transparent 1px);
 }
 
-/* Ultra-clean custom minimalist scrollbar */
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(212, 212, 216, 0.7) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-dark-grid {
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Subtle Shimmer highlight */
+.shimmer-badge {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.18) 50%, rgba(255, 255, 255, 0) 100%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 3.5s infinite;
+}
+
+/* Minimalist scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -202,15 +251,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #d4d4d8;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #a1a1aa;
 }
 
-/* Utility to hide scrollbars cleanly */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

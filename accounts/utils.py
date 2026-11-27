@@ -58,6 +58,7 @@ def decode_jwt(token: str) -> dict:
     except Exception:
         return None
 
+
 def get_current_user_from_request(request):
     """
     Extracts the authenticated user document from Authorization header:

@@ -408,16 +408,19 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
     <div className="max-w-2xl mx-auto px-4 py-8 animate-fade-in-up">
       <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden card-interactive">
         
-        {/* Banner */}
-        <div className="bg-gradient-to-r from-indigo-700 via-indigo-800 to-purple-800 text-white p-6 sm:p-8">
-          <div className="flex items-center space-x-2 text-indigo-200 text-xs font-bold uppercase tracking-wider mb-1">
-            <PlusCircle className="w-4 h-4 text-amber-300" />
-            <span>List a Resource</span>
+        {/* Modern Tech Banner */}
+        <div className="bg-[#090a0f] text-white p-6 sm:p-8 border-b border-zinc-800 relative overflow-hidden">
+          <div className="absolute inset-0 bg-dark-grid opacity-30 pointer-events-none"></div>
+          <div className="relative z-10">
+            <div className="inline-flex items-center space-x-1.5 text-emerald-400 bg-zinc-900 border border-zinc-800 text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-2">
+              <PlusCircle className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Campus Resource Publishing</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">List Gear for Campus Sharing</h1>
+            <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+              Rent out your equipment safely. Security deposit is locked in automated escrow before physical pickup.
+            </p>
           </div>
-          <h1 className="text-2xl font-bold">List Your Item for Campus Sharing</h1>
-          <p className="text-xs sm:text-sm text-indigo-100 mt-1">
-            Rent out your equipment safely. Security deposit is held in escrow before item handover.
-          </p>
         </div>
 
         {/* Form Body */}
