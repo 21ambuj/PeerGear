@@ -19,7 +19,8 @@ import {
   Tag,
   CheckCircle2,
   MapPin,
-  Star
+  Star,
+  Lock
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -33,6 +34,55 @@ const CATEGORIES = [
   "Clothing & Costumes",
   "Project Kits"
 ];
+
+// Refined, human-curated multi-color subtle styling for each campus category
+const getCategoryChipStyle = (cat, isSelected) => {
+  const colorMap = {
+    "All": {
+      active: "bg-white text-slate-950 font-bold border-white shadow-sm ring-1 ring-white/20",
+      inactive: "bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800 hover:text-white"
+    },
+    "Lab & Academic": {
+      active: "bg-emerald-500 text-slate-950 font-bold border-emerald-400 shadow-sm",
+      inactive: "bg-emerald-950/40 text-emerald-300 border-emerald-800/40 hover:bg-emerald-900/50 hover:border-emerald-600/50"
+    },
+    "Cycles & Mobility": {
+      active: "bg-sky-400 text-slate-950 font-bold border-sky-300 shadow-sm",
+      inactive: "bg-sky-950/40 text-sky-300 border-sky-800/40 hover:bg-sky-900/50 hover:border-sky-600/50"
+    },
+    "Electronics": {
+      active: "bg-indigo-400 text-slate-950 font-bold border-indigo-300 shadow-sm",
+      inactive: "bg-indigo-950/40 text-indigo-300 border-indigo-800/40 hover:bg-indigo-900/50 hover:border-indigo-600/50"
+    },
+    "Books": {
+      active: "bg-amber-400 text-slate-950 font-bold border-amber-300 shadow-sm",
+      inactive: "bg-amber-950/40 text-amber-300 border-amber-800/40 hover:bg-amber-900/50 hover:border-amber-600/50"
+    },
+    "Sports": {
+      active: "bg-orange-400 text-slate-950 font-bold border-orange-300 shadow-sm",
+      inactive: "bg-orange-950/40 text-orange-300 border-orange-800/40 hover:bg-orange-900/50 hover:border-orange-600/50"
+    },
+    "Audio & Music": {
+      active: "bg-rose-400 text-slate-950 font-bold border-rose-300 shadow-sm",
+      inactive: "bg-rose-950/40 text-rose-300 border-rose-800/40 hover:bg-rose-900/50 hover:border-rose-600/50"
+    },
+    "Project Kits": {
+      active: "bg-teal-400 text-slate-950 font-bold border-teal-300 shadow-sm",
+      inactive: "bg-teal-950/40 text-teal-300 border-teal-800/40 hover:bg-teal-900/50 hover:border-teal-600/50"
+    },
+    "Clothing & Costumes": {
+      active: "bg-purple-400 text-slate-950 font-bold border-purple-300 shadow-sm",
+      inactive: "bg-purple-950/40 text-purple-300 border-purple-800/40 hover:bg-purple-900/50 hover:border-purple-600/50"
+    }
+  };
+
+  const style = colorMap[cat] || {
+    active: "bg-white text-slate-950 font-bold border-white shadow-sm",
+    inactive: "bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800"
+  };
+
+  return isSelected ? style.active : style.inactive;
+};
 
 const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   const { user } = useAuth();
@@ -145,73 +195,105 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   return (
     <div className="pb-16">
       
-      {/* Sleek, Balanced Campus Hero Banner */}
-      <div className="bg-gradient-to-b from-slate-950 via-indigo-950 to-slate-900 text-white py-8 sm:py-14 px-3 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col justify-center">
+      {/* Refined, Human-Crafted Architectural Campus Hero Banner */}
+      <div className="bg-slate-950 text-white py-10 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col justify-center border-b border-slate-800/80">
         
-        {/* Subtle Ambient Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-[500px] h-40 sm:h-[220px] bg-gradient-to-r from-indigo-500/20 via-purple-500/15 to-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        {/* Subtle Architectural Grid Texture (Structured, non-AI aesthetic) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#33415518_1px,transparent_1px),linear-gradient(to_bottom,#33415518_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none"></div>
+
+        {/* Soft, Restrained Ambient Vignettes (Subtle warm amber & cool teal) */}
+        <div className="absolute top-0 left-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10 w-full">
           
-          <div className="inline-flex items-center space-x-1.5 bg-indigo-500/20 border border-indigo-400/30 px-3 py-1 rounded-full text-indigo-200 text-[11px] sm:text-xs font-bold mb-3 sm:mb-4 backdrop-blur-md shadow-xs max-w-full">
-            <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-            <span className="truncate">PeerGear • Verified Student Equipment Exchange</span>
+          {/* Authentic Live Campus Network Beacon */}
+          <div className="inline-flex items-center space-x-2 bg-slate-900/90 border border-slate-700/80 px-3.5 py-1.5 rounded-full text-slate-300 text-xs font-semibold mb-4 backdrop-blur-md shadow-xs">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="text-[11px] font-bold text-slate-200">Campus Peer Network</span>
+            <span className="text-slate-600">•</span>
+            <span className="text-[11px] font-medium text-emerald-400">100% Escrow Protected</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-2 sm:mb-3 leading-tight px-1">
-            Rent What You Need, <span className="bg-gradient-to-r from-amber-300 via-orange-300 to-emerald-300 bg-clip-text text-transparent">Share What You Have</span>
+          {/* Clean, High-Impact Headline without Generic AI Rainbow Gradient */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-3 sm:mb-4 leading-tight px-1">
+            Rent What You Need, <span className="text-amber-300 font-serif italic font-normal">Share What You Have</span>
           </h1>
 
-          <p className="max-w-xl mx-auto text-slate-300 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6 font-medium px-2">
-            Lab coats, calculators, cycles, cameras, sports gear, and project equipment — exchanged safely between verified college students.
+          <p className="max-w-2xl mx-auto text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-normal px-2">
+            Scientific calculators, lab coats, cycles, DSLR cameras, and robotics kits — securely exchanged with verified university peers.
           </p>
 
-          {/* Elevated Interactive Search Box */}
-          <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto flex items-center gap-1.5 p-1.5 sm:p-2 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl hover:border-white/30 transition-all focus-within:ring-2 focus-within:ring-indigo-400">
-            <div className="flex-1 flex items-center px-2.5 sm:px-3.5 text-slate-200 min-w-0">
-              <Search className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-300 shrink-0 mr-2 sm:mr-2.5" />
+          {/* Solid Elevated High-Contrast Search Box */}
+          <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto flex items-center gap-2 p-2 bg-white rounded-2xl shadow-xl shadow-slate-950/20 border border-slate-200 text-slate-900 focus-within:ring-2 focus-within:ring-emerald-500/40">
+            <div className="flex-1 flex items-center px-3 text-slate-800 min-w-0">
+              <Search className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 shrink-0 mr-2.5" />
               <input
                 type="text"
-                placeholder="Search equipment, cycles, lab coats..."
+                placeholder="Search calculators, lab coats, geared cycles, drafters..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-hidden font-medium"
+                className="w-full bg-transparent text-slate-900 placeholder-slate-400 text-xs sm:text-sm focus:outline-hidden font-medium"
               />
             </div>
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs sm:text-sm px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition cursor-pointer shadow-md hover:shadow-indigo-500/30 shrink-0"
+              className="bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl transition cursor-pointer shadow-sm shrink-0"
             >
               Search
             </button>
           </form>
 
-          {/* Quick Feature Trust Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 text-[10px] sm:text-[11px] font-semibold text-slate-300 mt-4 sm:mt-6 mb-1 sm:mb-2">
-            <span className="flex items-center space-x-1 sm:space-x-1.5 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-xs">
+          {/* Quick Clickable Popular Queries */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2.5 text-[11px] text-slate-400">
+            <span className="font-medium text-slate-500">Popular:</span>
+            {[
+              { label: 'Casio fx-991EX', query: 'Casio' },
+              { label: 'Mini Drafter', query: 'Drafter' },
+              { label: 'Geared Cycle', query: 'Cycle' },
+              { label: 'Lab Coat', query: 'Lab Coat' },
+              { label: 'Arduino Kit', query: 'Arduino' }
+            ].map(item => (
+              <button
+                type="button"
+                key={item.label}
+                onClick={() => {
+                  setSearchQuery(item.query);
+                  setSelectedCategory('All');
+                }}
+                className="px-2 py-0.5 rounded-md bg-slate-900/90 hover:bg-slate-800 text-slate-300 text-[10px] font-medium border border-slate-700/60 transition cursor-pointer"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Distinct, Subtle Multi-Color Trust Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] font-semibold mt-6 mb-2">
+            <span className="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 px-3 py-1 rounded-full shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>100% Refundable Escrow</span>
             </span>
-            <span className="flex items-center space-x-1 sm:space-x-1.5 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-xs">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-              <span>Verified Students Only</span>
+            <span className="flex items-center space-x-1.5 bg-sky-500/10 border border-sky-500/25 text-sky-300 px-3 py-1 rounded-full shadow-2xs">
+              <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+              <span>Verified College Students</span>
             </span>
-            <span className="flex items-center space-x-1 sm:space-x-1.5 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-xs">
-              <span>📍 Handover OTP</span>
+            <span className="flex items-center space-x-1.5 bg-amber-500/10 border border-amber-500/25 text-amber-300 px-3 py-1 rounded-full shadow-2xs">
+              <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span>Dynamic QR Handover Pass</span>
             </span>
           </div>
 
-          {/* Categories Bar */}
-          <div className="flex overflow-x-auto sm:flex-wrap items-center justify-start sm:justify-center gap-1.5 mt-4 sm:mt-5 max-w-4xl mx-auto px-1 py-1 no-scrollbar">
+          {/* Categories Bar with Tailored Multi-Color Subtle Styling */}
+          <div className="flex overflow-x-auto sm:flex-wrap items-center justify-start sm:justify-center gap-1.5 sm:gap-2 mt-5 max-w-4xl mx-auto px-1 py-1 no-scrollbar">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`text-[11px] sm:text-xs px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full font-semibold transition shrink-0 cursor-pointer ${
-                  selectedCategory === cat
-                    ? 'bg-amber-400 text-slate-900 shadow-md font-bold'
-                    : 'bg-white/10 hover:bg-white/20 text-slate-200 border border-white/10'
-                }`}
+                className={`text-[11px] sm:text-xs px-3 sm:px-3.5 py-1.5 rounded-xl font-semibold border transition shrink-0 cursor-pointer ${getCategoryChipStyle(cat, selectedCategory === cat)}`}
               >
                 {cat}
               </button>
