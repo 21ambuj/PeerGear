@@ -43,13 +43,50 @@ const CATEGORIES = [
   "Project Kits"
 ];
 
-// Cohesive 3-color palette styling (Slate foundation, Emerald brand accent, Warm Amber highlight)
-const getCategoryChipStyle = (cat, isSelected) => {
-  if (isSelected) {
-    return "bg-emerald-500 text-slate-950 font-black border-emerald-400 shadow-md shadow-emerald-500/20 scale-105";
+const HERO_FEATURED_GEAR = [
+  {
+    id: 'hero-1',
+    name: 'Casio fx-991CW ClassWiz',
+    shortName: 'Casio 991CW',
+    category: 'Electronics',
+    rate: 30,
+    deposit: 200,
+    location: 'Ramanujan Hostel, Block B',
+    status: 'Escrow Locked ✓',
+    badgeStyle: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40',
+    tag: 'Math & Physics Practicals',
+    image: 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?w=600&auto=format&fit=crop&q=80',
+    searchQuery: 'Casio'
+  },
+  {
+    id: 'hero-2',
+    name: 'Sony Alpha A6400 Mirrorless 4K',
+    shortName: 'Sony A6400',
+    category: 'Media & Optics',
+    rate: 350,
+    deposit: 2000,
+    location: 'Aryabhatta Block C',
+    status: 'QR Pass Verified ✓',
+    badgeStyle: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
+    tag: '4K Campus Videography Kit',
+    image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&auto=format&fit=crop&q=80',
+    searchQuery: 'Sony'
+  },
+  {
+    id: 'hero-3',
+    name: 'Hero Sprint 21-Speed Mountain Bike',
+    shortName: 'Geared Cycle',
+    category: 'Mobility & Cycles',
+    rate: 45,
+    deposit: 300,
+    location: 'Main Campus Gate Hub',
+    status: 'Ready for Pickup ✓',
+    badgeStyle: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+    tag: 'Daily Campus Commute',
+    image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600&auto=format&fit=crop&q=80',
+    searchQuery: 'Cycle'
   }
-  return "bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800 hover:text-white hover:border-slate-600 hover:scale-102";
-};
+];
 
 const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   const { user } = useAuth();
@@ -64,6 +101,18 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   const [bookingItem, setBookingItem] = useState(null);
   const [editingItem, setEditingItem] = useState(null);
   const [deletingItem, setDeletingItem] = useState(null);
+
+  // Hero Interactive Equipment Showcase State
+  const [activeHeroIdx, setActiveHeroIdx] = useState(0);
+  const [isHeroHovered, setIsHeroHovered] = useState(false);
+
+  useEffect(() => {
+    if (isHeroHovered) return;
+    const interval = setInterval(() => {
+      setActiveHeroIdx((prev) => (prev + 1) % HERO_FEATURED_GEAR.length);
+    }, 4200);
+    return () => clearInterval(interval);
+  }, [isHeroHovered]);
 
   useEffect(() => {
     fetchItems();
@@ -263,78 +312,140 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
 
             </div>
 
-            {/* Right Column: Live Campus Activity Card (Interactive tech showcase) */}
+            {/* Right Column: Interactive Animated Equipment Showcase with Real Pictures */}
             <div className="lg:col-span-5 hidden lg:block">
-              <div className="glass-panel-dark rounded-3xl p-6 border border-zinc-800 relative shadow-2xl">
-                
-                {/* Header of pulse widget */}
-                <div className="flex items-center justify-between pb-3.5 border-b border-zinc-800/80 mb-3.5">
+              <div 
+                onMouseEnter={() => setIsHeroHovered(true)}
+                onMouseLeave={() => setIsHeroHovered(false)}
+                className="glass-panel-dark rounded-3xl p-5 border border-zinc-800 relative shadow-2xl overflow-hidden group"
+              >
+                {/* Header with live pulse and 3 interactive gear switcher pills */}
+                <div className="flex items-center justify-between pb-3 border-b border-zinc-800/80 mb-3.5">
                   <div className="flex items-center space-x-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span className="text-xs font-bold text-zinc-200 uppercase tracking-wider">Live Campus Handover Feed</span>
+                    <span className="text-[11px] font-black text-zinc-200 uppercase tracking-wider">
+                      Featured Campus Gear
+                    </span>
                   </div>
-                  <span className="text-[10px] font-mono text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">REALTIME</span>
+
+                  {/* Interactive Switcher Tabs */}
+                  <div className="flex bg-zinc-900 p-0.5 rounded-lg border border-zinc-800">
+                    {HERO_FEATURED_GEAR.map((gear, idx) => (
+                      <button
+                        key={gear.id}
+                        type="button"
+                        onClick={() => setActiveHeroIdx(idx)}
+                        className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer ${
+                          activeHeroIdx === idx
+                            ? 'bg-zinc-800 text-white shadow-xs'
+                            : 'text-zinc-500 hover:text-zinc-300'
+                        }`}
+                      >
+                        {gear.shortName}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Simulated live exchange events */}
-                <div className="space-y-2.5">
-                  
-                  {/* Event 1 */}
-                  <div className="p-3 bg-zinc-900/80 rounded-2xl border border-zinc-800/90 flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-9 h-9 rounded-xl bg-zinc-800 flex items-center justify-center text-emerald-400 font-black text-xs">
-                        991
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-zinc-100">Casio fx-991CW Calculator</p>
-                        <p className="text-[10px] text-zinc-400">Ramanujan Block • 2-Day Practical Exam</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-xs font-black text-emerald-400 font-mono">₹30/d</span>
-                      <span className="text-[9px] block text-emerald-500 font-bold">Escrow Locked ✓</span>
-                    </div>
-                  </div>
+                {/* Main Hero Picture Container with Smooth Transition */}
+                {(() => {
+                  const currentGear = HERO_FEATURED_GEAR[activeHeroIdx];
+                  return (
+                    <div key={currentGear.id} className="animate-scale-in">
+                      {/* Photo with Overlay Badges */}
+                      <div className="relative aspect-16/10 rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 mb-3 group/img">
+                        <img
+                          src={currentGear.image}
+                          alt={currentGear.name}
+                          className="w-full h-full object-cover group-hover/img:scale-106 transition-transform duration-500 ease-out"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
 
-                  {/* Event 2 */}
-                  <div className="p-3 bg-zinc-900/80 rounded-2xl border border-zinc-800/90 flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-9 h-9 rounded-xl bg-zinc-800 flex items-center justify-center text-teal-400 font-black text-xs">
-                        DSLR
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-zinc-100">Sony Alpha A6400 Camera</p>
-                        <p className="text-[10px] text-zinc-400">Aryabhatta Hostel • Campus Fest Shoot</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-xs font-black text-emerald-400 font-mono">₹350/d</span>
-                      <span className="text-[9px] block text-blue-400 font-bold">QR Verified ✓</span>
-                    </div>
-                  </div>
+                        {/* Top Overlay Badges */}
+                        <div className="absolute top-2.5 left-2.5 flex items-center space-x-1.5">
+                          <span className="bg-black/75 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-white/20">
+                            {currentGear.category}
+                          </span>
+                        </div>
 
-                  {/* Event 3 */}
-                  <div className="p-3 bg-zinc-900/80 rounded-2xl border border-zinc-800/90 flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-9 h-9 rounded-xl bg-zinc-800 flex items-center justify-center text-amber-400 font-black text-xs">
-                        BIKE
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-zinc-100">Hero Sprint 21-Speed Cycle</p>
-                        <p className="text-[10px] text-zinc-400">Main Campus Gate • Weekly Commute</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-xs font-black text-emerald-400 font-mono">₹45/d</span>
-                      <span className="text-[9px] block text-emerald-500 font-bold">Deposit Refunded ✓</span>
-                    </div>
-                  </div>
+                        <div className="absolute top-2.5 right-2.5">
+                          <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border backdrop-blur-md shadow-xs ${currentGear.badgeStyle}`}>
+                            {currentGear.status}
+                          </span>
+                        </div>
 
+                        {/* Bottom Picture Info */}
+                        <div className="absolute bottom-2.5 left-3 right-3 text-left">
+                          <h4 className="text-base font-extrabold text-white tracking-tight leading-tight drop-shadow-xs">
+                            {currentGear.name}
+                          </h4>
+                          <p className="text-[11px] text-zinc-300 mt-0.5 flex items-center space-x-1">
+                            <MapPin className="w-3 h-3 text-emerald-400 shrink-0" />
+                            <span>{currentGear.location}</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Equipment Pricing, Deposit & Quick Action */}
+                      <div className="p-3 bg-zinc-900/90 rounded-2xl border border-zinc-800 flex items-center justify-between">
+                        <div>
+                          <div className="flex items-baseline space-x-1">
+                            <span className="text-xl font-black text-emerald-400 font-mono tracking-tight">₹{currentGear.rate}</span>
+                            <span className="text-zinc-500 text-xs font-semibold">/ day</span>
+                          </div>
+                          <span className="text-[10px] text-zinc-400 font-medium">₹{currentGear.deposit} Escrow Deposit</span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSearchQuery(currentGear.searchQuery);
+                            setSelectedCategory('All');
+                          }}
+                          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-zinc-950 font-black text-xs rounded-xl shadow-md shadow-emerald-600/20 btn-tactile flex items-center space-x-1.5 cursor-pointer"
+                        >
+                          <span>Explore Gear</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 3 Clickable Equipment Preview Thumbnails */}
+                <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-zinc-800/80">
+                  {HERO_FEATURED_GEAR.map((gear, idx) => {
+                    const isSelected = activeHeroIdx === idx;
+                    return (
+                      <button
+                        key={gear.id}
+                        type="button"
+                        onClick={() => setActiveHeroIdx(idx)}
+                        className={`p-1.5 rounded-xl border text-left transition-all cursor-pointer flex items-center space-x-2 group/thumb btn-tactile ${
+                          isSelected
+                            ? 'bg-zinc-800/90 border-emerald-500/60 shadow-xs'
+                            : 'bg-zinc-900/60 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900'
+                        }`}
+                      >
+                        <img
+                          src={gear.image}
+                          alt={gear.shortName}
+                          className="w-8 h-8 rounded-lg object-cover bg-zinc-800 shrink-0 border border-zinc-700/60"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <p className={`text-[10px] font-bold truncate ${isSelected ? 'text-emerald-400' : 'text-zinc-300'}`}>
+                            {gear.shortName}
+                          </p>
+                          <p className="text-[9px] text-zinc-500 font-mono">₹{gear.rate}/d</p>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
 
-                {/* Footer security promise */}
-                <div className="mt-3.5 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-400">
-                  <div className="flex items-center space-x-1.5 text-emerald-400 font-medium">
+                {/* Bottom Trust Guarantee Footer */}
+                <div className="mt-3 pt-2.5 border-t border-zinc-800/70 flex items-center justify-between text-[10px] text-zinc-400">
+                  <div className="flex items-center space-x-1 text-emerald-400 font-semibold">
                     <ShieldCheck className="w-3.5 h-3.5" />
                     <span>Dual-Party Condition Ledger</span>
                   </div>
