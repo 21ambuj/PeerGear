@@ -100,28 +100,28 @@ const EditItemModal = ({ item, onClose, onUpdated }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md animate-fade-in-up"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-150"
+        className="bg-white dark:bg-zinc-900 rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-zinc-800 animate-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Header */}
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/80 rounded-t-3xl">
+        <div className="p-5 border-b border-slate-100 dark:border-zinc-800 flex items-center justify-between bg-slate-50/80 dark:bg-zinc-850/80 rounded-t-3xl">
           <div className="flex items-center space-x-2">
-            <div className="p-2 bg-purple-100 text-purple-700 rounded-xl">
+            <div className="p-2 bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 rounded-xl">
               <Tag className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-extrabold text-slate-900 text-sm">Edit Your Listing</h3>
-              <p className="text-[11px] text-slate-500">Update availability, price, or description</p>
+              <h3 className="font-extrabold text-slate-900 dark:text-zinc-100 text-sm">Edit Your Listing</h3>
+              <p className="text-[11px] text-slate-500 dark:text-zinc-400">Update availability, price, or description</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-xl transition cursor-pointer"
+            className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-zinc-200 hover:bg-slate-200/60 dark:hover:bg-zinc-800 rounded-xl transition cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -130,17 +130,17 @@ const EditItemModal = ({ item, onClose, onUpdated }) => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 text-xs bg-rose-50 border border-rose-200 text-rose-700 rounded-xl flex items-start space-x-2">
+            <div className="p-3 text-xs bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 rounded-xl flex items-start space-x-2">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>{error}</span>
             </div>
           )}
 
           {/* Availability Status Quick Switch */}
-          <div className="p-3 bg-purple-50/60 border border-purple-100 rounded-2xl flex items-center justify-between">
+          <div className="p-3 bg-purple-50/60 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40 rounded-2xl flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold text-slate-900">Rental Availability</p>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-xs font-bold text-slate-900 dark:text-zinc-100">Rental Availability</p>
+              <p className="text-[11px] text-slate-500 dark:text-zinc-400">
                 {availabilityStatus === 'AVAILABLE'
                   ? 'Item is currently visible and bookable by students.'
                   : 'Item is paused and hidden from rentals.'}
@@ -152,7 +152,7 @@ const EditItemModal = ({ item, onClose, onUpdated }) => {
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer ${
                 availabilityStatus === 'AVAILABLE'
                   ? 'bg-emerald-600 text-white shadow-xs'
-                  : 'bg-amber-100 text-amber-900 border border-amber-200'
+                  : 'bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800'
               }`}
             >
               <span>{availabilityStatus === 'AVAILABLE' ? 'Live & Available' : 'Paused / Maintenance'}</span>
@@ -161,23 +161,23 @@ const EditItemModal = ({ item, onClose, onUpdated }) => {
 
           {/* Title */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Item Title</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Item Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3.5 py-2 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Category</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Category</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3.5 py-2 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
             >
               {categories.map(cat => (
                 <option key={cat} value={cat}>{cat}</option>
@@ -188,26 +188,26 @@ const EditItemModal = ({ item, onClose, onUpdated }) => {
           {/* Rates */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Rental Rate (₹/day)</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Rental Rate (₹/day)</label>
               <input
                 type="number"
                 min="0"
                 step="5"
                 value={rentalRate}
                 onChange={(e) => setRentalRate(e.target.value)}
-                className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-bold"
+                className="w-full px-3.5 py-2 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-bold"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Refundable Deposit (₹)</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Refundable Deposit (₹)</label>
               <input
                 type="number"
                 min="0"
                 step="10"
                 value={securityDeposit}
                 onChange={(e) => setSecurityDeposit(e.target.value)}
-                className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-bold"
+                className="w-full px-3.5 py-2 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-bold"
                 required
               />
             </div>
@@ -215,33 +215,33 @@ const EditItemModal = ({ item, onClose, onUpdated }) => {
 
           {/* Pickup Location */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Pickup Location</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Pickup Location</label>
             <input
               type="text"
               value={pickupLocation}
               onChange={(e) => setPickupLocation(e.target.value)}
               placeholder="e.g. Block C, Room 204 or Central Library"
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3.5 py-2 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Description / Notes</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Description / Notes</label>
             <textarea
               rows="3"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3.5 py-2 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-3 border-t border-slate-100 flex items-center justify-end space-x-2">
+          <div className="pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-end space-x-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
+              className="px-4 py-2 text-xs font-bold text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition cursor-pointer"
             >
               Cancel
             </button>

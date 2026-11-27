@@ -201,7 +201,7 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200/90 animate-scale-in max-h-[92vh] flex flex-col"
+        className="bg-white dark:bg-zinc-950 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200/90 dark:border-zinc-800 animate-scale-in max-h-[92vh] flex flex-col text-zinc-900 dark:text-zinc-100"
         onClick={(e) => e.stopPropagation()}
       >
         

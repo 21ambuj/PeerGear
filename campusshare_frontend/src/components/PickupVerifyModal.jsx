@@ -220,28 +220,28 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
 
   return (
     <div 
-      className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in duration-200"
+      className="fixed inset-0 bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in-up"
       onClick={handleClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-in zoom-in-95 duration-150 max-h-[92vh] overflow-y-auto relative"
+        className="bg-white dark:bg-zinc-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-zinc-800 animate-scale-in max-h-[92vh] overflow-y-auto relative"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Header */}
-        <div className="flex justify-between items-start mb-4 pb-3 border-b border-slate-100">
+        <div className="flex justify-between items-start mb-4 pb-3 border-b border-slate-100 dark:border-zinc-800">
           <div className="flex items-center space-x-2.5">
             <div className="p-2.5 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl text-white shadow-md shadow-indigo-500/25">
               <QrCode className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-black text-slate-900 text-base">Verify Pickup Handover</h3>
-              <p className="text-xs text-slate-500">{rental.item?.title || 'Resource'}</p>
+              <h3 className="font-black text-slate-900 dark:text-zinc-100 text-base">Verify Pickup Handover</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400">{rental.item?.title || 'Resource'}</p>
             </div>
           </div>
           <button 
             onClick={handleClose}
-            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-full hover:bg-slate-100 transition cursor-pointer"
+            className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer"
             title="Close"
           >
             <X className="w-5 h-5" />
@@ -249,7 +249,7 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
         </div>
 
         {/* Mode Selector Tabs: QR Code vs Manual OTP */}
-        <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200/80 mb-4">
+        <div className="flex bg-slate-100 dark:bg-zinc-800/80 p-1 rounded-2xl border border-slate-200/80 dark:border-zinc-700/80 mb-4">
           <button
             type="button"
             onClick={() => {
@@ -258,8 +258,8 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
             }}
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition flex items-center justify-center space-x-1.5 cursor-pointer ${
               verifyMode === 'qr'
-                ? 'bg-white text-indigo-700 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-zinc-900 text-indigo-700 dark:text-indigo-400 shadow-xs'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200'
             }`}
           >
             <QrCode className="w-3.5 h-3.5" />
@@ -274,8 +274,8 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
             }}
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition flex items-center justify-center space-x-1.5 cursor-pointer ${
               verifyMode === 'manual'
-                ? 'bg-white text-indigo-700 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-zinc-900 text-indigo-700 dark:text-indigo-400 shadow-xs'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200'
             }`}
           >
             <KeyRound className="w-3.5 h-3.5" />
@@ -284,7 +284,7 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
         </div>
 
         {error && (
-          <div className="mb-4 bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-xl text-xs flex items-center space-x-2">
+          <div className="mb-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 px-3.5 py-2.5 rounded-xl text-xs flex items-center space-x-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -294,16 +294,16 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
           
           {/* QR SCANNER VIEWPORT */}
           {verifyMode === 'qr' && (
-            <div className="p-4 bg-slate-50 border border-slate-200/90 rounded-2xl text-center">
+            <div className="p-4 bg-slate-50 dark:bg-zinc-800/60 border border-slate-200/90 dark:border-zinc-700/80 rounded-2xl text-center">
               
               {scanSuccess ? (
                 <div className="py-4 text-center">
-                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-inner">
+                  <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-2 shadow-inner">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h4 className="font-extrabold text-slate-900 text-sm">QR Pass Verified!</h4>
-                  <p className="text-xs text-slate-500 mb-2">Handover code matched:</p>
-                  <span className="font-mono text-3xl font-black tracking-widest text-emerald-600 bg-emerald-50 px-4 py-1 rounded-xl border border-emerald-200 inline-block">
+                  <h4 className="font-extrabold text-slate-900 dark:text-zinc-100 text-sm">QR Pass Verified!</h4>
+                  <p className="text-xs text-slate-500 dark:text-zinc-400 mb-2">Handover code matched:</p>
+                  <span className="font-mono text-3xl font-black tracking-widest text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-4 py-1 rounded-xl border border-emerald-200 dark:border-emerald-800 inline-block">
                     {otp}
                   </span>
                   <button
@@ -312,7 +312,7 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
                       setScanSuccess(false);
                       setOtp('');
                     }}
-                    className="mt-3 text-[11px] text-slate-500 hover:text-indigo-600 underline block mx-auto cursor-pointer"
+                    className="mt-3 text-[11px] text-slate-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 underline block mx-auto cursor-pointer"
                   >
                     Rescan Another Code
                   </button>
@@ -320,15 +320,15 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
               ) : (
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs text-slate-600 font-medium">
-                      Point camera at <strong>PeerGear QR Pass</strong> on <span className="font-bold text-slate-800">{rental.renter?.name || 'renter'}'s</span> screen:
+                    <p className="text-xs text-slate-600 dark:text-zinc-300 font-medium">
+                      Point camera at <strong>PeerGear QR Pass</strong> on <span className="font-bold text-slate-800 dark:text-zinc-200">{rental.renter?.name || 'renter'}'s</span> screen:
                     </p>
 
                     {cameras.length > 1 && (
                       <button
                         type="button"
                         onClick={handleSwitchCamera}
-                        className="text-[11px] text-indigo-600 hover:text-indigo-800 font-bold flex items-center space-x-1 bg-white border border-indigo-200 px-2 py-0.5 rounded-lg cursor-pointer shadow-2xs"
+                        className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold flex items-center space-x-1 bg-white dark:bg-zinc-800 border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 rounded-lg cursor-pointer shadow-2xs"
                         title="Switch Camera"
                       >
                         <SwitchCamera className="w-3 h-3" />
@@ -340,17 +340,17 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
                   {/* HTML5 QR Camera Element */}
                   <div 
                     id={qrRegionId} 
-                    className="w-full max-w-[280px] mx-auto rounded-2xl overflow-hidden border-2 border-indigo-300 shadow-md bg-black min-h-[220px]"
+                    className="w-full max-w-[280px] mx-auto rounded-2xl overflow-hidden border-2 border-indigo-300 dark:border-indigo-700 shadow-md bg-black min-h-[220px]"
                   />
 
                   {cameraError && (
-                    <div className="mt-3 p-2.5 bg-amber-50 border border-amber-200 text-amber-800 text-[11px] rounded-xl text-left">
+                    <div className="mt-3 p-2.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-[11px] rounded-xl text-left">
                       {cameraError}
                     </div>
                   )}
 
                   {/* Scan QR from Image File Upload (Real-world convenience fallback) */}
-                  <div className="mt-3 pt-3 border-t border-slate-200 flex items-center justify-center gap-2">
+                  <div className="mt-3 pt-3 border-t border-slate-200 dark:border-zinc-700 flex items-center justify-center gap-2">
                     <input
                       type="file"
                       ref={fileInputRef}
@@ -361,9 +361,9 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
                     />
                     <label
                       htmlFor="qr-file-upload-input"
-                      className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl border border-slate-200 transition flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+                      className="px-3.5 py-1.5 bg-white dark:bg-zinc-800 hover:bg-slate-100 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 text-xs font-bold rounded-xl border border-slate-200 dark:border-zinc-700 transition flex items-center space-x-1.5 cursor-pointer shadow-2xs"
                     >
-                      <Upload className="w-3.5 h-3.5 text-indigo-600" />
+                      <Upload className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                       <span>Upload QR Code Image</span>
                     </label>
                   </div>
@@ -375,7 +375,7 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
           {/* MANUAL OTP INPUT */}
           {verifyMode === 'manual' && (
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">
                 4-Digit Renter Handover OTP <span className="text-rose-500">*</span>
               </label>
               <input
@@ -384,10 +384,10 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                 placeholder="e.g. 5421"
-                className="w-full text-center text-3xl font-mono font-black tracking-widest px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                className="w-full text-center text-3xl font-mono font-black tracking-widest px-3 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                 required
               />
-              <p className="text-[11px] text-slate-400 mt-1">
+              <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-1">
                 Ask the renter (<strong>{rental.renter?.name}</strong>) for the 4-digit code shown on their dynamic screen.
               </p>
             </div>
@@ -395,25 +395,25 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
 
           {/* Condition Notes */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Initial Condition Notes</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Initial Condition Notes</label>
             <textarea
               rows="2"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           {/* Photo URL */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Handover Photo Evidence (URL)</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Handover Photo Evidence (URL)</label>
             <input
               type="url"
               value={photoUrl}
               onChange={(e) => setPhotoUrl(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs font-mono text-slate-600 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-mono text-slate-600 dark:text-zinc-300 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
             />
-            <p className="text-[10px] text-slate-400 mt-0.5">Captures initial cosmetic condition to prevent return damage disputes.</p>
+            <p className="text-[10px] text-slate-400 dark:text-zinc-500 mt-0.5">Captures initial cosmetic condition to prevent return damage disputes.</p>
           </div>
 
           {/* Action Buttons */}
@@ -421,7 +421,7 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 py-2.5 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-50 transition cursor-pointer"
+              className="flex-1 py-2.5 border border-slate-300 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 rounded-xl text-xs font-bold hover:bg-slate-50 dark:hover:bg-zinc-800 transition cursor-pointer"
             >
               Cancel
             </button>
@@ -431,7 +431,7 @@ const PickupVerifyModal = ({ rental, onClose, onSuccess }) => {
               className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-md cursor-pointer ${
                 otp && otp.length === 4
                   ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
-                  : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                  : 'bg-slate-200 dark:bg-zinc-800 text-slate-400 dark:text-zinc-600 cursor-not-allowed'
               }`}
             >
               <CheckCircle2 className="w-4 h-4" />

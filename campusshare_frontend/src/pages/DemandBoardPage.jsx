@@ -137,14 +137,14 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
     <div className="max-w-6xl mx-auto px-4 py-8">
       
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-indigo-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-indigo-900 dark:from-indigo-950 dark:via-blue-950 dark:to-zinc-900 border border-transparent dark:border-zinc-800 rounded-3xl p-6 sm:p-8 text-white shadow-xl mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div>
           <div className="flex items-center space-x-2 text-amber-300 text-xs font-bold uppercase tracking-wider mb-1">
             <Sparkles className="w-4 h-4" />
             <span>Demand-Driven Campus Sharing • Instant Matching</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black">Campus Requests Board ("Notify Me")</h1>
-          <p className="text-xs sm:text-sm text-indigo-100 mt-1 max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-indigo-100 dark:text-zinc-300 mt-1 max-w-xl leading-relaxed">
             Can't find a calculator, lab coat, cycle, or project kit? Post a request here. Our engine matches your criteria with campus owners in real-time!
           </p>
         </div>
@@ -160,22 +160,22 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
 
       {/* SECTION: Recommended / Available Items Matching Active Requests */}
       {allMatchedItems.length > 0 && (
-        <div className="mb-10 bg-gradient-to-br from-indigo-50/70 via-purple-50/60 to-emerald-50/60 border border-indigo-100 rounded-3xl p-5 sm:p-6 shadow-xs">
+        <div className="mb-10 bg-gradient-to-br from-indigo-50/70 via-purple-50/60 to-emerald-50/60 dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-850 border border-indigo-100 dark:border-zinc-800 rounded-3xl p-5 sm:p-6 shadow-xs">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2">
               <div className="p-2 bg-indigo-600 text-white rounded-xl shadow-xs">
                 <PackageCheck className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-black text-slate-900 text-sm sm:text-base">
+                <h3 className="font-black text-slate-900 dark:text-zinc-100 text-sm sm:text-base">
                   Available Campus Items Matching Active Requests
                 </h3>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-slate-500 dark:text-zinc-400">
                   Resources currently live on campus that fulfill pending student requests
                 </p>
               </div>
             </div>
-            <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+            <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
               {allMatchedItems.length} Live Matches
             </span>
           </div>
@@ -184,14 +184,14 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
             {allMatchedItems.map((item) => (
               <div 
                 key={item._id} 
-                className="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-2xs hover:shadow-md transition flex flex-col justify-between group"
+                className="bg-white dark:bg-zinc-850 rounded-2xl border border-slate-200/90 dark:border-zinc-750 p-4 shadow-2xs hover:shadow-md transition flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between gap-1 mb-2">
-                    <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-md">
                       {item.category}
                     </span>
-                    <span className="text-[10px] text-purple-700 font-extrabold bg-purple-50 border border-purple-200 px-2 py-0.2 rounded-full truncate max-w-[130px]">
+                    <span className="text-[10px] text-purple-700 dark:text-purple-300 font-extrabold bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800 px-2 py-0.2 rounded-full truncate max-w-[130px]">
                       Matches "{item.matchedFor}"
                     </span>
                   </div>
@@ -200,16 +200,16 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
                     <img
                       src={item.images?.[0] || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                       alt={item.title}
-                      className="w-16 h-16 rounded-xl object-cover bg-slate-100 shrink-0 border border-slate-100"
+                      className="w-16 h-16 rounded-xl object-cover bg-slate-100 dark:bg-zinc-800 shrink-0 border border-slate-100 dark:border-zinc-700"
                     />
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-bold text-slate-900 text-xs truncate" title={item.title}>
+                      <h4 className="font-bold text-slate-900 dark:text-zinc-100 text-xs truncate" title={item.title}>
                         {item.title}
                       </h4>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
-                        <strong className="text-slate-900 font-black">₹{item.rental_rate_per_day}</strong>/day • <span className="text-emerald-700 font-semibold">₹{item.security_deposit} dep</span>
+                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5">
+                        <strong className="text-slate-900 dark:text-zinc-100 font-black">₹{item.rental_rate_per_day}</strong>/day • <span className="text-emerald-700 dark:text-emerald-400 font-semibold">₹{item.security_deposit} dep</span>
                       </p>
-                      <p className="text-[10px] text-slate-400 truncate mt-0.5">
+                      <p className="text-[10px] text-slate-400 dark:text-zinc-500 truncate mt-0.5">
                         📍 {item.pickup_location || 'Campus'}
                       </p>
                     </div>
@@ -233,10 +233,10 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
       {/* Active Requests List */}
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-black text-slate-900">Active Student Requests</h2>
-          <p className="text-xs text-slate-500">Items requested by students awaiting owner listings</p>
+          <h2 className="text-lg font-black text-slate-900 dark:text-zinc-100">Active Student Requests</h2>
+          <p className="text-xs text-slate-500 dark:text-zinc-400">Items requested by students awaiting owner listings</p>
         </div>
-        <span className="text-xs text-slate-500 font-bold bg-slate-100 px-2.5 py-1 rounded-xl">
+        <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold bg-slate-100 dark:bg-zinc-800 px-2.5 py-1 rounded-xl">
           {requests.length} open request{requests.length === 1 ? '' : 's'}
         </span>
       </div>
@@ -244,14 +244,14 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
       {loading ? (
         <div className="grid sm:grid-cols-2 gap-4">
           {[1, 2].map((n) => (
-            <div key={n} className="h-40 bg-slate-100 rounded-3xl animate-pulse"></div>
+            <div key={n} className="h-40 bg-slate-100 dark:bg-zinc-800/60 rounded-3xl animate-pulse"></div>
           ))}
         </div>
       ) : requests.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8 shadow-xs">
-          <Bell className="w-12 h-12 mx-auto mb-3 text-slate-300" />
-          <h3 className="text-base font-bold text-slate-700 mb-1">No pending item requests</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto mb-5">
+        <div className="text-center py-16 bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-8 shadow-xs">
+          <Bell className="w-12 h-12 mx-auto mb-3 text-slate-300 dark:text-zinc-600" />
+          <h3 className="text-base font-bold text-slate-700 dark:text-zinc-200 mb-1">No pending item requests</h3>
+          <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-sm mx-auto mb-5">
             Can't find a calculator, lab coat, or camera on campus? Post your request and get alerted the second someone lists it.
           </p>
           <button
@@ -270,21 +270,21 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
             return (
               <div
                 key={req._id}
-                className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 flex flex-col justify-between card-interactive animate-fade-in-up"
+                className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:shadow-zinc-950/20 transition-all duration-300 flex flex-col justify-between card-interactive animate-fade-in-up"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div>
-                      <span className="glass-panel text-indigo-700 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border border-indigo-200/60 shadow-2xs">
+                      <span className="glass-panel text-indigo-700 dark:text-indigo-400 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border border-indigo-200/60 dark:border-indigo-800/60 shadow-2xs">
                         {req.category}
                       </span>
-                      <h3 className="font-black text-slate-900 text-base mt-2 leading-snug tracking-tight">{req.keyword}</h3>
+                      <h3 className="font-black text-slate-900 dark:text-zinc-100 text-base mt-2 leading-snug tracking-tight">{req.keyword}</h3>
                     </div>
 
                     {isMyRequest && (
                       <button
                         onClick={() => handleDeleteRequest(req._id, req.keyword)}
-                        className="text-slate-400 hover:text-rose-600 p-2 rounded-xl hover:bg-rose-50 btn-tactile cursor-pointer"
+                        className="text-slate-400 hover:text-rose-600 p-2 rounded-xl hover:bg-rose-50 dark:hover:bg-zinc-800 btn-tactile cursor-pointer"
                         title="Delete your request"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -292,26 +292,26 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
                     )}
                   </div>
 
-                  <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+                  <p className="text-xs text-slate-600 dark:text-zinc-300 mb-4 leading-relaxed">
                     {req.notes || "Urgent requirement for practicals, exams, or campus event."}
                   </p>
 
                   {/* Matching Item Inline Alert */}
                   {hasMatches && (
-                    <div className="mb-4 p-3.5 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/90 rounded-2xl shadow-2xs">
-                      <div className="flex items-center space-x-1.5 text-emerald-800 text-xs font-black mb-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <div className="mb-4 p-3.5 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border border-emerald-200/90 dark:border-emerald-800/60 rounded-2xl shadow-2xs">
+                      <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 text-xs font-black mb-2.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                         <span>{req.matching_items.length} Matched Item{req.matching_items.length > 1 ? 's' : ''} Live Now!</span>
                       </div>
                       <div className="space-y-2">
                         {req.matching_items.slice(0, 2).map((mItem) => (
                           <div 
                             key={mItem._id}
-                            className="flex items-center justify-between p-2.5 bg-white rounded-xl border border-emerald-200/70 shadow-2xs text-xs"
+                            className="flex items-center justify-between p-2.5 bg-white dark:bg-zinc-850 rounded-xl border border-emerald-200/70 dark:border-emerald-800/40 shadow-2xs text-xs"
                           >
-                            <span className="font-bold text-slate-900 truncate max-w-[170px]">{mItem.title}</span>
+                            <span className="font-bold text-slate-900 dark:text-zinc-100 truncate max-w-[170px]">{mItem.title}</span>
                             <div className="flex items-center space-x-2">
-                              <span className="text-[11px] font-black text-slate-900">₹{mItem.rental_rate_per_day}/d</span>
+                              <span className="text-[11px] font-black text-slate-900 dark:text-zinc-100">₹{mItem.rental_rate_per_day}/d</span>
                               <button
                                 onClick={() => setBookingItem(mItem)}
                                 className="px-3 py-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[10px] font-black rounded-lg btn-tactile cursor-pointer shadow-xs"
@@ -326,16 +326,16 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
                   )}
                 </div>
 
-                <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                <div className="pt-3.5 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs">
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Max Daily Budget</span>
-                    <span className="font-black text-emerald-700 text-sm">₹{req.max_budget_per_day} <span className="text-slate-400 font-medium text-xs">/ day</span></span>
+                    <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Max Daily Budget</span>
+                    <span className="font-black text-emerald-700 dark:text-emerald-400 text-sm">₹{req.max_budget_per_day} <span className="text-slate-400 dark:text-zinc-500 font-medium text-xs">/ day</span></span>
                   </div>
 
                   <div className="text-right">
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Requested By</span>
-                    <span className="font-extrabold text-slate-800">{req.student?.name || 'Verified Student'}</span>
-                    <span className="text-slate-400 text-[10px] block font-medium">{req.student?.hostel_block || 'Campus'}</span>
+                    <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Requested By</span>
+                    <span className="font-extrabold text-slate-800 dark:text-zinc-200">{req.student?.name || 'Verified Student'}</span>
+                    <span className="text-slate-400 dark:text-zinc-500 text-[10px] block font-medium">{req.student?.hostel_block || 'Campus'}</span>
                   </div>
                 </div>
               </div>
@@ -351,24 +351,24 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
           onClick={() => setShowModal(false)}
         >
           <div 
-            className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-200/90 animate-scale-in"
+            className="bg-white dark:bg-zinc-900 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-200/90 dark:border-zinc-800 animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-start mb-3">
               <div>
-                <h3 className="font-black text-slate-900 text-lg">Request an Item</h3>
-                <p className="text-xs text-slate-500">Get notified the second someone lists this item on campus.</p>
+                <h3 className="font-black text-slate-900 dark:text-zinc-100 text-lg">Request an Item</h3>
+                <p className="text-xs text-slate-500 dark:text-zinc-400">Get notified the second someone lists this item on campus.</p>
               </div>
               <button 
                 onClick={() => setShowModal(false)}
-                className="p-1 text-slate-400 hover:text-slate-700 rounded-lg cursor-pointer"
+                className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-zinc-200 rounded-lg cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
             {formError && (
-              <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-start space-x-2">
+              <div className="mb-4 p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 rounded-xl text-xs flex items-start space-x-2">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{formError}</span>
               </div>
@@ -376,11 +376,11 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
 
             <form onSubmit={handleCreateRequest} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Category</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Category</label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl text-xs font-semibold focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                 >
                   {CATEGORIES.map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
@@ -389,38 +389,38 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Item Name / Keyword</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Item Name / Keyword</label>
                 <input
                   type="text"
                   placeholder="e.g. Casio fx-991EX Calculator or Size L Lab Coat"
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl text-xs focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Max Daily Budget (₹)</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Max Daily Budget (₹)</label>
                 <input
                   type="number"
                   min="0"
                   step="5"
                   value={maxBudget}
                   onChange={(e) => setMaxBudget(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-bold"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl text-xs focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-bold"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Notes / When Needed</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Notes / When Needed</label>
                 <textarea
                   rows="2"
                   placeholder="e.g. Needed for physics lab exam this Friday"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl text-xs focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -428,7 +428,7 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 py-2.5 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-50 transition cursor-pointer"
+                  className="flex-1 py-2.5 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 rounded-xl text-xs font-bold hover:bg-slate-50 dark:hover:bg-zinc-800 transition cursor-pointer"
                 >
                   Cancel
                 </button>

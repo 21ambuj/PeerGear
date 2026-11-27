@@ -28,29 +28,29 @@ const DeleteItemModal = ({ item, onClose, onDeleted }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md animate-fade-in-up"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-150"
+        className="bg-white dark:bg-zinc-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-zinc-800 animate-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Warning Icon */}
-        <div className="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+        <div className="w-14 h-14 bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
           <Trash2 className="w-7 h-7" />
         </div>
 
-        <h3 className="text-lg font-black text-slate-900 text-center mb-1">
+        <h3 className="text-lg font-black text-slate-900 dark:text-zinc-100 text-center mb-1">
           Delete Listing?
         </h3>
         
-        <p className="text-xs text-slate-500 text-center mb-4 leading-relaxed">
-          Are you sure you want to permanently delete <strong className="text-slate-800 font-bold">"{item.title}"</strong>? It will be removed from the campus catalog immediately and peers will no longer be able to rent it.
+        <p className="text-xs text-slate-500 dark:text-zinc-400 text-center mb-4 leading-relaxed">
+          Are you sure you want to permanently delete <strong className="text-slate-800 dark:text-zinc-200 font-bold">"{item.title}"</strong>? It will be removed from the campus catalog immediately and peers will no longer be able to rent it.
         </p>
 
         {error && (
-          <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-start space-x-2">
+          <div className="mb-4 p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 rounded-xl text-xs flex items-start space-x-2">
             <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
@@ -60,7 +60,7 @@ const DeleteItemModal = ({ item, onClose, onDeleted }) => {
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-2.5 px-4 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition cursor-pointer"
+            className="flex-1 py-2.5 px-4 text-xs font-bold text-slate-700 dark:text-zinc-300 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 rounded-xl transition cursor-pointer"
           >
             Keep Listing
           </button>

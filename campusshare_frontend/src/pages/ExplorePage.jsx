@@ -471,12 +471,12 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         
         {/* Catalog Explorer Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-zinc-200/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
           <div>
-            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-zinc-950">
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-zinc-950 dark:text-white">
               {selectedCategory === "All" ? "Available Campus Inventory" : `${selectedCategory}`}
             </h2>
-            <p className="text-xs text-zinc-500 font-medium mt-0.5">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
               Showing {items.length} verified item{items.length === 1 ? '' : 's'} available for peer rental
             </p>
           </div>
@@ -486,7 +486,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-zinc-200 text-xs font-bold text-zinc-700 rounded-full px-4 py-2 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 cursor-pointer shadow-xs btn-tactile"
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-bold text-zinc-700 dark:text-zinc-200 rounded-full px-4 py-2 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 cursor-pointer shadow-xs btn-tactile"
             >
               <option value="newest">Sort: Newest First</option>
               <option value="price_asc">Price: Low to High</option>
@@ -500,17 +500,17 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="h-80 bg-zinc-100 rounded-3xl animate-pulse"></div>
+              <div key={n} className="h-80 bg-zinc-100 dark:bg-zinc-900 rounded-3xl animate-pulse"></div>
             ))}
           </div>
         ) : items.length === 0 ? (
           /* Empty State for Real User Uploads */
-          <div className="text-center py-16 bg-white rounded-3xl border border-zinc-200 p-8 shadow-xs max-w-xl mx-auto my-8">
-            <div className="w-14 h-14 bg-zinc-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-zinc-600">
+          <div className="text-center py-16 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-8 shadow-xs max-w-xl mx-auto my-8">
+            <div className="w-14 h-14 bg-zinc-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-zinc-600 dark:text-zinc-300">
               <PackageOpen className="w-7 h-7 stroke-[1.8]" />
             </div>
-            <h3 className="text-lg font-black text-zinc-900 mb-1 tracking-tight">No campus items found</h3>
-            <p className="text-xs text-zinc-500 max-w-md mx-auto mb-6 leading-relaxed">
+            <h3 className="text-lg font-black text-zinc-900 dark:text-white mb-1 tracking-tight">No campus items found</h3>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mb-6 leading-relaxed">
               Be the first student to list a scientific calculator, textbook, lab coat, cycle, or project kit. Start sharing with your university halls!
             </p>
             <button
@@ -544,16 +544,16 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
       <div id="trust-architecture-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16 scroll-mt-24">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-zinc-200/80">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
           <div>
-            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-600 block mb-1">
+            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">
               Campus Verification Architecture
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950">
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
               Why Campus Students Trust PeerGear
             </h2>
           </div>
-          <p className="text-xs text-zinc-500 max-w-md mt-2 sm:mt-0 font-medium leading-relaxed">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-md mt-2 sm:mt-0 font-medium leading-relaxed">
             Automated bank-grade escrow locks, in-person QR handovers, and zero platform theft across all university hostels.
           </p>
         </div>
@@ -597,15 +597,15 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
               </div>
 
               {/* Text & Content */}
-              <h3 className="font-black text-zinc-950 text-base mb-1 tracking-tight">100% Refundable Escrow</h3>
-              <p className="text-xs text-zinc-500 leading-relaxed">
+              <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">100% Refundable Escrow</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Deposit is securely locked in campus escrow and auto-refunded to your wallet the minute the gear is returned.
               </p>
             </div>
 
-            <div className="mt-4 pt-3.5 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-emerald-700">
+            <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
               <span>Automatic Settlement</span>
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <ShieldCheck className="w-4 h-4 text-emerald-500" />
             </div>
           </div>
 
@@ -643,15 +643,15 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
               </div>
 
               {/* Text & Content */}
-              <h3 className="font-black text-zinc-950 text-base mb-1 tracking-tight">Dynamic Handover Pass</h3>
-              <p className="text-xs text-zinc-500 leading-relaxed">
+              <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Dynamic Handover Pass</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Encrypted QR pass and 4-digit OTP ensure equipment only changes hands between verified university students.
               </p>
             </div>
 
-            <div className="mt-4 pt-3.5 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-indigo-700">
+            <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-indigo-600 dark:text-indigo-400">
               <span>OTP Handover Protocol</span>
-              <KeyRound className="w-4 h-4 text-indigo-600" />
+              <KeyRound className="w-4 h-4 text-indigo-500" />
             </div>
           </div>
 
@@ -700,15 +700,15 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
               </div>
 
               {/* Text & Content */}
-              <h3 className="font-black text-zinc-950 text-base mb-1 tracking-tight">Condition Inspector</h3>
-              <p className="text-xs text-zinc-500 leading-relaxed">
+              <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Condition Inspector</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Time-stamped photos recorded before and after rental. Zero disputes, complete equipment transparency.
               </p>
             </div>
 
-            <div className="mt-4 pt-3.5 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-amber-700">
+            <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400">
               <span>Damage Proof Ledger</span>
-              <Camera className="w-4 h-4 text-amber-600" />
+              <Camera className="w-4 h-4 text-amber-500" />
             </div>
           </div>
 
@@ -749,15 +749,15 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
               </div>
 
               {/* Text & Content */}
-              <h3 className="font-black text-zinc-950 text-base mb-1 tracking-tight">Instant B-Money Payouts</h3>
-              <p className="text-xs text-zinc-500 leading-relaxed">
+              <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Instant B-Money Payouts</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Earn money from your idle lab gear and cycles. Withdraw directly to Google Pay, PhonePe, or Bank in seconds.
               </p>
             </div>
 
-            <div className="mt-4 pt-3.5 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-purple-700">
+            <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-purple-600 dark:text-purple-400">
               <span>Instant IMPS & UPI</span>
-              <Wallet className="w-4 h-4 text-purple-600" />
+              <Wallet className="w-4 h-4 text-purple-500" />
             </div>
           </div>
 

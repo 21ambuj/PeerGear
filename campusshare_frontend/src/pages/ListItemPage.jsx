@@ -270,12 +270,12 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
   if (!user) {
     return (
       <div className="max-w-md mx-auto my-16 px-4">
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-8 text-center animate-in fade-in duration-200">
-          <div className="w-16 h-16 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-indigo-600 shadow-inner">
+        <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-xl p-8 text-center animate-in fade-in duration-200">
+          <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-800/60 rounded-2xl flex items-center justify-center mx-auto mb-4 text-indigo-600 dark:text-indigo-400 shadow-inner">
             <Lock className="w-8 h-8" />
           </div>
-          <h2 className="text-xl font-bold text-slate-900 mb-2">Sign In to List Items</h2>
-          <p className="text-xs text-slate-500 leading-relaxed mb-6">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-zinc-100 mb-2">Sign In to List Items</h2>
+          <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed mb-6">
             PeerGear is a closed-campus platform. Please sign in with your college account to publish listings for other students.
           </p>
           <button
@@ -294,22 +294,22 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
   if (user?.is_blocked) {
     return (
       <div className="max-w-md mx-auto my-16 px-4">
-        <div className="bg-white rounded-3xl border border-red-200 shadow-xl p-8 text-center animate-in fade-in duration-200">
-          <div className="w-16 h-16 bg-red-50 border border-red-200 rounded-2xl flex items-center justify-center mx-auto mb-4 text-red-600 shadow-inner">
+        <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-red-200 dark:border-red-900/60 shadow-xl p-8 text-center animate-in fade-in duration-200">
+          <div className="w-16 h-16 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-red-600 dark:text-red-400 shadow-inner">
             <AlertCircle className="w-8 h-8" />
           </div>
-          <div className="inline-block px-3 py-1 bg-red-100 text-red-800 text-[10px] font-extrabold uppercase rounded-full mb-3 tracking-wider">
+          <div className="inline-block px-3 py-1 bg-red-100 dark:bg-red-950/80 text-red-800 dark:text-red-300 text-[10px] font-extrabold uppercase rounded-full mb-3 tracking-wider">
             Account Suspended
           </div>
-          <h2 className="text-xl font-bold text-slate-900 mb-2">Listing Permissions Disabled</h2>
-          <p className="text-xs text-slate-600 leading-relaxed mb-4">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-zinc-100 mb-2">Listing Permissions Disabled</h2>
+          <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed mb-4">
             Your campus account has been suspended by administration.
             {user.blocked_reason && (
-              <span className="block mt-2 font-semibold italic text-red-700">"Reason: {user.blocked_reason}"</span>
+              <span className="block mt-2 font-semibold italic text-red-700 dark:text-red-400">"Reason: {user.blocked_reason}"</span>
             )}
           </p>
-          <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-500 text-left space-y-1">
-            <p className="font-semibold text-slate-700">Why am I seeing this?</p>
+          <div className="p-3 bg-slate-50 dark:bg-zinc-800/60 border border-slate-200 dark:border-zinc-700 rounded-xl text-[11px] text-slate-500 dark:text-zinc-400 text-left space-y-1">
+            <p className="font-semibold text-slate-700 dark:text-zinc-300">Why am I seeing this?</p>
             <p>Campus administrators restrict accounts that violate community safety or return policies. Please visit the admin desk to appeal your status.</p>
           </div>
         </div>
@@ -324,7 +324,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
 
     return (
       <div className="max-w-lg mx-auto my-12 px-4">
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden animate-in fade-in duration-200">
+        <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-xl overflow-hidden animate-in fade-in duration-200">
           
           {/* Header Banner */}
           <div className="bg-gradient-to-r from-amber-600 to-orange-600 text-white p-6 sm:p-7 text-center">
@@ -340,27 +340,27 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
           {/* Status Box & Actions */}
           <div className="p-6 sm:p-8 space-y-5">
             {isPending ? (
-              <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 space-y-2">
-                <div className="flex items-center space-x-2 font-bold text-amber-800">
-                  <Clock className="w-4 h-4 text-amber-600" />
+              <div className="p-4 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-2xl text-xs text-amber-900 dark:text-amber-200 space-y-2">
+                <div className="flex items-center space-x-2 font-bold text-amber-800 dark:text-amber-300">
+                  <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span>Document Under Review</span>
                 </div>
-                <p className="text-xs leading-relaxed text-amber-800/90">
+                <p className="text-xs leading-relaxed text-amber-800/90 dark:text-amber-300/90">
                   Your submitted College ID card is currently awaiting administrative approval. Campus coordinators verify student enrollment to maintain campus safety.
                 </p>
-                <p className="text-[11px] font-semibold text-amber-700">
+                <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">
                   ⏳ Review usually takes a few hours. Once approved, listing will automatically be unlocked!
                 </p>
               </div>
             ) : isRejected ? (
-              <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-xs text-rose-900 space-y-3">
-                <div className="flex items-center space-x-2 font-bold text-rose-800">
-                  <AlertCircle className="w-4 h-4 text-rose-600" />
+              <div className="p-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 rounded-2xl text-xs text-rose-900 dark:text-rose-200 space-y-3">
+                <div className="flex items-center space-x-2 font-bold text-rose-800 dark:text-rose-300">
+                  <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                   <span>Submission Rejected by Administration</span>
                 </div>
-                <p className="text-xs leading-relaxed text-rose-800/90">
+                <p className="text-xs leading-relaxed text-rose-800/90 dark:text-rose-300/90">
                   Your College ID card could not be verified:
-                  <span className="block mt-1 font-semibold italic text-rose-950">
+                  <span className="block mt-1 font-semibold italic text-rose-950 dark:text-rose-200">
                     "{user.id_card_rejection_reason || 'Unreadable document or invalid student registration number'}"
                   </span>
                 </p>
@@ -374,12 +374,12 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                 </button>
               </div>
             ) : (
-              <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-2xl text-xs text-indigo-900 space-y-3">
-                <div className="flex items-center space-x-2 font-bold text-indigo-800">
-                  <ShieldCheck className="w-4 h-4 text-indigo-600" />
+              <div className="p-4 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 rounded-2xl text-xs text-indigo-900 dark:text-indigo-200 space-y-3">
+                <div className="flex items-center space-x-2 font-bold text-indigo-800 dark:text-indigo-300">
+                  <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   <span>Step 2: Upload Your Student ID</span>
                 </div>
-                <p className="text-xs leading-relaxed text-indigo-800/90">
+                <p className="text-xs leading-relaxed text-indigo-800/90 dark:text-indigo-300/90">
                   You haven't uploaded your Student ID card yet. It only takes 30 seconds to snap a photo and verify your student registration.
                 </p>
                 <button
@@ -393,9 +393,9 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
               </div>
             )}
 
-            <div className="border-t border-slate-100 pt-4 text-center">
-              <p className="text-[11px] text-slate-400">
-                Logged in as <strong className="text-slate-600">{user?.name}</strong> ({user?.college_id})
+            <div className="border-t border-slate-100 dark:border-zinc-800 pt-4 text-center">
+              <p className="text-[11px] text-slate-400 dark:text-zinc-500">
+                Logged in as <strong className="text-slate-600 dark:text-zinc-300">{user?.name}</strong> ({user?.college_id})
               </p>
             </div>
           </div>
@@ -406,7 +406,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 animate-fade-in-up">
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden card-interactive">
+      <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 shadow-xl overflow-hidden card-interactive">
         
         {/* Modern Tech Banner */}
         <div className="bg-[#090a0f] text-white p-6 sm:p-8 border-b border-zinc-800 relative overflow-hidden">
@@ -442,16 +442,16 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
 
           {/* Photo Upload Section */}
           <div>
-            <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-bold text-slate-900 dark:text-zinc-100 uppercase tracking-wider mb-2">
               Item Photo
             </label>
             <div className="flex flex-col sm:flex-row gap-4 items-center">
-              <div className="w-full sm:w-44 h-36 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center relative overflow-hidden bg-slate-50 group hover:border-indigo-500 transition">
+              <div className="w-full sm:w-44 h-36 rounded-2xl border-2 border-dashed border-slate-300 dark:border-zinc-700 flex flex-col items-center justify-center relative overflow-hidden bg-slate-50 dark:bg-zinc-800/60 group hover:border-indigo-500 dark:hover:border-indigo-400 transition">
                 {imagePreview ? (
                   <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                 ) : (
-                  <div className="text-center p-3 text-slate-400">
-                    <Camera className="w-8 h-8 mx-auto mb-1 stroke-slate-400" />
+                  <div className="text-center p-3 text-slate-400 dark:text-zinc-500">
+                    <Camera className="w-8 h-8 mx-auto mb-1 stroke-slate-400 dark:stroke-zinc-500" />
                     <span className="text-[11px] font-semibold block">Click to upload photo</span>
                   </div>
                 )}
@@ -463,17 +463,17 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                 />
               </div>
 
-              <div className="flex-1 text-xs text-slate-500 space-y-1">
-                <p className="font-semibold text-slate-700">Upload a clear photo of your item</p>
+              <div className="flex-1 text-xs text-slate-500 dark:text-zinc-400 space-y-1">
+                <p className="font-semibold text-slate-700 dark:text-zinc-200">Upload a clear photo of your item</p>
                 <p className="text-[11px]">Takes photos from camera or gallery (JPG, PNG). Helps other students verify condition.</p>
                 <div className="pt-1">
-                  <span className="text-[10px] text-slate-400 block mb-0.5">Or paste direct photo URL:</span>
+                  <span className="text-[10px] text-slate-400 dark:text-zinc-500 block mb-0.5">Or paste direct photo URL:</span>
                   <input
                     type="url"
                     placeholder="https://..."
                     value={imagePreview.startsWith('http') ? imagePreview : ''}
                     onChange={(e) => setImagePreview(e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-2.5 py-1 text-xs bg-white dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -483,8 +483,8 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
           {/* Category Picker with Custom Category Management */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center space-x-1.5">
-                <Tag className="w-3.5 h-3.5 text-indigo-600" />
+              <label className="text-xs font-bold text-slate-900 dark:text-zinc-100 uppercase tracking-wider flex items-center space-x-1.5">
+                <Tag className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                 <span>Category</span>
               </label>
 
@@ -492,7 +492,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
               <button
                 type="button"
                 onClick={() => setIsAddingCategory(!isAddingCategory)}
-                className="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/80 px-2.5 py-1 rounded-xl transition flex items-center space-x-1 cursor-pointer shadow-2xs"
+                className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200/80 dark:border-indigo-800/60 px-2.5 py-1 rounded-xl transition flex items-center space-x-1 cursor-pointer shadow-2xs"
               >
                 <FolderPlus className="w-3.5 h-3.5" />
                 <span>+ Custom Category</span>
@@ -501,9 +501,9 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
 
             {/* Inline Add Custom Category Box */}
             {isAddingCategory && (
-              <div className="mb-3 p-3 bg-gradient-to-r from-indigo-50/90 to-purple-50/90 border border-indigo-200 rounded-2xl animate-in zoom-in-95 duration-150">
+              <div className="mb-3 p-3 bg-gradient-to-r from-indigo-50/90 to-purple-50/90 dark:from-indigo-950/40 dark:to-purple-950/40 border border-indigo-200 dark:border-indigo-800/80 rounded-2xl animate-in zoom-in-95 duration-150">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-bold text-slate-800 flex items-center space-x-1">
+                  <span className="text-xs font-bold text-slate-800 dark:text-zinc-200 flex items-center space-x-1">
                     <Sparkles className="w-3 h-3 text-amber-500" />
                     <span>Create Custom Category</span>
                   </span>
@@ -513,7 +513,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                       setIsAddingCategory(false);
                       setNewCatName("");
                     }}
-                    className="text-slate-400 hover:text-slate-600 p-0.5 rounded cursor-pointer"
+                    className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-0.5 rounded cursor-pointer"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -531,7 +531,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                         handleAddCategory(e);
                       }
                     }}
-                    className="flex-1 px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-medium focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    className="flex-1 px-3 py-1.5 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs font-medium focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     autoFocus
                   />
                   <button
@@ -559,13 +559,13 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                   return (
                     <div 
                       key={cat}
-                      className="p-1 bg-white border-2 border-indigo-500 rounded-xl shadow-xs col-span-2 flex items-center gap-1.5"
+                      className="p-1 bg-white dark:bg-zinc-800 border-2 border-indigo-500 rounded-xl shadow-xs col-span-2 flex items-center gap-1.5"
                     >
                       <input
                         type="text"
                         value={editingCatName}
                         onChange={(e) => setEditingCatName(e.target.value)}
-                        className="flex-1 px-2 py-1 text-xs font-bold text-slate-800 border border-slate-200 rounded-lg focus:outline-hidden"
+                        className="flex-1 px-2 py-1 text-xs font-bold text-slate-800 dark:text-zinc-100 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg focus:outline-hidden"
                         autoFocus
                       />
                       <button
@@ -582,7 +582,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                           e.stopPropagation();
                           setEditingCatId(null);
                         }}
-                        className="p-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 cursor-pointer"
+                        className="p-1.5 bg-slate-100 dark:bg-zinc-700 text-slate-600 dark:text-zinc-300 rounded-lg hover:bg-slate-200 dark:hover:bg-zinc-600 cursor-pointer"
                         title="Cancel"
                       >
                         <X className="w-3 h-3" />
@@ -598,7 +598,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                     className={`relative p-2.5 rounded-xl border text-xs font-semibold transition cursor-pointer flex items-center justify-between group ${
                       isSelected
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                        : 'bg-slate-50 dark:bg-zinc-800/80 text-slate-700 dark:text-zinc-300 border-slate-200 dark:border-zinc-750 hover:bg-slate-100 dark:hover:bg-zinc-700/60'
                     }`}
                   >
                     <span className="truncate pr-1">{cat}</span>
@@ -612,7 +612,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                           className={`p-1 rounded transition hover:scale-110 cursor-pointer ${
                             isSelected 
                               ? 'text-indigo-200 hover:text-white hover:bg-indigo-700/60' 
-                              : 'text-slate-400 hover:text-indigo-600 hover:bg-indigo-50'
+                              : 'text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-zinc-700'
                           }`}
                           title={`Rename custom category '${cat}'`}
                         >
@@ -624,7 +624,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                           className={`p-1 rounded transition hover:scale-110 cursor-pointer ${
                             isSelected 
                               ? 'text-indigo-200 hover:text-rose-200 hover:bg-rose-600/80' 
-                              : 'text-slate-400 hover:text-rose-600 hover:bg-rose-50'
+                              : 'text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-zinc-700'
                           }`}
                           title={`Delete custom category '${cat}'`}
                         >
@@ -638,7 +638,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
             </div>
             
             {customCategories.length > 0 && (
-              <p className="text-[10px] text-slate-400 mt-1.5 flex items-center space-x-1">
+              <p className="text-[10px] text-slate-400 dark:text-zinc-500 mt-1.5 flex items-center space-x-1">
                 <span>Tip: Custom categories can be renamed or deleted using the pencil and trash icons.</span>
               </p>
             )}
@@ -646,32 +646,32 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
 
           {/* Title & Description */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Item Title</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Item Title</label>
             <input
               type="text"
               placeholder="e.g. Casio fx-991EX Scientific Calculator, Size M Lab Coat, Hero Geared Bicycle"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Description & Specifications</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Description & Specifications</label>
             <textarea
               rows="3"
               placeholder="Describe the condition, what is included (charger, case, lock, etc.), and any instructions..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           {/* Rates and Escrow Security Deposit */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">
                 Rental Rate (₹ / day) <span className="text-rose-500">*</span>
               </label>
               <input
@@ -681,14 +681,14 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                 placeholder="e.g. 25"
                 value={rentalRate}
                 onChange={(e) => setRentalRate(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-slate-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1 flex items-center space-x-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1 flex items-center space-x-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 <span>Security Deposit (₹)</span> <span className="text-rose-500">*</span>
               </label>
               <input
@@ -698,7 +698,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                 placeholder="e.g. 100"
                 value={securityDeposit}
                 onChange={(e) => setSecurityDeposit(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs font-bold text-emerald-700 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-400 placeholder-zinc-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 required
               />
             </div>
@@ -706,20 +706,20 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
 
           {/* Pickup Location */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Campus Handover Location</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Campus Handover Location</label>
             <input
               type="text"
               placeholder="e.g. Hostel Block B, Library Gate, Food Court"
               value={pickupLocation}
               onChange={(e) => setPickupLocation(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
 
           {/* Specifications (CSE494 Schema Flexibility) */}
-          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-            <span className="text-xs font-bold text-slate-700 block mb-2 uppercase tracking-wider">
+          <div className="bg-slate-50 dark:bg-zinc-800/60 p-4 rounded-2xl border border-slate-200 dark:border-zinc-750">
+            <span className="text-xs font-bold text-slate-700 dark:text-zinc-300 block mb-2 uppercase tracking-wider">
               Item Details & Attributes
             </span>
             <div className="grid grid-cols-2 gap-2 mb-2">
@@ -728,14 +728,14 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                 placeholder="Key (e.g. Brand)"
                 value={specKey1}
                 onChange={(e) => setSpecKey1(e.target.value)}
-                className="px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs"
+                className="px-2.5 py-1.5 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-lg text-xs"
               />
               <input
                 type="text"
                 placeholder="Value (e.g. Casio)"
                 value={specVal1}
                 onChange={(e) => setSpecVal1(e.target.value)}
-                className="px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs"
+                className="px-2.5 py-1.5 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-lg text-xs"
               />
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -744,14 +744,14 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                 placeholder="Key (e.g. Condition)"
                 value={specKey2}
                 onChange={(e) => setSpecKey2(e.target.value)}
-                className="px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs"
+                className="px-2.5 py-1.5 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-lg text-xs"
               />
               <input
                 type="text"
                 placeholder="Value (e.g. Excellent, Like New)"
                 value={specVal2}
                 onChange={(e) => setSpecVal2(e.target.value)}
-                className="px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs"
+                className="px-2.5 py-1.5 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-lg text-xs"
               />
             </div>
           </div>

@@ -26,14 +26,18 @@ import {
   Menu,
   Search,
   Lock,
-  CheckCircle2
+  CheckCircle2,
+  Sun,
+  Moon
 } from 'lucide-react';
 import CampusPaymentModal from './CampusPaymentModal';
 import ManageMoneyModal from './ManageMoneyModal';
+import { useTheme } from '../context/ThemeContext';
 
 const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) => {
   const { user, logout, topupWallet, unreadNotifications } = useAuth();
   const { showToast } = useToast();
+  const { theme, isDark, toggleTheme } = useTheme();
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -152,21 +156,23 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-2xl border-b border-zinc-200/80 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.03)] transition-all">
-        {/* Iridescent Top Accent Bar */}
-        <div className="h-[2px] w-full bg-gradient-to-r from-emerald-500 via-teal-400 to-indigo-500"></div>
+      <header className="sticky top-0 z-40 bg-white/85 dark:bg-[#07080b]/85 backdrop-blur-2xl border-b border-zinc-200/60 dark:border-white/[0.07] shadow-[0_4px_24px_-4px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_36px_-8px_rgba(0,0,0,0.7)] transition-all duration-300">
+        {/* Sleek Ambient Top Laser Beam */}
+        <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-emerald-500/80 to-transparent"></div>
 
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 gap-2 sm:gap-4 lg:gap-8">
+          <div className="flex items-center justify-between h-16 sm:h-[68px] gap-2 sm:gap-4 lg:gap-8">
             
-            {/* Logo & Modern Tech Brand */}
+            {/* Precision Brand Mark & Live University Status */}
             <div 
               onClick={() => setActiveTab('explore')}
-              className="flex items-center space-x-2.5 cursor-pointer group select-none shrink-0"
+              className="flex items-center space-x-3 cursor-pointer group select-none shrink-0"
             >
               <div className="relative">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-zinc-950 text-white flex items-center justify-center shadow-md shadow-zinc-950/15 group-hover:scale-105 transition-all duration-200 border border-zinc-800">
-                  <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                {/* Ambient glow halo on hover */}
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-emerald-500/25 to-teal-500/25 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-950 to-black dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-950 text-white flex items-center justify-center shadow-md shadow-zinc-950/20 group-hover:scale-[1.04] transition-all duration-300 ring-1 ring-zinc-800 dark:ring-white/[0.12]">
+                  <svg className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M16 3h5v5" />
                     <path d="M4 20L21 3" />
                     <path d="M21 16v5h-5" />
@@ -174,40 +180,44 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                     <path d="M4 4l5 5" />
                   </svg>
                 </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-emerald-500 rounded-full border-2 border-white shadow-xs"></div>
+                {/* Live Campus Node Ping Dot */}
+                <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border-2 border-white dark:border-zinc-950"></span>
+                </span>
               </div>
 
               <div className="flex flex-col">
                 <div className="flex items-center space-x-1.5">
-                  <span className="text-lg font-black tracking-[-0.03em] text-zinc-950 leading-none">
+                  <span className="text-lg sm:text-[19px] font-black tracking-[-0.03em] text-zinc-950 dark:text-white leading-none group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                     PeerGear
                   </span>
-                  <span className="text-[9px] font-black uppercase tracking-wider bg-zinc-100 text-zinc-600 px-1.5 py-0.2 rounded-md border border-zinc-200/80">
+                  <span className="text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded-md border border-emerald-500/20">
                     Campus
                   </span>
                 </div>
-                <span className="text-[10px] text-zinc-400 font-medium tracking-tight">Student Resource Exchange</span>
+                <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-medium tracking-tight mt-0.5">Verified Peer Exchange</span>
               </div>
             </div>
 
-            {/* Quick Command Search Pill (Desktop) */}
+            {/* Quick Command Search Pill (Desktop - Linear / Raycast Style) */}
             <button
               onClick={() => {
                 setActiveTab('explore');
                 window.dispatchEvent(new CustomEvent('campusshare-focus-search'));
               }}
-              className="hidden xl:flex items-center space-x-2 px-3 py-1.5 rounded-full bg-zinc-100/80 hover:bg-zinc-200/60 border border-zinc-200/80 text-zinc-500 hover:text-zinc-800 text-xs transition cursor-pointer group btn-tactile"
-              title="Quick Search Gear (⌘K)"
+              className="hidden xl:flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-zinc-100/80 dark:bg-zinc-900/80 hover:bg-zinc-200/60 dark:hover:bg-zinc-850 border border-zinc-200/80 dark:border-white/[0.08] text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 text-xs transition-all duration-200 cursor-pointer group shadow-2xs hover:border-emerald-500/40"
+              title="Quick Search Gear (⌘K or Ctrl+K)"
             >
-              <Search className="w-3.5 h-3.5 text-zinc-400 group-hover:text-emerald-600 transition-colors" />
-              <span className="font-medium">Quick Find...</span>
-              <kbd className="text-[10px] font-mono bg-white px-1.5 py-0.2 rounded border border-zinc-200 text-zinc-400 font-bold shadow-2xs">
+              <Search className="w-3.5 h-3.5 text-zinc-400 group-hover:text-emerald-500 transition-colors" />
+              <span className="font-medium text-xs">Search gear...</span>
+              <kbd className="text-[10px] font-mono bg-white dark:bg-zinc-850 px-1.5 py-0.5 rounded-md border border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-400 font-bold shadow-2xs group-hover:border-emerald-500/40 transition-colors">
                 ⌘K
               </kbd>
             </button>
 
-            {/* Modern Dock Navigation Tabs */}
-            <nav className="hidden lg:flex items-center space-x-1 bg-zinc-100/80 p-1 rounded-full border border-zinc-200/80 backdrop-blur-md shrink-0">
+            {/* Modern Floating Dock Navigation Tabs */}
+            <nav className="hidden lg:flex items-center space-x-1 p-1 rounded-full bg-zinc-100/90 dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-white/[0.08] backdrop-blur-xl shadow-inner shrink-0">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id || (item.id === 'my-rentals' && (activeTab === 'my-rentals-renter' || activeTab === 'my-rentals-owner'));
@@ -222,101 +232,121 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                         setActiveTab(item.id);
                       }
                     }}
-                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center space-x-1.5 cursor-pointer ${
+                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center space-x-1.5 cursor-pointer ${
                       isActive
-                        ? 'bg-white text-zinc-950 shadow-xs border border-zinc-200/60'
-                        : 'text-zinc-600 hover:text-zinc-950 hover:bg-white/60'
+                        ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-sm ring-1 ring-black/[0.04] dark:ring-white/[0.06]'
+                        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-white/60 dark:hover:bg-zinc-800/60'
                     }`}
                   >
-                    <Icon className={`w-3.5 h-3.5 transition-colors duration-150 ${
-                      isActive ? 'text-emerald-600 stroke-[2.5]' : 'text-zinc-400'
+                    <Icon className={`w-3.5 h-3.5 transition-colors duration-200 ${
+                      isActive ? 'text-emerald-600 dark:text-emerald-400 stroke-[2.5]' : 'text-zinc-400 dark:text-zinc-500'
                     }`} />
                     <span>{item.label}</span>
                   </button>
                 );
               })}
 
-              {/* Dedicated "List an Item" Action Button (Emerald Accent) */}
+              {/* Dedicated "+ List Gear" Primary Action Button (Fluid Glowing CTA) */}
               <button
                 onClick={() => {
                   if (!user) onOpenAuth('login');
                   else setActiveTab('list-item');
                 }}
-                className={`ml-1 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center space-x-1.5 cursor-pointer shadow-xs btn-tactile ${
+                className={`ml-1 px-4 py-1.5 rounded-full text-xs font-black transition-all duration-200 flex items-center space-x-1.5 cursor-pointer shadow-md active:scale-95 group ${
                   activeTab === 'list-item'
-                    ? 'bg-emerald-600 text-white shadow-emerald-600/30'
-                    : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                    ? 'bg-emerald-600 text-white shadow-emerald-600/30 ring-2 ring-emerald-500/40'
+                    : 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30'
                 }`}
               >
-                <PlusCircle className="w-3.5 h-3.5 stroke-[2.8]" />
+                <PlusCircle className="w-3.5 h-3.5 stroke-[2.8] group-hover:rotate-90 transition-transform duration-300" />
                 <span>+ List Gear</span>
               </button>
             </nav>
 
-            {/* Right Action Bar (Fintech-Grade Wallet & User Avatar) */}
+            {/* Right Action Bar (Fintech Wallet, Theme Switcher & User Avatar) */}
             <div className="flex items-center space-x-2 shrink-0 ml-auto lg:ml-0">
               
+              {/* Animated Theme Switcher Button (Sun / Moon) */}
+              <button
+                onClick={toggleTheme}
+                className="relative p-2 rounded-full bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200/80 dark:hover:bg-zinc-800 text-zinc-600 dark:text-amber-400 border border-zinc-200/80 dark:border-white/[0.08] transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 group"
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label="Toggle color theme"
+              >
+                {isDark ? (
+                  <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-90 transition-transform duration-500" />
+                ) : (
+                  <Moon className="w-4 h-4 text-zinc-700 group-hover:-rotate-12 transition-transform duration-300" />
+                )}
+              </button>
+
               {user ? (
                 <>
-                  {/* Notification Bell with Badge */}
+                  {/* Notification Bell with Radiant Ping Badge */}
                   <button
                     onClick={onOpenNotifications}
-                    className="relative p-2 text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100 rounded-full transition-all duration-150 cursor-pointer btn-tactile"
+                    className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] group"
                     title="Campus Activity Alerts"
                   >
-                    <Bell className="w-4 h-4" />
+                    <Bell className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
                     {unreadNotifications > 0 && (
-                      <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-rose-500 text-white text-[8px] font-black rounded-full flex items-center justify-center shadow-xs">
-                        {unreadNotifications}
+                      <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-rose-500 text-white text-[8px] font-black items-center justify-center shadow-xs">
+                          {unreadNotifications}
+                        </span>
                       </span>
                     )}
                   </button>
 
-                  {/* Modern Fintech B-Money Pill (Revolut / Apple Pay style) */}
+                  {/* High-End Fintech B-Money Pill (Revolut / Apple Pay grade) */}
                   <div 
                     onClick={() => {
                       setMoneyModalInitialView('CHOICE');
                       setShowManageMoneyModal(true);
                     }}
-                    className="flex items-center space-x-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-white px-3 py-1.5 rounded-full text-xs font-bold cursor-pointer btn-tactile select-none group shadow-xs"
+                    className="flex items-center space-x-2 bg-gradient-to-r from-zinc-950 via-zinc-900 to-black dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-950 hover:from-zinc-900 hover:to-zinc-850 dark:hover:from-zinc-850 dark:hover:to-zinc-900 border border-zinc-800/90 dark:border-white/[0.12] text-white px-3.5 py-1.5 rounded-full text-xs font-bold cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md hover:border-emerald-500/50 active:scale-95 group select-none"
                     title="Open B-Money Portal (Add Funds & Withdraw Earnings)"
                   >
-                    {/* Live Pulse Dot */}
+                    {/* Concentric Animated Pulse Beacon */}
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
 
                     <span className="text-[10px] font-black text-emerald-400 tracking-wider uppercase">B-Money</span>
-                    <span className="w-px h-3 bg-zinc-800"></span>
-                    <span className="font-mono font-bold text-xs text-zinc-100">
+                    <span className="w-px h-3 bg-zinc-800 dark:bg-zinc-700"></span>
+                    <span className="font-mono font-black text-xs text-zinc-100 group-hover:text-emerald-300 transition-colors">
                       ₹{Number(user.wallet_balance || 0).toFixed(0)}
+                    </span>
+                    <span className="text-[10px] text-zinc-400 group-hover:text-white transition-colors">
+                      +
                     </span>
                   </div>
 
-                  {/* Modern Animated User Avatar with Dropdown */}
+                  {/* Modern User Avatar with Holographic ID Card Dropdown */}
                   <div className="relative" ref={profileContainerRef}>
                     <button
                       onClick={handleToggleProfileMenu}
-                      className="flex items-center space-x-2 bg-zinc-100 hover:bg-zinc-200/80 p-1 sm:pr-2.5 rounded-full text-xs font-bold text-zinc-800 transition-all duration-150 cursor-pointer border border-zinc-200 btn-tactile group"
+                      className="flex items-center space-x-2 bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200/80 dark:hover:bg-zinc-800 p-1 sm:pr-2.5 rounded-full text-xs font-bold text-zinc-800 dark:text-zinc-200 transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] group hover:scale-[1.02] active:scale-95"
                       title="Profile and Account Settings"
                     >
                       {/* Avatar */}
                       <div className="relative">
-                        <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full bg-zinc-900 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                        <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full bg-zinc-900 dark:bg-zinc-800 text-white font-black text-xs flex items-center justify-center shadow-xs ring-1 ring-white/10">
                           {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                         </div>
-                        <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border-2 border-white rounded-full"></span>
+                        <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border-2 border-white dark:border-zinc-900 rounded-full"></span>
                       </div>
 
                       <div className="text-left hidden md:block leading-tight">
-                        <p className="font-extrabold text-zinc-900 text-xs truncate max-w-20">
+                        <p className="font-extrabold text-zinc-900 dark:text-zinc-100 text-xs truncate max-w-20">
                           {user.name.split(' ')[0]}
                         </p>
                       </div>
 
-                      <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-150 ${
-                        showProfileMenu ? 'rotate-180 text-emerald-600' : 'group-hover:text-zinc-600'
+                      <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${
+                        showProfileMenu ? 'rotate-180 text-emerald-600 dark:text-emerald-400' : 'group-hover:text-zinc-600 dark:group-hover:text-zinc-200'
                       }`} />
                     </button>
 
@@ -330,7 +360,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
                     {/* Animated Glass Dropdown Menu */}
                     {showProfileMenu && (
-                      <div className="absolute right-0 mt-2 w-[calc(100vw-1.5rem)] sm:w-80 max-w-sm glass-panel rounded-3xl shadow-2xl shadow-slate-900/15 border border-slate-200/80 py-2.5 z-50 animate-scale-in max-h-[82vh] overflow-y-auto no-scrollbar">
+                      <div className="absolute right-0 mt-2 w-[calc(100vw-1.5rem)] sm:w-80 max-w-sm glass-panel dark:glass-panel-dark dark:bg-zinc-950/95 rounded-3xl shadow-2xl shadow-slate-900/15 dark:shadow-black/70 border border-slate-200/80 dark:border-zinc-800 py-2.5 z-50 animate-scale-in max-h-[82vh] overflow-y-auto no-scrollbar">
                         
                         {/* Student Digital Identity Card (Obsidian Fintech Card) */}
                         <div className="mx-2 mb-2 p-3.5 bg-gradient-to-br from-zinc-950 via-zinc-900 to-slate-950 text-white rounded-2xl border border-zinc-800 shadow-md relative overflow-hidden">
@@ -377,8 +407,8 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                         {(user.id_card_status === 'REJECTED' || (user.id_card_status !== 'VERIFIED' && user.id_card_status !== 'PENDING_VERIFICATION')) && (
                           <div className="px-2 pb-2">
                             {user.id_card_status === 'REJECTED' && (
-                              <div className="p-2 bg-rose-50 border border-rose-200 rounded-xl space-y-1.5">
-                                <p className="text-[10px] text-rose-800 font-semibold leading-tight">
+                              <div className="p-2 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 rounded-xl space-y-1.5">
+                                <p className="text-[10px] text-rose-800 dark:text-rose-300 font-semibold leading-tight">
                                   ⚠️ {user.id_card_rejection_reason || 'Document could not be verified by admin.'}
                                 </p>
                                 <button
@@ -402,9 +432,9 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                                   setShowProfileMenu(false);
                                   onOpenAuth && onOpenAuth('register', 'ID_CARD');
                                 }}
-                                className="w-full mt-1.5 py-1.5 px-2 bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 text-indigo-700 border border-indigo-200/80 rounded-xl text-[10px] font-bold flex items-center justify-center space-x-1 transition cursor-pointer"
+                                className="w-full mt-1.5 py-1.5 px-2 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 hover:from-indigo-100 hover:to-purple-100 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/60 rounded-xl text-[10px] font-bold flex items-center justify-center space-x-1 transition cursor-pointer"
                               >
-                                <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
+                                <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                                 <span>Upload College ID (Get Verified)</span>
                               </button>
                             )}
@@ -412,13 +442,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                         )}
 
                         {/* SECTION: My Listed Items (Shows your listings right in the dropdown) */}
-                        <div className="px-3 py-2.5 bg-slate-50/80 border-b border-slate-100">
+                        <div className="px-3 py-2.5 bg-slate-50/80 dark:bg-zinc-900/60 border-b border-slate-100 dark:border-zinc-800">
                           <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center space-x-1.5 text-purple-700">
+                            <div className="flex items-center space-x-1.5 text-purple-700 dark:text-purple-400">
                               <Tag className="w-3.5 h-3.5" />
                               <span className="text-[11px] font-black uppercase tracking-wider">My Listed Items</span>
                             </div>
-                            <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800">
+                            <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300">
                               {userListings.length} {userListings.length === 1 ? 'item' : 'items'}
                             </span>
                           </div>
@@ -436,22 +466,22 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                                     setActiveTab('my-rentals-owner');
                                     setShowProfileMenu(false);
                                   }}
-                                  className="flex items-center space-x-2.5 p-2 rounded-xl bg-white hover:bg-purple-50/80 border border-slate-200/80 hover:border-purple-200 transition cursor-pointer group shadow-2xs"
+                                  className="flex items-center space-x-2.5 p-2 rounded-xl bg-white dark:bg-zinc-900 hover:bg-purple-50/80 dark:hover:bg-zinc-800 border border-slate-200/80 dark:border-zinc-800 hover:border-purple-200 transition cursor-pointer group shadow-2xs"
                                 >
                                   <img
                                     src={item.images?.[0] || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                                     alt={item.title}
-                                    className="w-9 h-9 rounded-lg object-cover bg-slate-100 shrink-0"
+                                    className="w-9 h-9 rounded-lg object-cover bg-slate-100 dark:bg-zinc-800 shrink-0"
                                   />
                                   <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between">
-                                      <p className="text-xs font-bold text-slate-900 truncate group-hover:text-purple-700">{item.title}</p>
-                                      <span className="text-[9px] text-purple-600 font-bold group-hover:underline">Manage →</span>
+                                      <p className="text-xs font-bold text-slate-900 dark:text-zinc-100 truncate group-hover:text-purple-700 dark:group-hover:text-purple-400">{item.title}</p>
+                                      <span className="text-[9px] text-purple-600 dark:text-purple-400 font-bold group-hover:underline">Manage →</span>
                                     </div>
-                                    <div className="flex items-center justify-between text-[10px] text-slate-500 mt-0.5">
-                                      <span className="font-bold text-slate-800">₹{item.rental_rate_per_day}/day</span>
+                                    <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5">
+                                      <span className="font-bold text-slate-800 dark:text-zinc-200">₹{item.rental_rate_per_day}/day</span>
                                       <span className={`px-1.5 py-0.2 rounded font-black text-[9px] ${
-                                        item.availability_status === 'AVAILABLE' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                                        item.availability_status === 'AVAILABLE' ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300'
                                       }`}>
                                         {item.availability_status}
                                       </span>
@@ -461,14 +491,14 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                               ))}
                             </div>
                           ) : (
-                            <div className="p-3 text-center bg-white rounded-2xl border border-slate-200/60 shadow-2xs">
-                              <p className="text-[11px] text-slate-400 font-medium">You haven't listed any campus items yet.</p>
+                            <div className="p-3 text-center bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200/60 dark:border-zinc-800 shadow-2xs">
+                              <p className="text-[11px] text-slate-400 dark:text-zinc-500 font-medium">You haven't listed any campus items yet.</p>
                               <button
                                 onClick={() => {
                                   setActiveTab('list-item');
                                   setShowProfileMenu(false);
                                 }}
-                                className="mt-1 text-[11px] text-emerald-600 font-bold hover:underline block mx-auto cursor-pointer"
+                                className="mt-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold hover:underline block mx-auto cursor-pointer"
                               >
                                 + List Your First Resource
                               </button>
@@ -476,7 +506,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                           )}
                         </div>
 
-                        {/* SECTION: Remaining Navigation Options (Retained and styled) */}
+                        {/* SECTION: Remaining Navigation Options */}
                         <div className="p-1.5 space-y-0.5">
                           {user?.role === 'ADMIN' && (
                             <button
@@ -484,10 +514,10 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                                 setActiveTab('admin');
                                 setShowProfileMenu(false);
                               }}
-                              className="w-full text-left px-3.5 py-2 text-xs font-bold text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 rounded-xl flex items-center justify-between transition cursor-pointer mb-1 border border-indigo-200"
+                              className="w-full text-left px-3.5 py-2 text-xs font-bold text-indigo-700 dark:text-indigo-400 bg-indigo-50/80 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 rounded-xl flex items-center justify-between transition cursor-pointer mb-1 border border-indigo-200 dark:border-indigo-800/60"
                             >
                               <div className="flex items-center space-x-2">
-                                <ShieldCheck className="w-4 h-4 text-indigo-600" />
+                                <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                                 <span>Campus Admin Console</span>
                               </div>
                               <ArrowUpRight className="w-3 h-3 text-indigo-400" />
@@ -498,13 +528,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                               setActiveTab('list-item');
                               setShowProfileMenu(false);
                             }}
-                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl flex items-center justify-between transition cursor-pointer"
+                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-xl flex items-center justify-between transition cursor-pointer"
                           >
                             <div className="flex items-center space-x-2">
-                              <PlusCircle className="w-4 h-4 text-emerald-600" />
-                              <span className="font-bold text-emerald-700">+ List New Resource</span>
+                              <PlusCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                              <span className="font-bold text-emerald-700 dark:text-emerald-400">+ List New Resource</span>
                             </div>
-                            <ArrowUpRight className="w-3 h-3 text-slate-300" />
+                            <ArrowUpRight className="w-3 h-3 text-slate-300 dark:text-zinc-600" />
                           </button>
 
                           <button
@@ -512,13 +542,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                               setActiveTab('history');
                               setShowProfileMenu(false);
                             }}
-                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl flex items-center justify-between transition cursor-pointer"
+                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-700 dark:hover:text-indigo-400 rounded-xl flex items-center justify-between transition cursor-pointer"
                           >
                             <div className="flex items-center space-x-2">
-                              <History className="w-4 h-4 text-indigo-500" />
+                              <History className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                               <span>History</span>
                             </div>
-                            <ArrowUpRight className="w-3 h-3 text-slate-300" />
+                            <ArrowUpRight className="w-3 h-3 text-slate-300 dark:text-zinc-600" />
                           </button>
 
                           <button
@@ -526,13 +556,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                               setActiveTab('my-rentals-renter');
                               setShowProfileMenu(false);
                             }}
-                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl flex items-center justify-between transition cursor-pointer"
+                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-700 dark:hover:text-indigo-400 rounded-xl flex items-center justify-between transition cursor-pointer"
                           >
                             <div className="flex items-center space-x-2">
-                              <ShoppingBag className="w-4 h-4 text-indigo-500" />
+                              <ShoppingBag className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                               <span>Items I'm Renting</span>
                             </div>
-                            <ArrowUpRight className="w-3 h-3 text-slate-300" />
+                            <ArrowUpRight className="w-3 h-3 text-slate-300 dark:text-zinc-600" />
                           </button>
 
                           <button
@@ -540,13 +570,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                               setActiveTab('my-rentals-owner');
                               setShowProfileMenu(false);
                             }}
-                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-purple-50 hover:text-purple-700 rounded-xl flex items-center justify-between transition cursor-pointer"
+                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-300 hover:bg-purple-50 dark:hover:bg-purple-950/40 hover:text-purple-700 dark:hover:text-purple-400 rounded-xl flex items-center justify-between transition cursor-pointer"
                           >
                             <div className="flex items-center space-x-2">
-                              <Tag className="w-4 h-4 text-purple-500" />
+                              <Tag className="w-4 h-4 text-purple-500 dark:text-purple-400" />
                               <span>All Listings & Escrow Ledger</span>
                             </div>
-                            <ArrowUpRight className="w-3 h-3 text-slate-300" />
+                            <ArrowUpRight className="w-3 h-3 text-slate-300 dark:text-zinc-600" />
                           </button>
 
                           <button
@@ -554,17 +584,17 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                               setActiveTab('demand-board');
                               setShowProfileMenu(false);
                             }}
-                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl flex items-center justify-between transition cursor-pointer"
+                            className="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-700 dark:hover:text-indigo-400 rounded-xl flex items-center justify-between transition cursor-pointer"
                           >
                             <div className="flex items-center space-x-2">
-                              <Bell className="w-4 h-4 text-slate-400" />
+                              <Bell className="w-4 h-4 text-slate-400 dark:text-zinc-500" />
                               <span>Requests Board</span>
                             </div>
-                            <ArrowUpRight className="w-3 h-3 text-slate-300" />
+                            <ArrowUpRight className="w-3 h-3 text-slate-300 dark:text-zinc-600" />
                           </button>
                         </div>
 
-                        <div className="border-t border-slate-100 mx-2 my-1"></div>
+                        <div className="border-t border-slate-100 dark:border-zinc-800 mx-2 my-1"></div>
 
                         <div className="p-1.5">
                           <button
@@ -572,7 +602,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                               setShowProfileMenu(false);
                               setShowLogoutConfirm(true);
                             }}
-                            className="w-full text-left px-3.5 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center space-x-2 transition cursor-pointer"
+                            className="w-full text-left px-3.5 py-2 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl flex items-center space-x-2 transition cursor-pointer"
                           >
                             <LogOut className="w-4 h-4" />
                             <span>Sign Out</span>
@@ -587,21 +617,21 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 <div className="flex items-center space-x-2 shrink-0">
                   <button
                     onClick={() => setActiveTab('admin-login')}
-                    className="p-1.5 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-all duration-150 cursor-pointer flex items-center space-x-1 border border-zinc-200 btn-tactile"
+                    className="p-1.5 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-all duration-200 cursor-pointer flex items-center space-x-1 border border-zinc-200 dark:border-white/[0.08] hover:scale-105 active:scale-95"
                     title="Campus Administrator Portal"
                   >
-                    <ShieldCheck className="w-3.5 h-3.5 text-zinc-600 shrink-0" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400 shrink-0" />
                     <span className="hidden sm:inline">Admin</span>
                   </button>
                   <button
                     onClick={() => onOpenAuth('login')}
-                    className="px-3.5 py-1.5 text-xs font-bold text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 rounded-full transition-all duration-150 cursor-pointer whitespace-nowrap btn-tactile"
+                    className="px-3.5 py-1.5 text-xs font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-all duration-200 cursor-pointer whitespace-nowrap hover:scale-105 active:scale-95"
                   >
                     Sign In
                   </button>
                   <button
                     onClick={() => onOpenAuth('register')}
-                    className="px-4 py-1.5 text-xs font-bold bg-zinc-950 hover:bg-zinc-800 text-white rounded-full shadow-sm hover:shadow transition-all duration-150 cursor-pointer whitespace-nowrap btn-tactile"
+                    className="px-4 py-1.5 text-xs font-black bg-gradient-to-r from-zinc-950 via-zinc-900 to-black hover:from-zinc-900 hover:to-zinc-800 dark:from-emerald-600 dark:to-teal-600 dark:hover:from-emerald-500 dark:hover:to-teal-500 text-white rounded-full shadow-md hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-200 cursor-pointer whitespace-nowrap hover:scale-105 active:scale-95 ring-1 ring-white/10"
                   >
                     Join Campus
                   </button>
@@ -611,13 +641,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
               {/* Mobile Menu Toggle Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 rounded-xl transition cursor-pointer btn-tactile ml-1"
+                className="lg:hidden p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] ml-1"
                 aria-label="Toggle navigation menu"
               >
                 {mobileMenuOpen ? (
-                  <X className="w-5 h-5 text-zinc-900" />
+                  <X className="w-5 h-5 text-zinc-900 dark:text-zinc-100" />
                 ) : (
-                  <Menu className="w-5 h-5 text-zinc-700" />
+                  <Menu className="w-5 h-5 text-zinc-700 dark:text-zinc-300" />
                 )}
               </button>
 
@@ -627,7 +657,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
         {/* Animated Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-zinc-200/80 bg-white/95 backdrop-blur-2xl px-4 py-4 space-y-3 animate-fade-in-down shadow-xl max-h-[80vh] overflow-y-auto">
+          <div className="lg:hidden border-t border-zinc-200/80 dark:border-white/[0.08] bg-white/95 dark:bg-[#07080b]/95 backdrop-blur-2xl px-4 py-4 space-y-3 animate-fade-in-down shadow-2xl max-h-[82vh] overflow-y-auto">
             
             {/* Quick Search Trigger */}
             <div 
@@ -636,10 +666,30 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 setMobileMenuOpen(false);
                 window.dispatchEvent(new CustomEvent('campusshare-focus-search'));
               }}
-              className="flex items-center space-x-2.5 px-3.5 py-2.5 rounded-xl bg-zinc-100/90 border border-zinc-200/80 text-zinc-500 text-xs cursor-pointer hover:bg-zinc-100 transition"
+              className="flex items-center space-x-2.5 px-3.5 py-2.5 rounded-2xl bg-zinc-100/90 dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 text-xs cursor-pointer hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition"
             >
-              <Search className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span className="font-medium text-zinc-700 truncate">Search Casio, drafters, cycles, DSLR...</span>
+              <Search className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span className="font-medium text-zinc-700 dark:text-zinc-300 truncate">Search Casio, drafters, cycles, DSLR...</span>
+            </div>
+
+            {/* Mobile Theme Switcher Row */}
+            <div className="flex items-center justify-between p-2.5 rounded-2xl bg-zinc-100/80 dark:bg-zinc-900/80 border border-zinc-200/80 dark:border-zinc-800">
+              <div className="flex items-center space-x-2">
+                {isDark ? (
+                  <Moon className="w-4 h-4 text-amber-400" />
+                ) : (
+                  <Sun className="w-4 h-4 text-amber-500" />
+                )}
+                <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
+                  {isDark ? 'Dark Mode Active' : 'Light Mode Active'}
+                </span>
+              </div>
+              <button
+                onClick={toggleTheme}
+                className="px-3.5 py-1 rounded-full text-xs font-bold bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs border border-zinc-200 dark:border-zinc-700 cursor-pointer"
+              >
+                Switch to {isDark ? 'Light' : 'Dark'}
+              </button>
             </div>
 
             {/* Navigation Links Grid */}
@@ -659,13 +709,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                         setActiveTab(item.id);
                       }
                     }}
-                    className={`flex items-center space-x-2 p-2.5 rounded-xl text-xs font-bold transition text-left cursor-pointer ${
+                    className={`flex items-center space-x-2 p-2.5 rounded-2xl text-xs font-bold transition text-left cursor-pointer ${
                       isActive
-                        ? 'bg-zinc-950 text-white shadow-xs'
-                        : 'bg-zinc-50 hover:bg-zinc-100 text-zinc-700'
+                        ? 'bg-zinc-950 dark:bg-zinc-800 text-white shadow-xs'
+                        : 'bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-400' : 'text-zinc-500'}`} />
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
                     <span className="truncate">{item.label}</span>
                   </button>
                 );
@@ -679,21 +729,21 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 if (!user) onOpenAuth('login');
                 else setActiveTab('list-item');
               }}
-              className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md shadow-emerald-950/20 cursor-pointer"
+              className="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-2xl text-xs font-black transition flex items-center justify-center space-x-2 shadow-lg shadow-emerald-950/20 cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
               <span>+ List New Gear for Rent</span>
             </button>
 
             {/* Admin Console Quick Link */}
-            <div className="pt-2 border-t border-zinc-100 flex items-center justify-between text-xs">
+            <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs">
               <span className="text-[11px] text-zinc-400">Campus Student Network</span>
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   setActiveTab(user?.role === 'ADMIN' ? 'admin' : 'admin-login');
                 }}
-                className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1 cursor-pointer"
+                className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
               >
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Admin Console</span>

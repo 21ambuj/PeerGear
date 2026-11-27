@@ -308,7 +308,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200/90 animate-scale-in max-h-[92vh] overflow-y-auto no-scrollbar"
+        className="bg-white dark:bg-zinc-900 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200/90 dark:border-zinc-800 animate-scale-in max-h-[92vh] overflow-y-auto no-scrollbar"
         onClick={(e) => e.stopPropagation()}
       >
         
@@ -317,13 +317,13 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
         {/* ========================================================================= */}
         {regStep === 'SUCCESS' ? (
           <div className="text-center py-6 space-y-5 animate-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+            <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto shadow-inner">
               <CheckCircle2 className="w-9 h-9 stroke-[2.5]" />
             </div>
             
             <div>
-              <h2 className="text-xl font-bold text-slate-900">College ID Submitted Successfully!</h2>
-              <p className="text-xs text-slate-600 mt-2 px-2 leading-relaxed">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-zinc-100">College ID Submitted Successfully!</h2>
+              <p className="text-xs text-slate-600 dark:text-zinc-400 mt-2 px-2 leading-relaxed">
                 Our campus moderation team will verify your credentials soon. Your account is active and you can now explore the platform.
               </p>
             </div>
@@ -337,7 +337,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                 <span>Go to Home Page Now</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <p className="text-[11px] text-slate-400">Directing automatically in 2 seconds...</p>
+              <p className="text-[11px] text-slate-400 dark:text-zinc-500">Directing automatically in 2 seconds...</p>
             </div>
           </div>
         ) : regStep === 'ID_CARD' ? (
@@ -347,42 +347,42 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
           <div>
             <div className="flex justify-between items-start mb-5">
               <div>
-                <div className="flex items-center space-x-1.5 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-1">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700">Email Verified &#10003;</span>
+                <div className="flex items-center space-x-1.5 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <span className="text-emerald-700 dark:text-emerald-400">Email Verified &#10003;</span>
                 </div>
-                <h2 className="text-2xl font-bold text-slate-900">
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-zinc-100">
                   {user?.id_card_status === 'REJECTED' ? 'Re-upload Student ID Card' : 'Upload Student ID Card'}
                 </h2>
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1">
                   Upload a photo or PDF of your University ID card, library pass, or admission fee slip.
                 </p>
               </div>
               <button 
                 onClick={onClose} 
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {user?.id_card_status === 'REJECTED' && user?.id_card_rejection_reason && (
-              <div className="mb-4 bg-rose-50 border border-rose-200 text-rose-800 p-3 rounded-2xl text-xs space-y-1">
-                <p className="font-bold text-rose-900 flex items-center space-x-1">
+              <div className="mb-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200 p-3 rounded-2xl text-xs space-y-1">
+                <p className="font-bold text-rose-900 dark:text-rose-100 flex items-center space-x-1">
                   <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
                   <span>Previous ID Submission Rejected:</span>
                 </p>
-                <p className="pl-5 text-[11px] leading-relaxed text-rose-700 italic">
+                <p className="pl-5 text-[11px] leading-relaxed text-rose-700 dark:text-rose-300 italic">
                   "{user.id_card_rejection_reason}"
                 </p>
-                <p className="pl-5 text-[10px] text-rose-600 font-semibold">
+                <p className="pl-5 text-[10px] text-rose-600 dark:text-rose-400 font-semibold">
                   Please upload a clearer photo or official document addressing the note above.
                 </p>
               </div>
             )}
 
             {error && (
-              <div className="mb-4 bg-rose-50 border border-rose-200 text-rose-700 px-3 py-2.5 rounded-xl text-xs flex items-center space-x-2">
+              <div className="mb-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 px-3 py-2.5 rounded-xl text-xs flex items-center space-x-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{error}</span>
               </div>
@@ -390,7 +390,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
 
             <form onSubmit={handleUploadIdCard} className="space-y-4">
               {/* Upload Dropzone */}
-              <div className="border-2 border-dashed border-indigo-200 hover:border-indigo-400 rounded-2xl p-4 bg-indigo-50/40 transition text-center relative group">
+              <div className="border-2 border-dashed border-indigo-200 dark:border-indigo-900/60 hover:border-indigo-400 dark:hover:border-indigo-600 rounded-2xl p-4 bg-indigo-50/40 dark:bg-indigo-950/20 transition text-center relative group">
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp,application/pdf"
@@ -401,39 +401,39 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                 {idCardPreview ? (
                   <div className="space-y-2 py-2">
                     {idCardFileType === 'pdf' ? (
-                      <div className="flex items-center justify-center space-x-3 bg-white p-3 rounded-xl border border-indigo-100 shadow-2xs">
+                      <div className="flex items-center justify-center space-x-3 bg-white dark:bg-zinc-800 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900/60 shadow-2xs">
                         <FileText className="w-8 h-8 text-rose-600 shrink-0" />
                         <div className="text-left overflow-hidden">
-                          <p className="text-xs font-bold text-slate-800 truncate max-w-[200px]">{idCardFileName}</p>
-                          <span className="text-[10px] text-slate-400 font-medium">PDF Document &bull; {idCardFileSize}</span>
+                          <p className="text-xs font-bold text-slate-800 dark:text-zinc-200 truncate max-w-[200px]">{idCardFileName}</p>
+                          <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-medium">PDF Document &bull; {idCardFileSize}</span>
                         </div>
                       </div>
                     ) : (
-                      <div className="relative mx-auto max-w-[240px] rounded-xl overflow-hidden border border-slate-200 shadow-xs">
+                      <div className="relative mx-auto max-w-[240px] rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-xs">
                         <img src={idCardPreview} alt="ID Preview" className="w-full h-32 object-cover" />
                         <div className="absolute bottom-1 right-1 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded font-mono">
                           {idCardFileSize}
                         </div>
                       </div>
                     )}
-                    <span className="text-[11px] font-bold text-indigo-600 hover:underline block pt-1">
+                    <span className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline block pt-1">
                       Click to choose a different photo or PDF
                     </span>
                   </div>
                 ) : (
                   <div className="py-6 space-y-2">
-                    <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-2xs">
+                    <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mx-auto shadow-2xs">
                       <Upload className="w-6 h-6" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-slate-800">Click to upload College ID Card</p>
-                      <p className="text-[11px] text-slate-500 mt-0.5">Supports JPG, PNG, WEBP, or PDF (Max 10MB)</p>
+                      <p className="text-xs font-bold text-slate-800 dark:text-zinc-200">Click to upload College ID Card</p>
+                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5">Supports JPG, PNG, WEBP, or PDF (Max 10MB)</p>
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3 text-[11px] text-amber-800 flex items-start space-x-2">
+              <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 rounded-xl p-3 text-[11px] text-amber-800 dark:text-amber-300 flex items-start space-x-2">
                 <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                 <span>Your student ID card is securely stored and reviewed solely by campus moderation to ensure community safety.</span>
               </div>
@@ -455,20 +455,20 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
           <div>
             <div className="flex justify-between items-start mb-4">
               <div>
-                <div className="flex items-center space-x-1.5 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-1">
+                <div className="flex items-center space-x-1.5 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
                   <KeyRound className="w-4 h-4" />
                   <span>Email Verification</span>
                 </div>
-                <h2 className="text-2xl font-bold text-slate-900">Enter Verification Code</h2>
-                <div className="flex items-center space-x-2 text-xs text-slate-500 mt-1">
-                  <span>Sent to: <span className="font-bold text-slate-800">{email}</span></span>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-zinc-100">Enter Verification Code</h2>
+                <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-zinc-400 mt-1">
+                  <span>Sent to: <span className="font-bold text-slate-800 dark:text-zinc-200">{email}</span></span>
                   <button
                     type="button"
                     onClick={() => {
                       setRegStep('FORM');
                       setError('');
                     }}
-                    className="text-indigo-600 hover:underline font-semibold cursor-pointer"
+                    className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold cursor-pointer"
                   >
                     (Change)
                   </button>
@@ -476,25 +476,25 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
               </div>
               <button 
                 onClick={onClose} 
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Spam / Junk Notice Box */}
-            <div className="mb-4 bg-amber-50/90 border border-amber-200/90 rounded-2xl p-3 text-xs text-amber-900 space-y-1">
-              <div className="flex items-center space-x-1.5 font-bold text-amber-950">
-                <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+            <div className="mb-4 bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/90 dark:border-amber-800/60 rounded-2xl p-3 text-xs text-amber-900 dark:text-amber-200 space-y-1">
+              <div className="flex items-center space-x-1.5 font-bold text-amber-950 dark:text-amber-100">
+                <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Can't find the email in your Inbox?</span>
               </div>
-              <p className="pl-5 text-[11px] leading-relaxed text-amber-800">
+              <p className="pl-5 text-[11px] leading-relaxed text-amber-800 dark:text-amber-300">
                 Please check your <strong>Spam</strong>, <strong>Junk</strong>, or <strong>Promotions</strong> folder! Google Mail sometimes places automated verification codes from new senders in Spam.
               </p>
             </div>
 
             {error && (
-              <div className="mb-4 bg-rose-50 border border-rose-200 text-rose-700 px-3 py-2.5 rounded-xl text-xs flex items-center space-x-2">
+              <div className="mb-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 px-3 py-2.5 rounded-xl text-xs flex items-center space-x-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{error}</span>
               </div>
@@ -502,7 +502,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
 
             <form onSubmit={handleVerifyOtp} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">Enter 6-Digit Code</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">Enter 6-Digit Code</label>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -511,11 +511,11 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                   onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                   onPaste={handleOtpPaste}
                   placeholder="000000"
-                  className="w-full py-3.5 text-center text-2xl font-mono font-bold tracking-[10px] border-2 border-indigo-200 focus:border-indigo-600 rounded-2xl focus:outline-hidden bg-slate-50 text-indigo-900 shadow-inner"
+                  className="w-full py-3.5 text-center text-2xl font-mono font-bold tracking-[10px] border-2 border-indigo-200 dark:border-indigo-900/80 focus:border-indigo-600 rounded-2xl focus:outline-hidden bg-slate-50 dark:bg-zinc-800 text-indigo-900 dark:text-indigo-300 shadow-inner"
                   autoFocus
                   required
                 />
-                <p className="text-[11px] text-slate-400 mt-1.5 text-center">
+                <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-1.5 text-center">
                   Valid for 10 minutes &bull; Paste friendly (spaces/dashes handled automatically)
                 </p>
               </div>
@@ -534,7 +534,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                   type="button"
                   disabled={resendTimer > 0 || resendLoading}
                   onClick={handleResendOtp}
-                  className="text-xs font-bold text-indigo-600 hover:text-indigo-800 disabled:text-slate-400 cursor-pointer disabled:cursor-not-allowed inline-flex items-center space-x-1"
+                  className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 disabled:text-slate-400 dark:disabled:text-zinc-600 cursor-pointer disabled:cursor-not-allowed inline-flex items-center space-x-1"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${resendLoading ? 'animate-spin' : ''}`} />
                   <span>
@@ -554,14 +554,14 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
             {/* Header */}
             <div className="flex justify-between items-start mb-6">
               <div>
-                <div className="flex items-center space-x-1.5 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-1">
+                <div className="flex items-center space-x-1.5 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
                   <ShieldCheck className="w-4 h-4" />
                   <span>Campus Verified</span>
                 </div>
-                <h2 className="text-2xl font-bold text-slate-900">
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-zinc-100">
                   {mode === 'login' ? 'Welcome Back' : 'Create Student Account'}
                 </h2>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
                   {mode === 'login' 
                     ? 'Sign in to access your campus rentals and wallet' 
                     : 'Join with any personal or campus email (OTP verified)'}
@@ -569,19 +569,19 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
               </div>
               <button 
                 onClick={onClose} 
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Mode Switch Tabs */}
-            <div className="flex bg-slate-100 p-1 rounded-xl mb-5">
+            <div className="flex bg-slate-100 dark:bg-zinc-800/90 p-1 rounded-xl mb-5">
               <button
                 type="button"
                 onClick={() => { setMode('login'); setError(''); }}
                 className={`flex-1 py-2 text-xs font-bold rounded-lg transition cursor-pointer ${
-                  mode === 'login' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                  mode === 'login' ? 'bg-white dark:bg-zinc-900 text-indigo-700 dark:text-indigo-400 shadow-xs' : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100'
                 }`}
               >
                 Sign In
@@ -590,7 +590,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                 type="button"
                 onClick={() => { setMode('register'); setError(''); }}
                 className={`flex-1 py-2 text-xs font-bold rounded-lg transition cursor-pointer ${
-                  mode === 'register' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                  mode === 'register' ? 'bg-white dark:bg-zinc-900 text-indigo-700 dark:text-indigo-400 shadow-xs' : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100'
                 }`}
               >
                 Register
@@ -598,7 +598,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
             </div>
 
             {error && (
-              <div className="mb-4 bg-rose-50 border border-rose-200 text-rose-700 px-3 py-2.5 rounded-xl text-xs flex items-center space-x-2">
+              <div className="mb-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 px-3 py-2.5 rounded-xl text-xs flex items-center space-x-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{error}</span>
               </div>
@@ -609,7 +609,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
               {mode === 'register' && (
                 <>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Full Name</label>
                     <div className="relative">
                       <User className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
                       <input
@@ -617,7 +617,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                         placeholder="e.g. Rahul Sharma"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                         required
                       />
                     </div>
@@ -625,30 +625,30 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
 
                   <div className="grid grid-cols-2 gap-2.5">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">College Roll / Reg No.</label>
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">College Roll / Reg No.</label>
                       <input
                         type="text"
                         placeholder="e.g. 12014522"
                         value={collegeId}
                         onChange={(e) => setCollegeId(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                         required
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">Hostel / Campus Room</label>
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Hostel / Campus Room</label>
                       <input
                         type="text"
                         placeholder="e.g. Block B, 304"
                         value={hostelBlock}
                         onChange={(e) => setHostelBlock(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Phone Number</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Phone Number</label>
                     <div className="relative">
                       <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
                       <input
@@ -656,7 +656,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                         placeholder="e.g. +91 9876543210"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                   </div>
@@ -664,7 +664,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">
                   {mode === 'register' ? 'Email Address (Personal or University Email)' : 'Email Address'}
                 </label>
                 <div className="relative">
@@ -674,14 +674,14 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                     placeholder="e.g. student@gmail.com or student@campus.edu"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Password</label>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
                   <input
@@ -689,7 +689,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     required
                   />
                 </div>

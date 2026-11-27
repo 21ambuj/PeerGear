@@ -215,11 +215,11 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
 
   return (
     <div 
-      className="fixed inset-0 bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50 animate-fade-in-up"
+      className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50 animate-fade-in-up"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200/90 animate-scale-in max-h-[94vh] flex flex-col relative"
+        className="bg-white dark:bg-zinc-950 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200/90 dark:border-zinc-800 animate-scale-in max-h-[94vh] flex flex-col relative text-zinc-900 dark:text-zinc-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -258,27 +258,27 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
         </div>
 
         {/* Live Balance Card Banner */}
-        <div className="bg-gradient-to-r from-slate-50 via-indigo-50/30 to-emerald-50/40 p-4 border-b border-slate-200 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-slate-50 via-indigo-50/30 to-emerald-50/40 dark:from-zinc-900 dark:via-zinc-900/60 dark:to-zinc-900/80 p-4 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-11 h-11 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-700 shadow-inner">
+            <div className="w-11 h-11 bg-emerald-100 dark:bg-emerald-950/60 rounded-2xl flex items-center justify-center text-emerald-700 dark:text-emerald-400 shadow-inner">
               <Wallet className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 block">
                 Total Available B-Money
               </span>
-              <span className="text-2xl font-black text-slate-900 font-mono tracking-tight">
+              <span className="text-2xl font-black text-slate-900 dark:text-white font-mono tracking-tight">
                 ₹{walletBalance.toFixed(2)}
               </span>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
-              <Sparkles className="w-2.5 h-2.5 text-emerald-600" />
+            <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">
+              <Sparkles className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-400" />
               <span>Escrow Protected</span>
             </span>
-            <span className="text-[10px] text-slate-400 block mt-0.5">Ready for Rentals & Payout</span>
+            <span className="text-[10px] text-slate-400 dark:text-zinc-500 block mt-0.5">Ready for Rentals & Payout</span>
           </div>
         </div>
 
@@ -289,8 +289,8 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
           {currentView === 'CHOICE' && (
             <div className="space-y-4">
               <div className="text-center max-w-sm mx-auto mb-2">
-                <h3 className="text-base font-black text-slate-900">Manage Your Campus Funds</h3>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <h3 className="text-base font-black text-slate-900 dark:text-white">Manage Your Campus Funds</h3>
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
                   Deposit funds for gear rentals or withdraw your lending profits directly to your bank account.
                 </p>
               </div>
@@ -302,25 +302,25 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                 <button
                   type="button"
                   onClick={() => setCurrentView('ADD')}
-                  className="p-5 rounded-2xl border-2 border-emerald-500/30 hover:border-emerald-600 bg-gradient-to-b from-emerald-50/60 to-white text-left transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-0.5 cursor-pointer group flex flex-col justify-between"
+                  className="p-5 rounded-2xl border-2 border-emerald-500/30 hover:border-emerald-600 dark:border-emerald-500/40 dark:hover:border-emerald-400 bg-gradient-to-b from-emerald-50/60 to-white dark:from-emerald-950/20 dark:to-zinc-900 text-left transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-0.5 cursor-pointer group flex flex-col justify-between"
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                       <ArrowDownLeft className="w-6 h-6" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full">
                       Instant Top-Up
                     </span>
                   </div>
                   <div>
-                    <h4 className="text-sm font-black text-slate-900 group-hover:text-emerald-700 transition-colors">
+                    <h4 className="text-sm font-black text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                       + Add Money
                     </h4>
-                    <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 leading-relaxed">
                       Recharge balance via Google Pay, PhonePe, Paytm, or dynamic QR code for gear security deposits.
                     </p>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-emerald-100 flex items-center justify-between text-xs font-bold text-emerald-700">
+                  <div className="mt-4 pt-3 border-t border-emerald-100 dark:border-emerald-900/40 flex items-center justify-between text-xs font-bold text-emerald-700 dark:text-emerald-400">
                     <span>Recharge with UPI</span>
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
@@ -330,25 +330,25 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                 <button
                   type="button"
                   onClick={() => setCurrentView('WITHDRAW')}
-                  className="p-5 rounded-2xl border-2 border-indigo-500/30 hover:border-indigo-600 bg-gradient-to-b from-indigo-50/60 to-white text-left transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5 cursor-pointer group flex flex-col justify-between"
+                  className="p-5 rounded-2xl border-2 border-indigo-500/30 hover:border-indigo-600 dark:border-indigo-500/40 dark:hover:border-indigo-400 bg-gradient-to-b from-indigo-50/60 to-white dark:from-indigo-950/20 dark:to-zinc-900 text-left transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5 cursor-pointer group flex flex-col justify-between"
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
                       <ArrowUpRight className="w-6 h-6" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full">
                       Direct Payout
                     </span>
                   </div>
                   <div>
-                    <h4 className="text-sm font-black text-slate-900 group-hover:text-indigo-700 transition-colors">
+                    <h4 className="text-sm font-black text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                       ↑ Withdraw Money
                     </h4>
-                    <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 leading-relaxed">
                       Transfer lending earnings directly into your personal bank account or UPI ID via instant IMPS.
                     </p>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-indigo-100 flex items-center justify-between text-xs font-bold text-indigo-700">
+                  <div className="mt-4 pt-3 border-t border-indigo-100 dark:border-indigo-900/40 flex items-center justify-between text-xs font-bold text-indigo-700 dark:text-indigo-400">
                     <span>Cash Out to Bank</span>
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
@@ -357,7 +357,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
               </div>
 
               {/* Escrow Guarantee Footer Note */}
-              <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-[11px] text-slate-600 flex items-center space-x-2.5">
+              <div className="p-3 bg-slate-50 dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 text-[11px] text-slate-600 dark:text-zinc-400 flex items-center space-x-2.5">
                 <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
                 <span>
                   <strong>Zero Platform Commission:</strong> 100% of rental earnings belong to student lenders. Security deposits are returned in full with zero deduction upon safe item handover.

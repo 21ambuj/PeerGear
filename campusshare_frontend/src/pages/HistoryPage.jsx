@@ -163,12 +163,12 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
       
       {/* Page Header */}
       <div className="mb-6">
-        <div className="inline-flex items-center space-x-1.5 text-emerald-700 text-[10px] font-black uppercase tracking-wider bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full mb-1.5">
-          <History className="w-3.5 h-3.5 text-emerald-600" />
+        <div className="inline-flex items-center space-x-1.5 text-emerald-700 dark:text-emerald-400 text-[10px] font-black uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-full mb-1.5">
+          <History className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
           <span>PeerGear Exchange & Escrow Ledger</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight">Exchange & Financial History</h1>
-        <p className="text-xs sm:text-sm text-zinc-500 mt-1 max-w-2xl leading-relaxed font-medium">
+        <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 dark:text-zinc-100 tracking-tight">Exchange & Financial History</h1>
+        <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1 max-w-2xl leading-relaxed font-medium">
           Comprehensive records of resources you have borrowed, items peers rented from your inventory, and your live escrow wallet deposits and refunds.
         </p>
       </div>
@@ -177,14 +177,14 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         
         {/* Card 1: Total Spent on Rentals */}
-        <div className="bg-white rounded-3xl p-5 border border-zinc-200/90 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
+        <div className="bg-white dark:bg-zinc-900 rounded-3xl p-5 border border-zinc-200/90 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-zinc-500">Total Spent on Rentals</span>
-            <div className="p-2.5 bg-zinc-100 text-zinc-700 rounded-xl">
+            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">Total Spent on Rentals</span>
+            <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-xl">
               <ShoppingBag className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-black text-zinc-950 font-mono tracking-tight">
+          <p className="text-xl sm:text-2xl font-black text-zinc-950 dark:text-zinc-100 font-mono tracking-tight">
             ₹{Number(walletData.summary?.total_spent_rentals || 0).toFixed(0)}
           </p>
           <p className="text-[11px] text-zinc-400 mt-1">
@@ -193,30 +193,30 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
         </div>
 
         {/* Card 2: Security Deposits 100% Refunded */}
-        <div className="bg-white rounded-3xl p-5 border border-zinc-200/90 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
+        <div className="bg-white dark:bg-zinc-900 rounded-3xl p-5 border border-zinc-200/90 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-zinc-500">Deposits 100% Refunded</span>
-            <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
+            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">Deposits 100% Refunded</span>
+            <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-xl">
               <ShieldCheck className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-black text-emerald-600 font-mono tracking-tight">
+          <p className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono tracking-tight">
             ₹{Number(walletData.summary?.total_refunded || 0).toFixed(0)}
           </p>
-          <p className="text-[11px] text-emerald-700/80 font-bold mt-1">
+          <p className="text-[11px] text-emerald-700/80 dark:text-emerald-400/90 font-bold mt-1">
             Returned safely to wallet
           </p>
         </div>
 
         {/* Card 3: Earnings from Lending */}
-        <div className="bg-white rounded-3xl p-5 border border-zinc-200/90 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
+        <div className="bg-white dark:bg-zinc-900 rounded-3xl p-5 border border-zinc-200/90 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:shadow-zinc-950/5 transition-all duration-300 card-interactive">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-zinc-500">Lending Earnings</span>
-            <div className="p-2.5 bg-zinc-100 text-zinc-700 rounded-xl">
+            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">Lending Earnings</span>
+            <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-xl">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-black text-zinc-950 font-mono tracking-tight">
+          <p className="text-xl sm:text-2xl font-black text-zinc-950 dark:text-zinc-100 font-mono tracking-tight">
             ₹{Number(walletData.summary?.total_earned_lending || 0).toFixed(0)}
           </p>
           <p className="text-[11px] text-zinc-400 mt-1">
@@ -244,21 +244,21 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
       </div>
 
       {/* Control Navigation Bar (Search + Section Selector) */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 p-4 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 p-4 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         
         {/* Three Primary Sections Tabs */}
-        <div className="flex flex-wrap bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80 gap-1.5">
+        <div className="flex flex-wrap bg-slate-100/90 dark:bg-zinc-800/80 p-1.5 rounded-2xl border border-slate-200/80 dark:border-zinc-700/80 gap-1.5">
           <button
             onClick={() => setActiveSection('rented')}
             className={`px-4 py-2 rounded-xl text-xs font-bold btn-tactile flex items-center space-x-1.5 cursor-pointer ${
               activeSection === 'rented'
-                ? 'bg-white text-indigo-700 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-zinc-900 text-indigo-700 dark:text-indigo-400 shadow-sm'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100'
             }`}
           >
             <ShoppingBag className="w-3.5 h-3.5" />
             <span>1. Items I Rented</span>
-            <span className="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-100 text-indigo-800 font-extrabold">
+            <span className="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 font-extrabold">
               {myRentedItems.length}
             </span>
           </button>
@@ -267,13 +267,13 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
             onClick={() => setActiveSection('lent')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer ${
               activeSection === 'lent'
-                ? 'bg-white text-purple-700 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-zinc-900 text-purple-700 dark:text-purple-400 shadow-xs'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100'
             }`}
           >
             <Tag className="w-3.5 h-3.5" />
             <span>2. Peers Rented My Items</span>
-            <span className="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-purple-100 text-purple-800 font-extrabold">
+            <span className="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-purple-100 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 font-extrabold">
               {peersRentedMyItems.length}
             </span>
           </button>
@@ -282,13 +282,13 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
             onClick={() => setActiveSection('wallet')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer ${
               activeSection === 'wallet'
-                ? 'bg-white text-emerald-700 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-zinc-900 text-emerald-700 dark:text-emerald-400 shadow-xs'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100'
             }`}
           >
             <Wallet className="w-3.5 h-3.5" />
             <span>3. Wallet & Refund Ledger</span>
-            <span className="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-extrabold">
+            <span className="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-extrabold">
               {allWalletTx.length}
             </span>
           </button>
@@ -302,7 +302,7 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
             placeholder="Search items, peers, notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-zinc-800/90 border border-slate-200 dark:border-zinc-700 rounded-xl text-xs font-medium text-slate-900 dark:text-zinc-100 placeholder-zinc-400 focus:bg-white dark:focus:bg-zinc-800 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
@@ -313,23 +313,23 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
         <div className="space-y-4">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h2 className="text-lg font-black text-slate-900">Items You Rented (Borrower History)</h2>
-              <p className="text-xs text-slate-500">Track rental charges, refundable security deposits, and handover receipts</p>
+              <h2 className="text-lg font-black text-slate-900 dark:text-zinc-100">Items You Rented (Borrower History)</h2>
+              <p className="text-xs text-slate-500 dark:text-zinc-400">Track rental charges, refundable security deposits, and handover receipts</p>
             </div>
-            <span className="text-xs text-slate-400 font-bold bg-slate-100 px-3 py-1 rounded-xl">
+            <span className="text-xs text-slate-400 dark:text-zinc-400 font-bold bg-slate-100 dark:bg-zinc-800 px-3 py-1 rounded-xl">
               {displayedRented.length} record{displayedRented.length === 1 ? '' : 's'}
             </span>
           </div>
 
           {loading ? (
             <div className="space-y-4">
-              {[1, 2].map(n => <div key={n} className="h-36 bg-slate-100 rounded-3xl animate-pulse"></div>)}
+              {[1, 2].map(n => <div key={n} className="h-36 bg-slate-100 dark:bg-zinc-800/60 rounded-3xl animate-pulse"></div>)}
             </div>
           ) : displayedRented.length === 0 ? (
-            <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center shadow-xs">
-              <ShoppingBag className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-              <h3 className="text-base font-bold text-slate-800 mb-1">No borrowed resources recorded</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto mb-5">
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-12 text-center shadow-xs">
+              <ShoppingBag className="w-12 h-12 text-slate-300 dark:text-zinc-600 mx-auto mb-3" />
+              <h3 className="text-base font-bold text-slate-800 dark:text-zinc-200 mb-1">No borrowed resources recorded</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-sm mx-auto mb-5">
                 Whenever you rent a calculator, cycle, camera, or lab coat on campus, its full payment and refund ledger will appear here.
               </p>
               {onNavigateToExplore && (
@@ -345,10 +345,10 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
             displayedRented.map(rental => (
               <div 
                 key={rental._id}
-                className="bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs hover:shadow-md transition flex flex-col md:flex-row gap-5"
+                className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 p-5 shadow-xs hover:shadow-md transition flex flex-col md:flex-row gap-5"
               >
                 {/* Image */}
-                <div className="w-full md:w-40 h-32 md:h-auto rounded-2xl overflow-hidden bg-slate-100 shrink-0">
+                <div className="w-full md:w-40 h-32 md:h-auto rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-800 shrink-0">
                   <img
                     src={rental.item?.image || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                     alt={rental.item?.title}
@@ -361,45 +361,45 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                   <div>
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                       <div className="flex items-center space-x-2">
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60">
                           {rental.item?.category || 'Resource'}
                         </span>
-                        <h3 className="font-extrabold text-slate-900 text-base">{rental.item?.title}</h3>
+                        <h3 className="font-extrabold text-slate-900 dark:text-zinc-100 text-base">{rental.item?.title}</h3>
                       </div>
                       <div>{getStatusBadge(rental.status)}</div>
                     </div>
 
                     {/* Breakdown Matrix */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-2 text-xs text-slate-600 bg-slate-50/80 p-3 rounded-2xl border border-slate-100">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-2 text-xs text-slate-600 dark:text-zinc-400 bg-slate-50/80 dark:bg-zinc-800/60 p-3 rounded-2xl border border-slate-100 dark:border-zinc-750">
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Rental Dates</span>
-                        <span className="font-bold text-slate-800">
+                        <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Rental Dates</span>
+                        <span className="font-bold text-slate-800 dark:text-zinc-200">
                           {new Date(rental.start_date).toLocaleDateString([], { month: 'short', day: 'numeric' })} - {new Date(rental.end_date).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                         </span>
-                        <span className="text-[10px] text-slate-400 block">({rental.rental_days} {rental.rental_days === 1 ? 'day' : 'days'})</span>
+                        <span className="text-[10px] text-slate-400 dark:text-zinc-500 block">({rental.rental_days} {rental.rental_days === 1 ? 'day' : 'days'})</span>
                       </div>
 
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Rental Fee Paid</span>
-                        <span className="font-black text-slate-900">₹{rental.rental_fee}</span>
-                        <span className="text-[10px] text-slate-400 block">@ ₹{rental.rental_rate_per_day || (rental.rental_fee / (rental.rental_days || 1))}/day</span>
+                        <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Rental Fee Paid</span>
+                        <span className="font-black text-slate-900 dark:text-zinc-100">₹{rental.rental_fee}</span>
+                        <span className="text-[10px] text-slate-400 dark:text-zinc-500 block">@ ₹{rental.rental_rate_per_day || (rental.rental_fee / (rental.rental_days || 1))}/day</span>
                       </div>
 
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Security Deposit</span>
+                        <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Security Deposit</span>
                         {getDepositBadge(rental.deposit_status, rental.security_deposit)}
                       </div>
 
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Resource Owner</span>
-                        <span className="font-bold text-slate-800">{rental.owner?.name || 'Verified Peer'}</span>
-                        <span className="text-[10px] text-slate-400 block">{rental.owner?.hostel_block || 'Campus'}</span>
+                        <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Resource Owner</span>
+                        <span className="font-bold text-slate-800 dark:text-zinc-200">{rental.owner?.name || 'Verified Peer'}</span>
+                        <span className="text-[10px] text-slate-400 dark:text-zinc-500 block">{rental.owner?.hostel_block || 'Campus'}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Actions & Dynamic Pass */}
-                  <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 mt-3">
+                  <div className="pt-3 border-t border-slate-100 dark:border-zinc-800 flex flex-wrap items-center justify-between gap-3 mt-3">
                     <div className="flex items-center space-x-2">
                       {rental.status === 'BOOKED' && (
                         <button
@@ -412,8 +412,8 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                       )}
 
                       {rental.status === 'COMPLETED' && (
-                        <span className="text-xs text-emerald-700 font-extrabold flex items-center space-x-1">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <span className="text-xs text-emerald-700 dark:text-emerald-400 font-extrabold flex items-center space-x-1">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                           <span>Deposit of ₹{rental.security_deposit} 100% credited to your wallet</span>
                         </span>
                       )}
@@ -421,9 +421,9 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
 
                     <button
                       onClick={() => setSelectedRentalForTracking(rental)}
-                      className="border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-xl transition flex items-center space-x-1 cursor-pointer"
+                      className="border border-slate-200 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-bold text-xs px-3 py-1.5 rounded-xl transition flex items-center space-x-1 cursor-pointer"
                     >
-                      <Camera className="w-3.5 h-3.5 text-slate-500" />
+                      <Camera className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
                       <span>Inspection Evidence Ledger</span>
                     </button>
                   </div>
@@ -440,23 +440,23 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
         <div className="space-y-4">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h2 className="text-lg font-black text-slate-900">Peers Who Rented Your Items (Lending & Earnings)</h2>
-              <p className="text-xs text-slate-500">History of equipment you listed that peers booked, along with earnings and handover status</p>
+              <h2 className="text-lg font-black text-slate-900 dark:text-zinc-100">Peers Who Rented Your Items (Lending & Earnings)</h2>
+              <p className="text-xs text-slate-500 dark:text-zinc-400">History of equipment you listed that peers booked, along with earnings and handover status</p>
             </div>
-            <span className="text-xs text-slate-400 font-bold bg-slate-100 px-3 py-1 rounded-xl">
+            <span className="text-xs text-slate-400 dark:text-zinc-400 font-bold bg-slate-100 dark:bg-zinc-800 px-3 py-1 rounded-xl">
               {displayedLent.length} contract{displayedLent.length === 1 ? '' : 's'}
             </span>
           </div>
 
           {loading ? (
             <div className="space-y-4">
-              {[1, 2].map(n => <div key={n} className="h-36 bg-slate-100 rounded-3xl animate-pulse"></div>)}
+              {[1, 2].map(n => <div key={n} className="h-36 bg-slate-100 dark:bg-zinc-800/60 rounded-3xl animate-pulse"></div>)}
             </div>
           ) : displayedLent.length === 0 ? (
-            <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center shadow-xs">
-              <Tag className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-              <h3 className="text-base font-bold text-slate-800 mb-1">No lending contracts yet</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto mb-5">
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-12 text-center shadow-xs">
+              <Tag className="w-12 h-12 text-slate-300 dark:text-zinc-600 mx-auto mb-3" />
+              <h3 className="text-base font-bold text-slate-800 dark:text-zinc-200 mb-1">No lending contracts yet</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-sm mx-auto mb-5">
                 When fellow students rent resources from your inventory, their rental payments, handover confirmations, and return inspections will be recorded here.
               </p>
             </div>
@@ -464,10 +464,10 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
             displayedLent.map(rental => (
               <div 
                 key={rental._id}
-                className="bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs hover:shadow-md transition flex flex-col md:flex-row gap-5"
+                className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 p-5 shadow-xs hover:shadow-md transition flex flex-col md:flex-row gap-5"
               >
                 {/* Image */}
-                <div className="w-full md:w-40 h-32 md:h-auto rounded-2xl overflow-hidden bg-slate-100 shrink-0">
+                <div className="w-full md:w-40 h-32 md:h-auto rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-800 shrink-0">
                   <img
                     src={rental.item?.image || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                     alt={rental.item?.title}
@@ -480,36 +480,36 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                   <div>
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                       <div className="flex items-center space-x-2">
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200">
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60">
                           {rental.item?.category || 'Lending'}
                         </span>
-                        <h3 className="font-extrabold text-slate-900 text-base">{rental.item?.title}</h3>
+                        <h3 className="font-extrabold text-slate-900 dark:text-zinc-100 text-base">{rental.item?.title}</h3>
                       </div>
                       <div>{getStatusBadge(rental.status)}</div>
                     </div>
 
                     {/* Matrix */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-2 text-xs text-slate-600 bg-purple-50/40 p-3 rounded-2xl border border-purple-100">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-2 text-xs text-slate-600 dark:text-zinc-400 bg-purple-50/40 dark:bg-purple-950/20 p-3 rounded-2xl border border-purple-100 dark:border-purple-900/40">
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Renter Student</span>
-                        <span className="font-bold text-slate-900">{rental.renter?.name || 'Peer'}</span>
-                        <span className="text-[10px] text-slate-500 block">{rental.renter?.hostel_block || 'Campus Hostel'}</span>
+                        <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Renter Student</span>
+                        <span className="font-bold text-slate-900 dark:text-zinc-100">{rental.renter?.name || 'Peer'}</span>
+                        <span className="text-[10px] text-slate-500 dark:text-zinc-400 block">{rental.renter?.hostel_block || 'Campus Hostel'}</span>
                       </div>
 
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Your Earnings</span>
-                        <span className="font-black text-emerald-700 text-sm">₹{rental.rental_fee}</span>
-                        <span className="text-[10px] text-slate-400 block">for {rental.rental_days} day(s)</span>
+                        <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Your Earnings</span>
+                        <span className="font-black text-emerald-700 dark:text-emerald-400 text-sm">₹{rental.rental_fee}</span>
+                        <span className="text-[10px] text-slate-400 dark:text-zinc-500 block">for {rental.rental_days} day(s)</span>
                       </div>
 
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Deposit Escrow</span>
+                        <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Deposit Escrow</span>
                         {getDepositBadge(rental.deposit_status, rental.security_deposit)}
                       </div>
 
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Rental Dates</span>
-                        <span className="font-bold text-slate-800">
+                        <span className="text-slate-400 dark:text-zinc-500 block text-[10px] uppercase font-bold">Rental Dates</span>
+                        <span className="font-bold text-slate-800 dark:text-zinc-200">
                           {new Date(rental.start_date).toLocaleDateString([], { month: 'short', day: 'numeric' })} - {new Date(rental.end_date).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                         </span>
                       </div>
@@ -517,7 +517,7 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                   </div>
 
                   {/* Actions */}
-                  <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 mt-3">
+                  <div className="pt-3 border-t border-slate-100 dark:border-zinc-800 flex flex-wrap items-center justify-between gap-3 mt-3">
                     <div className="flex items-center space-x-2">
                       {rental.status === 'BOOKED' && (
                         <button
@@ -542,9 +542,9 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
 
                     <button
                       onClick={() => setSelectedRentalForTracking(rental)}
-                      className="border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-xl transition flex items-center space-x-1 cursor-pointer"
+                      className="border border-slate-200 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-bold text-xs px-3 py-1.5 rounded-xl transition flex items-center space-x-1 cursor-pointer"
                     >
-                      <Camera className="w-3.5 h-3.5 text-slate-500" />
+                      <Camera className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
                       <span>Inspection Evidence Ledger</span>
                     </button>
                   </div>
@@ -561,8 +561,8 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
             <div>
-              <h2 className="text-lg font-black text-slate-900">Wallet Top-Ups & Escrow Refund Ledger</h2>
-              <p className="text-xs text-slate-500">Real-time audit trail of wallet recharges, security deposit refunds, and payouts</p>
+              <h2 className="text-lg font-black text-slate-900 dark:text-zinc-100">Wallet Top-Ups & Escrow Refund Ledger</h2>
+              <p className="text-xs text-slate-500 dark:text-zinc-400">Real-time audit trail of wallet recharges, security deposit refunds, and payouts</p>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
@@ -591,7 +591,7 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
               </button>
 
               {/* Filter Pills */}
-              <div className="flex flex-wrap gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200/80 text-xs">
+              <div className="flex flex-wrap gap-1 bg-slate-100 dark:bg-zinc-800/80 p-1 rounded-2xl border border-slate-200/80 dark:border-zinc-700/80 text-xs">
               {[
                 { id: 'ALL', label: 'All' },
                 { id: 'TOPUP', label: 'Top-Ups' },
@@ -605,8 +605,8 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                   onClick={() => setWalletFilter(f.id)}
                   className={`px-3 py-1 rounded-xl font-bold transition cursor-pointer ${
                     walletFilter === f.id
-                      ? 'bg-white text-slate-900 shadow-2xs'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'bg-white dark:bg-zinc-900 text-slate-900 dark:text-zinc-100 shadow-2xs'
+                      : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   {f.label}
@@ -618,19 +618,19 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
 
           {loading ? (
             <div className="space-y-3">
-              {[1, 2, 3].map(n => <div key={n} className="h-20 bg-slate-100 rounded-2xl animate-pulse"></div>)}
+              {[1, 2, 3].map(n => <div key={n} className="h-20 bg-slate-100 dark:bg-zinc-800/60 rounded-2xl animate-pulse"></div>)}
             </div>
           ) : displayedWallet.length === 0 ? (
-            <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center shadow-xs">
-              <Wallet className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-              <h3 className="text-base font-bold text-slate-800 mb-1">No wallet transactions found</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-12 text-center shadow-xs">
+              <Wallet className="w-12 h-12 text-slate-300 dark:text-zinc-600 mx-auto mb-3" />
+              <h3 className="text-base font-bold text-slate-800 dark:text-zinc-200 mb-1">No wallet transactions found</h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-sm mx-auto">
                 All top-ups, refundable deposit holds, and completed escrow refunds will be logged here with instant verification.
               </p>
             </div>
           ) : (
-            <div className="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs">
-              <div className="divide-y divide-slate-100">
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 overflow-hidden shadow-xs">
+              <div className="divide-y divide-slate-100 dark:divide-zinc-800">
                 {displayedWallet.map((tx, idx) => {
                   const isPositive = Number(tx.amount) > 0;
                   const isTopup = tx.type === 'TOPUP';
@@ -642,49 +642,49 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
                   return (
                     <div 
                       key={tx._id || idx}
-                      className="p-4 sm:p-5 flex items-center justify-between hover:bg-slate-50/80 transition"
+                      className="p-4 sm:p-5 flex items-center justify-between hover:bg-slate-50/80 dark:hover:bg-zinc-800/50 transition"
                     >
                       <div className="flex items-center space-x-3.5">
                         <div className={`p-2.5 rounded-2xl shrink-0 ${
-                          isTopup ? 'bg-emerald-100 text-emerald-700' :
-                          isRefund ? 'bg-teal-100 text-teal-700' :
-                          isEarning ? 'bg-purple-100 text-purple-700' :
-                          isWithdrawal ? 'bg-indigo-100 text-indigo-700' :
-                          'bg-slate-100 text-slate-600'
+                          isTopup ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400' :
+                          isRefund ? 'bg-teal-100 dark:bg-teal-950/60 text-teal-700 dark:text-teal-400' :
+                          isEarning ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400' :
+                          isWithdrawal ? 'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400' :
+                          'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400'
                         }`}>
                           {isTopup && <ArrowDownLeft className="w-5 h-5" />}
-                          {isRefund && <ShieldCheck className="w-5 h-5 text-emerald-600" />}
+                          {isRefund && <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
                           {isEarning && <TrendingUp className="w-5 h-5" />}
-                          {isWithdrawal && <Building2 className="w-5 h-5 text-indigo-600" />}
+                          {isWithdrawal && <Building2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />}
                           {isDebit && <ArrowUpRight className="w-5 h-5" />}
                         </div>
 
                         <div>
                           <div className="flex items-center space-x-2">
                             <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md ${
-                              isTopup ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' :
-                              isRefund ? 'bg-teal-50 text-teal-800 border border-teal-200' :
-                              isEarning ? 'bg-purple-50 text-purple-800 border border-purple-200' :
-                              isWithdrawal ? 'bg-indigo-50 text-indigo-800 border border-indigo-200' :
-                              'bg-slate-100 text-slate-800 border border-slate-200'
+                              isTopup ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60' :
+                              isRefund ? 'bg-teal-50 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800/60' :
+                              isEarning ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60' :
+                              isWithdrawal ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60' :
+                              'bg-slate-100 dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 border border-slate-200 dark:border-zinc-700'
                             }`}>
                               {isTopup ? 'Wallet Top-Up' :
                                isRefund ? '100% Escrow Refund' :
                                isEarning ? 'Rental Earning' : 
                                isWithdrawal ? 'Bank IMPS Payout' : 'Rental Payment'}
                             </span>
-                            <span className="text-[10px] text-slate-400">
+                            <span className="text-[10px] text-slate-400 dark:text-zinc-500">
                               {tx.created_at ? new Date(tx.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent'}
                             </span>
                           </div>
 
-                          <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-1">
+                          <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-zinc-100 mt-1">
                             {tx.description}
                           </h4>
 
                           {tx.item_title && (
-                            <p className="text-[11px] text-slate-500 mt-0.5">
-                              Resource: <strong className="text-slate-700">{tx.item_title}</strong>
+                            <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5">
+                              Resource: <strong className="text-slate-700 dark:text-zinc-300">{tx.item_title}</strong>
                             </p>
                           )}
                         </div>
@@ -692,11 +692,11 @@ const HistoryPage = ({ onNavigateToRentals, onNavigateToExplore }) => {
 
                       <div className="text-right">
                         <span className={`text-base sm:text-lg font-black font-mono block ${
-                          isPositive ? 'text-emerald-600' : 'text-slate-900'
+                          isPositive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-zinc-100'
                         }`}>
                           {isPositive ? `+₹${Number(tx.amount).toFixed(2)}` : `-₹${Math.abs(Number(tx.amount)).toFixed(2)}`}
                         </span>
-                        <span className="text-[10px] font-bold uppercase text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">
+                        <span className="text-[10px] font-bold uppercase text-slate-400 dark:text-zinc-400 bg-slate-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
                           {tx.status || 'SUCCESS'}
                         </span>
                       </div>

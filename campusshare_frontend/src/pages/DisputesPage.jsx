@@ -124,53 +124,53 @@ const DisputesPage = () => {
             return (
               <div
                 key={d._id}
-                className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden"
+                className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-sm overflow-hidden"
               >
                 {/* Dispute Card Header */}
-                <div className="p-5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                <div className="p-5 bg-slate-50 dark:bg-zinc-850 border-b border-slate-200 dark:border-zinc-800 flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center space-x-2">
                     <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
-                      isResolved ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800 animate-pulse'
+                      isResolved ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300' : 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 animate-pulse'
                     }`}>
                       {d.status}
                     </span>
-                    <h3 className="font-bold text-slate-900 text-sm">{d.item_title}</h3>
+                    <h3 className="font-bold text-slate-900 dark:text-zinc-100 text-sm">{d.item_title}</h3>
                   </div>
 
                   <div className="text-xs">
-                    <span className="text-slate-500">Claimed Damage: </span>
-                    <strong className="text-rose-600 font-bold">₹{d.claimed_amount}</strong>
+                    <span className="text-slate-500 dark:text-zinc-400">Claimed Damage: </span>
+                    <strong className="text-rose-600 dark:text-rose-400 font-bold">₹{d.claimed_amount}</strong>
                   </div>
                 </div>
 
                 <div className="p-5">
                   <div className="grid md:grid-cols-2 gap-4 mb-4 text-xs">
                     <div>
-                      <p className="text-slate-500 mb-1">
-                        Reported By Owner: <strong>{d.owner_name}</strong>
+                      <p className="text-slate-500 dark:text-zinc-400 mb-1">
+                        Reported By Owner: <strong className="text-slate-800 dark:text-zinc-200">{d.owner_name}</strong>
                       </p>
-                      <p className="text-slate-500">
-                        Against Student: <strong>{d.renter_name}</strong>
+                      <p className="text-slate-500 dark:text-zinc-400">
+                        Against Student: <strong className="text-slate-800 dark:text-zinc-200">{d.renter_name}</strong>
                       </p>
                     </div>
                     <div>
-                      <p className="text-slate-500 mb-1">Reason for Claim:</p>
-                      <p className="font-semibold text-slate-800 bg-slate-50 p-2 rounded-xl border border-slate-200">
+                      <p className="text-slate-500 dark:text-zinc-400 mb-1">Reason for Claim:</p>
+                      <p className="font-semibold text-slate-800 dark:text-zinc-200 bg-slate-50 dark:bg-zinc-850 p-2 rounded-xl border border-slate-200 dark:border-zinc-700">
                         {d.description || "Damage reported during physical return inspection."}
                       </p>
                     </div>
                   </div>
 
                   {/* Evidence Photos: Before vs After */}
-                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-4">
-                    <p className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
-                      <Camera className="w-4 h-4 text-slate-500" />
+                  <div className="bg-slate-50 dark:bg-zinc-850/60 p-4 rounded-2xl border border-slate-200 dark:border-zinc-750 mb-4">
+                    <p className="text-xs font-bold text-slate-700 dark:text-zinc-300 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
+                      <Camera className="w-4 h-4 text-slate-500 dark:text-zinc-400" />
                       <span>Photo Evidence Ledger</span>
                     </p>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <span className="text-[10px] font-semibold text-slate-500 block mb-1">Before Handover (Pickup)</span>
-                        <div className="aspect-16/9 rounded-xl overflow-hidden bg-slate-200 border border-slate-300">
+                        <span className="text-[10px] font-semibold text-slate-500 dark:text-zinc-400 block mb-1">Before Handover (Pickup)</span>
+                        <div className="aspect-16/9 rounded-xl overflow-hidden bg-slate-200 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700">
                           <img
                             src={evidence.before_pickup?.[0] || 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?w=600&auto=format&fit=crop&q=80'}
                             alt="Pickup evidence"
@@ -179,8 +179,8 @@ const DisputesPage = () => {
                         </div>
                       </div>
                       <div>
-                        <span className="text-[10px] font-semibold text-rose-500 block mb-1">After Return (Inspection Damage)</span>
-                        <div className="aspect-16/9 rounded-xl overflow-hidden bg-slate-200 border border-rose-300">
+                        <span className="text-[10px] font-semibold text-rose-500 dark:text-rose-400 block mb-1">After Return (Inspection Damage)</span>
+                        <div className="aspect-16/9 rounded-xl overflow-hidden bg-slate-200 dark:bg-zinc-800 border border-rose-300 dark:border-rose-900/60">
                           <img
                             src={evidence.after_return?.[0] || 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?w=600&auto=format&fit=crop&q=80'}
                             alt="Return evidence"
@@ -193,19 +193,19 @@ const DisputesPage = () => {
 
                   {/* Resolution status / Action */}
                   {isResolved ? (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-xs text-emerald-900">
+                    <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-2xl p-4 text-xs text-emerald-900 dark:text-emerald-200">
                       <div className="flex items-center space-x-1.5 font-bold mb-1">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                         <span>Resolved by {d.admin_resolution?.resolved_by || 'Admin'}</span>
                       </div>
                       <p>
                         ₹{d.admin_resolution?.deducted_from_deposit} deducted for repairs and paid to owner • ₹{d.admin_resolution?.refunded_to_renter} refunded to renter.
                       </p>
-                      <p className="text-emerald-700 text-[11px] mt-1 italic">"{d.admin_resolution?.notes}"</p>
+                      <p className="text-emerald-700 dark:text-emerald-400 text-[11px] mt-1 italic">"{d.admin_resolution?.notes}"</p>
                     </div>
                   ) : (
                     <div className="flex items-center justify-between pt-2">
-                      <p className="text-xs text-slate-500">Security deposit is currently locked in escrow.</p>
+                      <p className="text-xs text-slate-500 dark:text-zinc-400">Security deposit is currently locked in escrow.</p>
                       <button
                         onClick={() => {
                           setSelectedDispute(d);

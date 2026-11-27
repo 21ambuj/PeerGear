@@ -150,7 +150,7 @@ const CampusPaymentModal = ({
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200/90 animate-scale-in max-h-[94vh] flex flex-col relative"
+        className="bg-white dark:bg-zinc-950 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200/90 dark:border-zinc-800 animate-scale-in max-h-[94vh] flex flex-col relative text-zinc-900 dark:text-zinc-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Gateway Header */}

@@ -71,59 +71,59 @@ const AnalyticsPage = () => {
           
           {/* Metric Cards Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-slate-500 mb-2">
+            <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-xs">
+              <div className="flex items-center justify-between text-slate-500 dark:text-zinc-400 mb-2">
                 <span className="text-xs font-semibold">Verified Students</span>
-                <Users className="w-4 h-4 text-indigo-600" />
+                <Users className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
               </div>
-              <p className="text-2xl font-black text-slate-900">{summary.total_students || 0}</p>
-              <span className="text-[10px] text-emerald-600 font-semibold">Active Campus Accounts</span>
+              <p className="text-2xl font-black text-slate-900 dark:text-zinc-100">{summary.total_students || 0}</p>
+              <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Active Campus Accounts</span>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-slate-500 mb-2">
+            <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-xs">
+              <div className="flex items-center justify-between text-slate-500 dark:text-zinc-400 mb-2">
                 <span className="text-xs font-semibold">Live Resources</span>
-                <ShoppingBag className="w-4 h-4 text-blue-600" />
+                <ShoppingBag className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               </div>
-              <p className="text-2xl font-black text-slate-900">{summary.available_listings || 0}</p>
-              <span className="text-[10px] text-slate-400">{summary.total_listings || 0} total shared</span>
+              <p className="text-2xl font-black text-slate-900 dark:text-zinc-100">{summary.available_listings || 0}</p>
+              <span className="text-[10px] text-slate-400 dark:text-zinc-500">{summary.total_listings || 0} total shared</span>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-slate-500 mb-2">
+            <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-xs">
+              <div className="flex items-center justify-between text-slate-500 dark:text-zinc-400 mb-2">
                 <span className="text-xs font-semibold">Active Rentals</span>
-                <TrendingUp className="w-4 h-4 text-amber-600" />
+                <TrendingUp className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               </div>
-              <p className="text-2xl font-black text-amber-600">{summary.active_rentals || 0}</p>
-              <span className="text-[10px] text-emerald-600 font-semibold">{summary.completed_rentals || 0} completed</span>
+              <p className="text-2xl font-black text-amber-600 dark:text-amber-400">{summary.active_rentals || 0}</p>
+              <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">{summary.completed_rentals || 0} completed</span>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-slate-500 mb-2">
+            <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-xs">
+              <div className="flex items-center justify-between text-slate-500 dark:text-zinc-400 mb-2">
                 <span className="text-xs font-semibold">Protected Escrow</span>
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <p className="text-2xl font-black text-emerald-600">₹{summary.escrow_held_deposit || 0}</p>
-              <span className="text-[10px] text-emerald-700 font-semibold">100% Refundable Deposits</span>
+              <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400">₹{summary.escrow_held_deposit || 0}</p>
+              <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-semibold">100% Refundable Deposits</span>
             </div>
           </div>
 
           {/* Category Performance */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+          <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-sm p-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
               <div>
-                <h3 className="font-bold text-slate-900 text-base">Category Sharing Activity & Volume</h3>
-                <p className="text-xs text-slate-500">Live breakdown of student sharing by resource category</p>
+                <h3 className="font-bold text-slate-900 dark:text-zinc-100 text-base">Category Sharing Activity & Volume</h3>
+                <p className="text-xs text-slate-500 dark:text-zinc-400">Live breakdown of student sharing by resource category</p>
               </div>
             </div>
 
             {categories.length === 0 ? (
-              <p className="text-xs text-slate-400 py-6 text-center">No completed rental contracts yet. As students start renting, category activity will appear here!</p>
+              <p className="text-xs text-slate-400 dark:text-zinc-500 py-6 text-center">No completed rental contracts yet. As students start renting, category activity will appear here!</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-slate-200 text-slate-400 font-semibold uppercase tracking-wider text-[10px]">
+                    <tr className="border-b border-slate-200 dark:border-zinc-800 text-slate-400 dark:text-zinc-400 font-semibold uppercase tracking-wider text-[10px]">
                       <th className="pb-3">Category</th>
                       <th className="pb-3">Total Rentals</th>
                       <th className="pb-3">Student Savings / Fee</th>
@@ -131,14 +131,14 @@ const AnalyticsPage = () => {
                       <th className="pb-3">Protected Deposit Volume</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-slate-100 dark:divide-zinc-800">
                     {categories.map((c, i) => (
-                      <tr key={i} className="hover:bg-slate-50/70 transition">
-                        <td className="py-3 font-bold text-slate-900">{c.category}</td>
-                        <td className="py-3 text-slate-600">{c.total_rentals} contract{c.total_rentals > 1 ? 's' : ''}</td>
-                        <td className="py-3 font-semibold text-emerald-700">₹{c.total_revenue}</td>
-                        <td className="py-3 text-slate-600">{c.avg_rental_days} days</td>
-                        <td className="py-3 font-semibold text-slate-800">₹{c.total_deposits_managed}</td>
+                      <tr key={i} className="hover:bg-slate-50/70 dark:hover:bg-zinc-850/50 transition">
+                        <td className="py-3 font-bold text-slate-900 dark:text-zinc-100">{c.category}</td>
+                        <td className="py-3 text-slate-600 dark:text-zinc-300">{c.total_rentals} contract{c.total_rentals > 1 ? 's' : ''}</td>
+                        <td className="py-3 font-semibold text-emerald-700 dark:text-emerald-400">₹{c.total_revenue}</td>
+                        <td className="py-3 text-slate-600 dark:text-zinc-300">{c.avg_rental_days} days</td>
+                        <td className="py-3 font-semibold text-slate-800 dark:text-zinc-200">₹{c.total_deposits_managed}</td>
                       </tr>
                     ))}
                   </tbody>

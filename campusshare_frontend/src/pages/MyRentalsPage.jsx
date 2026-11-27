@@ -151,22 +151,24 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <div className="inline-flex items-center space-x-1.5 text-emerald-700 text-[10px] font-black uppercase tracking-wider bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full mb-1.5">
-            <ClipboardList className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="inline-flex items-center space-x-1.5 text-emerald-700 dark:text-emerald-400 text-[10px] font-black uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/80 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-full mb-1.5">
+            <ClipboardList className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
             <span>Campus Exchange Ledger</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight">My Rentals & Published Listings</h1>
-          <p className="text-xs text-zinc-500 font-medium mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 dark:text-white tracking-tight">My Rentals & Published Listings</h1>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
             Manage items you are currently borrowing, track security deposit refunds, and oversee resources you have listed.
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex bg-zinc-100 p-1 rounded-full border border-zinc-200/80 self-start sm:self-auto shadow-xs backdrop-blur-md">
+        <div className="flex bg-zinc-100 dark:bg-zinc-900 p-1 rounded-full border border-zinc-200/80 dark:border-zinc-800 self-start sm:self-auto shadow-xs backdrop-blur-md">
           <button
             onClick={() => setActiveTab('all')}
             className={`px-4 py-1.5 rounded-full text-xs font-bold btn-tactile cursor-pointer ${
-              activeTab === 'all' ? 'bg-white text-zinc-950 shadow-xs border border-zinc-200/60' : 'text-zinc-600 hover:text-zinc-950'
+              activeTab === 'all' 
+                ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-xs border border-zinc-200/60 dark:border-zinc-700' 
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
             All Activity
@@ -174,19 +176,23 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
           <button
             onClick={() => setActiveTab('renter')}
             className={`px-4 py-1.5 rounded-full text-xs font-bold btn-tactile cursor-pointer flex items-center space-x-1.5 ${
-              activeTab === 'renter' ? 'bg-white text-zinc-950 shadow-xs border border-zinc-200/60' : 'text-zinc-600 hover:text-zinc-950'
+              activeTab === 'renter' 
+                ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-xs border border-zinc-200/60 dark:border-zinc-700' 
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
-            <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
+            <ShoppingBag className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
             <span>Items I'm Renting</span>
           </button>
           <button
             onClick={() => setActiveTab('owner')}
             className={`px-4 py-1.5 rounded-full text-xs font-bold btn-tactile cursor-pointer flex items-center space-x-1.5 ${
-              activeTab === 'owner' ? 'bg-white text-zinc-950 shadow-xs border border-zinc-200/60' : 'text-zinc-600 hover:text-zinc-950'
+              activeTab === 'owner' 
+                ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-xs border border-zinc-200/60 dark:border-zinc-700' 
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
-            <Tag className="w-3.5 h-3.5 text-zinc-500" />
+            <Tag className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
             <span>My Listed Items ({myListedItems.length})</span>
           </button>
         </div>
@@ -194,15 +200,15 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
 
       {/* SECTION: When on "My Listed Items" (Owner) mode, show the Published Inventory grid */}
       {(activeTab === 'owner' || activeTab === 'all') && myListedItems.length > 0 && (
-        <div className="mb-8 bg-zinc-50/80 border border-zinc-200 rounded-3xl p-5 sm:p-6">
+        <div className="mb-8 bg-zinc-50/80 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2.5">
-              <div className="p-2 bg-zinc-950 rounded-xl text-white">
+              <div className="p-2 bg-zinc-950 dark:bg-zinc-800 rounded-xl text-white">
                 <Package className="w-4 h-4 text-emerald-400" />
               </div>
               <div>
-                <h3 className="font-extrabold text-zinc-950 text-sm">Your Published Campus Listings</h3>
-                <p className="text-[11px] text-zinc-500">Resources you made available for other students to rent ({myListedItems.length} active)</p>
+                <h3 className="font-extrabold text-zinc-950 dark:text-white text-sm">Your Published Campus Listings</h3>
+                <p className="text-[11px] text-zinc-500 dark:text-zinc-400">Resources you made available for other students to rent ({myListedItems.length} active)</p>
               </div>
             </div>
             {onNavigateToList && (
@@ -218,38 +224,38 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {myListedItems.map((item) => (
-              <div key={item._id} className="bg-white rounded-3xl border border-slate-200/90 p-4 shadow-sm hover:border-purple-300 hover:shadow-lg hover:shadow-purple-900/5 transition-all duration-300 flex flex-col justify-between group card-interactive">
+              <div key={item._id} className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 p-4 shadow-sm hover:border-purple-300 dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group card-interactive">
                 <div className="flex items-start space-x-3 mb-3">
                   <img
                     src={item.images?.[0] || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                     alt={item.title}
-                    className="w-16 h-16 rounded-2xl object-cover bg-slate-100 shrink-0 border border-slate-100 group-hover:scale-105 transition-transform"
+                    className="w-16 h-16 rounded-2xl object-cover bg-slate-100 dark:bg-zinc-800 shrink-0 border border-slate-100 dark:border-zinc-800 group-hover:scale-105 transition-transform"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">
+                      <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2 py-0.5 rounded-md">
                         {item.category}
                       </span>
                       <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
-                        item.availability_status === 'AVAILABLE' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                        item.availability_status === 'AVAILABLE' ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300'
                       }`}>
                         {item.availability_status}
                       </span>
                     </div>
-                    <h4 className="font-bold text-slate-900 text-xs truncate" title={item.title}>
+                    <h4 className="font-bold text-slate-900 dark:text-white text-xs truncate" title={item.title}>
                       {item.title}
                     </h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
-                      <span className="font-extrabold text-slate-900">₹{item.rental_rate_per_day}</span>/day • <span className="font-medium text-emerald-700">₹{item.security_deposit} dep</span>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5">
+                      <span className="font-extrabold text-slate-900 dark:text-zinc-200">₹{item.rental_rate_per_day}</span>/day • <span className="font-medium text-emerald-700 dark:text-emerald-400">₹{item.security_deposit} dep</span>
                     </p>
                   </div>
                 </div>
 
                 {/* Owner Actions: Edit & Delete */}
-                <div className="pt-2.5 border-t border-slate-100 flex items-center justify-end space-x-1.5">
+                <div className="pt-2.5 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-end space-x-1.5">
                   <button
                     onClick={() => setEditingItem(item)}
-                    className="px-3 py-1.5 bg-slate-100 hover:bg-purple-100 text-slate-700 hover:text-purple-800 text-xs font-bold rounded-xl btn-tactile flex items-center space-x-1 cursor-pointer"
+                    className="px-3 py-1.5 bg-slate-100 dark:bg-zinc-800 hover:bg-purple-100 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 hover:text-purple-800 dark:hover:text-white text-xs font-bold rounded-xl btn-tactile flex items-center space-x-1 cursor-pointer"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                     <span>Edit</span>
@@ -290,26 +296,26 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
 
       {/* Rentals List */}
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="font-extrabold text-slate-900 text-base">
+        <h3 className="font-extrabold text-slate-900 dark:text-white text-base">
           {activeTab === 'renter' 
             ? "Items You Are Currently Renting" 
             : activeTab === 'owner' 
             ? "Rental Handover & Return Contracts for Your Items" 
             : "All Rental Transactions"}
         </h3>
-        <span className="text-xs text-slate-400 font-semibold">{rentals.length} transaction{rentals.length === 1 ? '' : 's'}</span>
+        <span className="text-xs text-slate-400 dark:text-zinc-500 font-semibold">{rentals.length} transaction{rentals.length === 1 ? '' : 's'}</span>
       </div>
 
       {loading ? (
         <div className="space-y-4">
           {[1, 2].map((n) => (
-            <div key={n} className="h-40 bg-slate-100 rounded-2xl animate-pulse"></div>
+            <div key={n} className="h-40 bg-slate-100 dark:bg-zinc-900 rounded-2xl animate-pulse"></div>
           ))}
         </div>
       ) : rentals.length === 0 ? (
-        <div className="text-center py-14 bg-white rounded-3xl border border-slate-200 p-8 shadow-xs">
-          <ClipboardList className="w-12 h-12 mx-auto mb-3 text-slate-300" />
-          <h3 className="text-base font-bold text-slate-700 mb-1">
+        <div className="text-center py-14 bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-8 shadow-xs">
+          <ClipboardList className="w-12 h-12 mx-auto mb-3 text-slate-300 dark:text-zinc-700" />
+          <h3 className="text-base font-bold text-slate-700 dark:text-zinc-200 mb-1">
             {activeTab === 'renter' 
               ? "You haven't rented any items yet" 
               : activeTab === 'owner'
@@ -318,7 +324,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                   : "No rental bookings yet")
               : "No rental contracts found"}
           </h3>
-          <p className="text-xs text-slate-500 mb-5 max-w-sm mx-auto leading-relaxed">
+          <p className="text-xs text-slate-500 dark:text-zinc-400 mb-5 max-w-sm mx-auto leading-relaxed">
             {activeTab === 'renter'
               ? "Find calculators, lab coats, cycles, and project equipment available for rent in your college."
               : activeTab === 'owner'
@@ -330,7 +336,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
           {activeTab === 'renter' && onNavigateToExplore && (
             <button
               onClick={onNavigateToExplore}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition cursor-pointer"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition cursor-pointer"
             >
               Explore Items to Rent
             </button>
@@ -347,10 +353,10 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
             return (
               <div
                 key={rental._id}
-                className="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 card-interactive p-5 sm:p-6 flex flex-col md:flex-row gap-5 animate-fade-in-up"
+                className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 card-interactive p-5 sm:p-6 flex flex-col md:flex-row gap-5 animate-fade-in-up text-slate-800 dark:text-zinc-100"
               >
                 {/* Thumbnail */}
-                <div className="w-full md:w-36 h-32 md:h-auto rounded-2xl overflow-hidden bg-slate-100 shrink-0 border border-slate-100 group">
+                <div className="w-full md:w-36 h-32 md:h-auto rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-800 shrink-0 border border-slate-100 dark:border-zinc-800 group">
                   <img
                     src={rental.item?.image || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                     alt={rental.item?.title}

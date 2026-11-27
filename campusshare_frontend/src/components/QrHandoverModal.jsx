@@ -87,14 +87,14 @@ const QrHandoverModal = ({ rental, onClose }) => {
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border border-slate-200/90 animate-scale-in relative"
+        className="bg-white dark:bg-zinc-900 rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border border-slate-200/90 dark:border-zinc-800 animate-scale-in relative"
         onClick={(e) => e.stopPropagation()}
       >
         {isVerified ? (
           /* ===================================================================== */
           /* REAL-TIME SUCCESS VIEW (Auto-closes in 2 seconds)                      */
           /* ===================================================================== */
-          <div className="p-8 text-center bg-gradient-to-b from-emerald-50 via-white to-emerald-50/50">
+          <div className="p-8 text-center bg-gradient-to-b from-emerald-50 via-white to-emerald-50/50 dark:from-emerald-950/40 dark:via-zinc-900 dark:to-emerald-950/20">
             <div className="relative mx-auto w-20 h-20 mb-4 flex items-center justify-center">
               <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-25"></div>
               <div className="w-20 h-20 bg-gradient-to-tr from-emerald-600 to-teal-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/30">
@@ -102,20 +102,20 @@ const QrHandoverModal = ({ rental, onClose }) => {
               </div>
             </div>
 
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wider mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-[10px] font-black uppercase tracking-wider mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Handover Confirmed</span>
             </span>
 
-            <h3 className="text-xl font-black text-slate-900 mb-1">
+            <h3 className="text-xl font-black text-slate-900 dark:text-zinc-100 mb-1">
               QR Code Scanned!
             </h3>
-            <p className="text-xs text-slate-600 mb-6 leading-relaxed">
-              The owner verified the dynamic pass. Your rental contract for <strong className="text-slate-900">{rental.item?.title || 'this item'}</strong> is now <strong>ACTIVE</strong>.
+            <p className="text-xs text-slate-600 dark:text-zinc-400 mb-6 leading-relaxed">
+              The owner verified the dynamic pass. Your rental contract for <strong className="text-slate-900 dark:text-zinc-100">{rental.item?.title || 'this item'}</strong> is now <strong>ACTIVE</strong>.
             </p>
 
-            <div className="flex items-center justify-center space-x-2 text-xs text-emerald-700 font-bold bg-emerald-100/70 py-2.5 px-4 rounded-xl border border-emerald-200">
-              <Loader2 className="w-4 h-4 animate-spin text-emerald-600" />
+            <div className="flex items-center justify-center space-x-2 text-xs text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-100/70 dark:bg-emerald-950/40 py-2.5 px-4 rounded-xl border border-emerald-200 dark:border-emerald-800/60">
+              <Loader2 className="w-4 h-4 animate-spin text-emerald-600 dark:text-emerald-400" />
               <span>Auto-closing pass in 2s...</span>
             </div>
           </div>
@@ -148,7 +148,7 @@ const QrHandoverModal = ({ rental, onClose }) => {
             {/* QR Code Presentation Box */}
             <div className="p-6 text-center flex flex-col items-center">
               
-              <div className="relative p-4 bg-white rounded-3xl shadow-xl border-2 border-indigo-100 mb-4 group">
+              <div className="relative p-4 bg-white rounded-3xl shadow-xl border-2 border-indigo-100 dark:border-indigo-900/40 mb-4 group">
                 {/* Ambient scanner border glow */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl blur-xs opacity-25 group-hover:opacity-40 transition"></div>
                 
@@ -168,38 +168,38 @@ const QrHandoverModal = ({ rental, onClose }) => {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-1.5 text-xs text-indigo-600 font-bold mb-2">
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-500" />
+              <div className="flex items-center space-x-1.5 text-xs text-indigo-600 dark:text-indigo-400 font-bold mb-2">
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-500 dark:text-indigo-400" />
                 <span>Waiting for owner scan (Auto-closes)...</span>
               </div>
 
-              <p className="text-[11px] text-slate-500 max-w-xs mx-auto mb-4 leading-relaxed">
+              <p className="text-[11px] text-slate-500 dark:text-zinc-400 max-w-xs mx-auto mb-4 leading-relaxed">
                 Show this QR pass to the owner in person. When they scan it, this screen will verify and close automatically.
               </p>
 
               {/* Fallback 4-Digit OTP Box */}
-              <div className="w-full bg-slate-50 border border-slate-200/80 rounded-2xl p-3 mb-4 flex items-center justify-between">
+              <div className="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 rounded-2xl p-3 mb-4 flex items-center justify-between">
                 <div className="text-left">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-zinc-500 block tracking-wider">
                     Or Tell 4-Digit OTP
                   </span>
-                  <span className="text-2xl font-black font-mono tracking-widest text-indigo-700">
+                  <span className="text-2xl font-black font-mono tracking-widest text-indigo-700 dark:text-indigo-400">
                     {rental.handover_otp}
                   </span>
                 </div>
 
                 <button
                   onClick={handleCopyOtp}
-                  className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-indigo-600 bg-white hover:bg-indigo-50 border border-slate-200 rounded-xl transition flex items-center space-x-1 cursor-pointer shadow-2xs"
+                  className="px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400 bg-white dark:bg-zinc-800 hover:bg-indigo-50 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 rounded-xl transition flex items-center space-x-1 cursor-pointer shadow-2xs"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
-                      <span className="text-emerald-700 text-[11px]">Copied</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                      <span className="text-emerald-700 dark:text-emerald-400 text-[11px]">Copied</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3.5 h-3.5 text-slate-400" />
+                      <Copy className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-400" />
                       <span className="text-[11px]">Copy OTP</span>
                     </>
                   )}
@@ -209,7 +209,7 @@ const QrHandoverModal = ({ rental, onClose }) => {
               {/* Done / Dismiss Button */}
               <button
                 onClick={onClose}
-                className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-md"
+                className="w-full py-2.5 bg-slate-900 dark:bg-zinc-800 hover:bg-slate-800 dark:hover:bg-zinc-700 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-md"
               >
                 Close Pass
               </button>

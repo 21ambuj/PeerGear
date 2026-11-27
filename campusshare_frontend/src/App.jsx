@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider, useToast } from './context/ToastContext';
 import Navbar from './components/Navbar';
@@ -34,7 +35,7 @@ const AppContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-800">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#07080b] flex flex-col font-sans text-slate-800 dark:text-zinc-100 transition-colors duration-200">
       
       {/* Navigation Bar */}
       <Navbar
@@ -219,10 +220,12 @@ const AppContent = () => {
 
 export default function App() {
   return (
-    <ToastProvider>
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
-    </ToastProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
