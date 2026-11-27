@@ -304,11 +304,11 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
 
   return (
     <div 
-      className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in duration-150"
+      className="fixed inset-0 bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in-up"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 animate-in zoom-in-95 fade-in duration-200 max-h-[92vh] overflow-y-auto no-scrollbar"
+        className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200/90 animate-scale-in max-h-[92vh] overflow-y-auto no-scrollbar"
         onClick={(e) => e.stopPropagation()}
       >
         

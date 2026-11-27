@@ -270,21 +270,21 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
             return (
               <div
                 key={req._id}
-                className="bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between"
+                className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 flex flex-col justify-between card-interactive animate-fade-in-up"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div>
-                      <span className="bg-indigo-50 text-indigo-700 text-[10px] font-bold px-2 py-0.5 rounded-md">
+                      <span className="glass-panel text-indigo-700 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border border-indigo-200/60 shadow-2xs">
                         {req.category}
                       </span>
-                      <h3 className="font-black text-slate-900 text-base mt-1 leading-snug">{req.keyword}</h3>
+                      <h3 className="font-black text-slate-900 text-base mt-2 leading-snug tracking-tight">{req.keyword}</h3>
                     </div>
 
                     {isMyRequest && (
                       <button
                         onClick={() => handleDeleteRequest(req._id, req.keyword)}
-                        className="text-slate-400 hover:text-rose-600 p-1.5 rounded-xl hover:bg-rose-50 transition cursor-pointer"
+                        className="text-slate-400 hover:text-rose-600 p-2 rounded-xl hover:bg-rose-50 btn-tactile cursor-pointer"
                         title="Delete your request"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -292,29 +292,29 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
                     )}
                   </div>
 
-                  <p className="text-xs text-slate-600 mb-3 leading-relaxed">
+                  <p className="text-xs text-slate-600 mb-4 leading-relaxed">
                     {req.notes || "Urgent requirement for practicals, exams, or campus event."}
                   </p>
 
                   {/* Matching Item Inline Alert */}
                   {hasMatches && (
-                    <div className="mb-3 p-3 bg-emerald-50 border border-emerald-200 rounded-2xl">
-                      <div className="flex items-center space-x-1.5 text-emerald-800 text-xs font-bold mb-2">
+                    <div className="mb-4 p-3.5 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/90 rounded-2xl shadow-2xs">
+                      <div className="flex items-center space-x-1.5 text-emerald-800 text-xs font-black mb-2.5">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                         <span>{req.matching_items.length} Matched Item{req.matching_items.length > 1 ? 's' : ''} Live Now!</span>
                       </div>
-                      <div className="space-y-1.5">
+                      <div className="space-y-2">
                         {req.matching_items.slice(0, 2).map((mItem) => (
                           <div 
                             key={mItem._id}
-                            className="flex items-center justify-between p-2 bg-white rounded-xl border border-emerald-200/60 shadow-2xs text-xs"
+                            className="flex items-center justify-between p-2.5 bg-white rounded-xl border border-emerald-200/70 shadow-2xs text-xs"
                           >
                             <span className="font-bold text-slate-900 truncate max-w-[170px]">{mItem.title}</span>
                             <div className="flex items-center space-x-2">
-                              <span className="text-[11px] font-black text-slate-800">₹{mItem.rental_rate_per_day}/d</span>
+                              <span className="text-[11px] font-black text-slate-900">₹{mItem.rental_rate_per_day}/d</span>
                               <button
                                 onClick={() => setBookingItem(mItem)}
-                                className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold rounded-lg transition cursor-pointer shadow-2xs"
+                                className="px-3 py-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[10px] font-black rounded-lg btn-tactile cursor-pointer shadow-xs"
                               >
                                 Rent
                               </button>
@@ -326,16 +326,16 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
                   )}
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs">
                   <div>
                     <span className="text-slate-400 block text-[10px] uppercase font-bold">Max Daily Budget</span>
-                    <span className="font-black text-emerald-700">₹{req.max_budget_per_day} / day</span>
+                    <span className="font-black text-emerald-700 text-sm">₹{req.max_budget_per_day} <span className="text-slate-400 font-medium text-xs">/ day</span></span>
                   </div>
 
                   <div className="text-right">
                     <span className="text-slate-400 block text-[10px] uppercase font-bold">Requested By</span>
-                    <span className="font-bold text-slate-800">{req.student?.name || 'Verified Student'}</span>
-                    <span className="text-slate-400 text-[10px] block">{req.student?.hostel_block || 'Campus'}</span>
+                    <span className="font-extrabold text-slate-800">{req.student?.name || 'Verified Student'}</span>
+                    <span className="text-slate-400 text-[10px] block font-medium">{req.student?.hostel_block || 'Campus'}</span>
                   </div>
                 </div>
               </div>
@@ -347,11 +347,11 @@ const DemandBoardPage = ({ onFulfillRequest }) => {
       {/* Modal to Post Request */}
       {showModal && (
         <div 
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in duration-150"
+          className="fixed inset-0 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in-up"
           onClick={() => setShowModal(false)}
         >
           <div 
-            className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200"
+            className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-200/90 animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-start mb-3">

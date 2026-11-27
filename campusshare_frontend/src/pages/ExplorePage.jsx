@@ -38,9 +38,9 @@ const CATEGORIES = [
 // Cohesive 3-color palette styling (Slate foundation, Emerald brand accent, Warm Amber highlight)
 const getCategoryChipStyle = (cat, isSelected) => {
   if (isSelected) {
-    return "bg-emerald-500 text-slate-950 font-bold border-emerald-400 shadow-sm shadow-emerald-500/10";
+    return "bg-emerald-500 text-slate-950 font-black border-emerald-400 shadow-md shadow-emerald-500/20 scale-105";
   }
-  return "bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800 hover:text-white hover:border-slate-600";
+  return "bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800 hover:text-white hover:border-slate-600 hover:scale-102";
 };
 
 const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
@@ -316,10 +316,11 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {items.map((item) => (
+            {items.map((item, index) => (
               <ItemCard
                 key={item._id}
                 item={item}
+                animationDelayClass={`delay-${(index % 6) + 1}`}
                 onSelect={setSelectedItem}
                 onBook={setBookingItem}
               />
@@ -331,8 +332,8 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
 
       {/* Item Detail Modal */}
       {selectedItem && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200">
+        <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in-up">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/90 animate-scale-in">
             <div className="relative aspect-16/9 bg-slate-100">
               <img
                 src={selectedItem.images?.[0] || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
@@ -448,7 +449,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
                         setEditingItem(selectedItem);
                         setSelectedItem(null);
                       }}
-                      className="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-xs shadow-md transition flex items-center justify-center space-x-1.5 cursor-pointer"
+                      className="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-xs shadow-md shadow-purple-600/20 btn-tactile flex items-center justify-center space-x-1.5 cursor-pointer"
                     >
                       <Edit2 className="w-3.5 h-3.5" />
                       <span>Edit Listing & Rate</span>
@@ -458,7 +459,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
                         setDeletingItem(selectedItem);
                         setSelectedItem(null);
                       }}
-                      className="py-3 px-4 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl font-bold text-xs transition flex items-center justify-center space-x-1.5 cursor-pointer"
+                      className="py-3 px-4 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl font-bold text-xs btn-tactile flex items-center justify-center space-x-1.5 cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       <span>Delete</span>
@@ -472,7 +473,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
                     setSelectedItem(null);
                   }}
                   disabled={selectedItem.availability_status !== 'AVAILABLE'}
-                  className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs shadow-md transition cursor-pointer disabled:opacity-50"
+                  className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-black text-xs shadow-lg shadow-emerald-600/25 btn-tactile cursor-pointer disabled:opacity-50 tracking-wide"
                 >
                   Rent This Resource
                 </button>

@@ -405,8 +405,8 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8 animate-in fade-in duration-150">
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+    <div className="max-w-2xl mx-auto px-4 py-8 animate-fade-in-up">
+      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden card-interactive">
         
         {/* Banner */}
         <div className="bg-gradient-to-r from-indigo-700 via-indigo-800 to-purple-800 text-white p-6 sm:p-8">
@@ -757,9 +757,9 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition shadow-lg shadow-emerald-600/25 cursor-pointer disabled:opacity-50 flex items-center justify-center space-x-2"
+            className="w-full py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-sm rounded-2xl btn-tactile shadow-xl shadow-emerald-600/25 cursor-pointer disabled:opacity-50 flex items-center justify-center space-x-2 tracking-wide"
           >
-            <PlusCircle className="w-4 h-4 stroke-[2.5]" />
+            <PlusCircle className="w-4 h-4 stroke-[2.8]" />
             <span>{submitting ? "Publishing Item..." : "Publish Item for Campus Sharing"}</span>
           </button>
         </form>

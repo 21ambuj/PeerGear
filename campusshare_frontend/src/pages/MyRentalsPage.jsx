@@ -162,19 +162,19 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200/80 self-start sm:self-auto shadow-xs">
+        <div className="flex bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/80 self-start sm:self-auto shadow-xs backdrop-blur-md">
           <button
             onClick={() => setActiveTab('all')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'all' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+            className={`px-4 py-2 rounded-xl text-xs font-bold btn-tactile cursor-pointer ${
+              activeTab === 'all' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             All Activity
           </button>
           <button
             onClick={() => setActiveTab('renter')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1 ${
-              activeTab === 'renter' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+            className={`px-4 py-2 rounded-xl text-xs font-bold btn-tactile cursor-pointer flex items-center space-x-1.5 ${
+              activeTab === 'renter' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <ShoppingBag className="w-3.5 h-3.5 text-indigo-500" />
@@ -182,8 +182,8 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
           </button>
           <button
             onClick={() => setActiveTab('owner')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1 ${
-              activeTab === 'owner' ? 'bg-white text-indigo-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+            className={`px-4 py-2 rounded-xl text-xs font-bold btn-tactile cursor-pointer flex items-center space-x-1.5 ${
+              activeTab === 'owner' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Tag className="w-3.5 h-3.5 text-purple-500" />
@@ -218,12 +218,12 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {myListedItems.map((item) => (
-              <div key={item._id} className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs hover:border-purple-200 hover:shadow-md transition flex flex-col justify-between group">
+              <div key={item._id} className="bg-white rounded-3xl border border-slate-200/90 p-4 shadow-sm hover:border-purple-300 hover:shadow-lg hover:shadow-purple-900/5 transition-all duration-300 flex flex-col justify-between group card-interactive">
                 <div className="flex items-start space-x-3 mb-3">
                   <img
                     src={item.images?.[0] || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                     alt={item.title}
-                    className="w-16 h-16 rounded-xl object-cover bg-slate-100 shrink-0 border border-slate-100"
+                    className="w-16 h-16 rounded-2xl object-cover bg-slate-100 shrink-0 border border-slate-100 group-hover:scale-105 transition-transform"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-1 mb-1">
@@ -249,14 +249,14 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                 <div className="pt-2.5 border-t border-slate-100 flex items-center justify-end space-x-1.5">
                   <button
                     onClick={() => setEditingItem(item)}
-                    className="px-3 py-1.5 bg-slate-100 hover:bg-purple-100 text-slate-700 hover:text-purple-800 text-xs font-bold rounded-xl transition flex items-center space-x-1 cursor-pointer"
+                    className="px-3 py-1.5 bg-slate-100 hover:bg-purple-100 text-slate-700 hover:text-purple-800 text-xs font-bold rounded-xl btn-tactile flex items-center space-x-1 cursor-pointer"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                     <span>Edit</span>
                   </button>
                   <button
                     onClick={() => setDeletingItem(item)}
-                    className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold rounded-xl transition flex items-center space-x-1 cursor-pointer"
+                    className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold rounded-xl btn-tactile flex items-center space-x-1 cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Delete</span>
@@ -347,14 +347,14 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
             return (
               <div
                 key={rental._id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition p-5 flex flex-col md:flex-row gap-5"
+                className="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 card-interactive p-5 sm:p-6 flex flex-col md:flex-row gap-5 animate-fade-in-up"
               >
                 {/* Thumbnail */}
-                <div className="w-full md:w-36 h-32 md:h-auto rounded-xl overflow-hidden bg-slate-100 shrink-0">
+                <div className="w-full md:w-36 h-32 md:h-auto rounded-2xl overflow-hidden bg-slate-100 shrink-0 border border-slate-100 group">
                   <img
                     src={rental.item?.image || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                     alt={rental.item?.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
 
@@ -363,12 +363,12 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                   <div>
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
                       <div className="flex items-center space-x-2">
-                        <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded ${
+                        <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md ${
                           isRenter ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-purple-50 text-purple-700 border border-purple-200'
                         }`}>
                           {isRenter ? 'You Rented This' : 'Lent from Your Inventory'}
                         </span>
-                        <h3 className="font-bold text-slate-900 text-base">{rental.item?.title || 'Resource'}</h3>
+                        <h3 className="font-extrabold text-slate-900 text-base">{rental.item?.title || 'Resource'}</h3>
                       </div>
                       <div>{getStatusBadge(rental.status)}</div>
                     </div>
@@ -392,7 +392,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                     </div>
 
                     {/* Pickup Location & Logistics Banner */}
-                    <div className="my-2 bg-gradient-to-r from-amber-50/80 via-orange-50/50 to-amber-50/80 border border-amber-200/90 rounded-xl px-3 py-2 flex items-center justify-between text-xs">
+                    <div className="my-2 bg-gradient-to-r from-amber-50/80 via-orange-50/50 to-amber-50/80 border border-amber-200/90 rounded-2xl px-3.5 py-2.5 flex items-center justify-between text-xs">
                       <div className="flex items-center space-x-2">
                         <MapPin className="w-4 h-4 text-amber-600 shrink-0" />
                         <div>
@@ -400,7 +400,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                           <span className="font-bold text-slate-900">{pickupLoc}</span>
                         </div>
                       </div>
-                      <span className="text-[10px] font-semibold text-amber-700 bg-white/80 border border-amber-200 px-2 py-0.5 rounded-md">
+                      <span className="text-[10px] font-bold text-amber-800 bg-white/90 border border-amber-200 px-2.5 py-0.5 rounded-lg shadow-2xs">
                         In-Person Handover
                       </span>
                     </div>
@@ -455,7 +455,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                         {peer?.phone && peer.phone !== '+91 0000000000' && (
                           <a
                             href={`tel:${peer.phone}`}
-                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl text-indigo-700 font-bold text-[11px] transition shadow-2xs flex items-center space-x-1 cursor-pointer"
+                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl text-indigo-700 font-bold text-[11px] btn-tactile shadow-2xs flex items-center space-x-1 cursor-pointer"
                             title="Direct Call / Contact"
                           >
                             <Phone className="w-3 h-3 text-indigo-600" />
@@ -478,7 +478,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
 
                         <button
                           onClick={() => setSelectedRentalForQr(rental)}
-                          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition flex items-center space-x-1.5 shadow-xs cursor-pointer"
+                          className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs px-4 py-2 rounded-xl btn-tactile flex items-center space-x-1.5 shadow-md shadow-indigo-600/20 cursor-pointer"
                         >
                           <QrCode className="w-3.5 h-3.5" />
                           <span>Show QR Handover Pass</span>
@@ -489,7 +489,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                     {rental.status === 'BOOKED' && isOwner && (
                       <button
                         onClick={() => setPickupModalRental(rental)}
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition flex items-center space-x-1.5 shadow-sm cursor-pointer"
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-xl btn-tactile flex items-center space-x-1.5 shadow-md shadow-indigo-600/20 cursor-pointer"
                       >
                         <QrCode className="w-3.5 h-3.5" />
                         <span>Scan QR or Enter OTP to Hand Over</span>
@@ -499,7 +499,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                     {rental.status === 'ACTIVE' && isOwner && (
                       <button
                         onClick={() => setReturnModalRental(rental)}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition flex items-center space-x-1.5 shadow-sm cursor-pointer"
+                        className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs px-4 py-2 rounded-xl btn-tactile flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 cursor-pointer"
                       >
                         <ShieldCheck className="w-3.5 h-3.5" />
                         <span>Verify Return & Refund Deposit</span>
@@ -509,7 +509,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                     {rental.status === 'COMPLETED' && isRenter && !rental.rating_given && (
                       <button
                         onClick={() => setReviewModalRental(rental)}
-                        className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition flex items-center space-x-1.5 cursor-pointer"
+                        className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl btn-tactile flex items-center space-x-1.5 shadow-sm cursor-pointer"
                       >
                         <Star className="w-3.5 h-3.5 fill-current" />
                         <span>Leave Review</span>
@@ -519,7 +519,7 @@ const MyRentalsPage = ({ initialSubTab = 'all', onNavigateToExplore, onNavigateT
                     {/* Always visible: Condition Tracking Ledger */}
                     <button
                       onClick={() => setSelectedRentalForTracking(rental)}
-                      className="border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-xl transition flex items-center space-x-1 cursor-pointer"
+                      className="border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs px-3.5 py-2 rounded-xl btn-tactile flex items-center space-x-1.5 cursor-pointer"
                     >
                       <Camera className="w-3.5 h-3.5 text-slate-500" />
                       <span>Condition Photos & Evidence</span>

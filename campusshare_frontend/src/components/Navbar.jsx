@@ -21,7 +21,8 @@ import {
   Tag,
   Package,
   X,
-  History
+  History,
+  RefreshCw
 } from 'lucide-react';
 import CampusPaymentModal from './CampusPaymentModal';
 import ManageMoneyModal from './ManageMoneyModal';
@@ -303,7 +304,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
                     {/* Animated Glass Dropdown Menu */}
                     {showProfileMenu && (
-                      <div className="absolute right-0 mt-2 w-[calc(100vw-1.5rem)] sm:w-80 max-w-sm bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/80 py-2.5 z-50 animate-in zoom-in-95 fade-in duration-150 max-h-[82vh] overflow-y-auto no-scrollbar">
+                      <div className="absolute right-0 mt-2 w-[calc(100vw-1.5rem)] sm:w-80 max-w-sm glass-panel rounded-3xl shadow-2xl shadow-slate-900/15 border border-slate-200/80 py-2.5 z-50 animate-scale-in max-h-[82vh] overflow-y-auto no-scrollbar">
                         
                         {/* Student Identity Card */}
                         <div className="px-4 py-3 border-b border-slate-100">
