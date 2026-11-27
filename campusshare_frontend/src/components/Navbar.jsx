@@ -22,7 +22,11 @@ import {
   Package,
   X,
   History,
-  RefreshCw
+  RefreshCw,
+  Menu,
+  Search,
+  Lock,
+  CheckCircle2
 } from 'lucide-react';
 import CampusPaymentModal from './CampusPaymentModal';
 import ManageMoneyModal from './ManageMoneyModal';
@@ -39,10 +43,11 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
   const [topupAmount, setTopupAmount] = useState('500');
   const [userListings, setUserListings] = useState([]);
   const [loadingListings, setLoadingListings] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const profileContainerRef = useRef(null);
 
-  // Close profile menu and wallet on outside click or Escape key
+  // Close profile menu, mobile drawer, and wallet on outside click or Escape key
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (profileContainerRef.current && !profileContainerRef.current.contains(e.target)) {
@@ -54,6 +59,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
       if (e.key === 'Escape') {
         setShowProfileMenu(false);
         setShowWalletModal(false);
+        setMobileMenuOpen(false);
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setActiveTab('explore');
+        setMobileMenuOpen(false);
+        window.dispatchEvent(new CustomEvent('campusshare-focus-search'));
       }
     };
 
@@ -66,7 +78,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
       document.removeEventListener('touchstart', handleOutsideClick);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [setActiveTab]);
 
   const fetchUserListings = async () => {
     if (!user) return;
@@ -140,9 +152,12 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-zinc-200/70 shadow-[0_1px_3px_0_rgba(0,0,0,0.02)] transition-all">
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-2xl border-b border-zinc-200/80 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.03)] transition-all">
+        {/* Iridescent Top Accent Bar */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-emerald-500 via-teal-400 to-indigo-500"></div>
+
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 gap-2 sm:gap-6 lg:gap-8">
+          <div className="flex items-center justify-between h-16 gap-2 sm:gap-4 lg:gap-8">
             
             {/* Logo & Modern Tech Brand */}
             <div 
@@ -171,9 +186,25 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                     Campus
                   </span>
                 </div>
-                <span className="text-[10px] text-zinc-400 font-medium tracking-tight">Verified P2P Network</span>
+                <span className="text-[10px] text-zinc-400 font-medium tracking-tight">Student Resource Exchange</span>
               </div>
             </div>
+
+            {/* Quick Command Search Pill (Desktop) */}
+            <button
+              onClick={() => {
+                setActiveTab('explore');
+                window.dispatchEvent(new CustomEvent('campusshare-focus-search'));
+              }}
+              className="hidden xl:flex items-center space-x-2 px-3 py-1.5 rounded-full bg-zinc-100/80 hover:bg-zinc-200/60 border border-zinc-200/80 text-zinc-500 hover:text-zinc-800 text-xs transition cursor-pointer group btn-tactile"
+              title="Quick Search Gear (⌘K)"
+            >
+              <Search className="w-3.5 h-3.5 text-zinc-400 group-hover:text-emerald-600 transition-colors" />
+              <span className="font-medium">Quick Find...</span>
+              <kbd className="text-[10px] font-mono bg-white px-1.5 py-0.2 rounded border border-zinc-200 text-zinc-400 font-bold shadow-2xs">
+                ⌘K
+              </kbd>
+            </button>
 
             {/* Modern Dock Navigation Tabs */}
             <nav className="hidden lg:flex items-center space-x-1 bg-zinc-100/80 p-1 rounded-full border border-zinc-200/80 backdrop-blur-md shrink-0">
@@ -301,75 +332,84 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                     {showProfileMenu && (
                       <div className="absolute right-0 mt-2 w-[calc(100vw-1.5rem)] sm:w-80 max-w-sm glass-panel rounded-3xl shadow-2xl shadow-slate-900/15 border border-slate-200/80 py-2.5 z-50 animate-scale-in max-h-[82vh] overflow-y-auto no-scrollbar">
                         
-                        {/* Student Identity Card */}
-                        <div className="px-4 py-3 border-b border-slate-100">
-                          <div className="flex items-center justify-between mb-1">
-                            <div className="flex items-center space-x-2">
-                              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-200"></span>
-                              <p className="text-xs font-black text-slate-900 truncate">{user.name}</p>
+                        {/* Student Digital Identity Card (Obsidian Fintech Card) */}
+                        <div className="mx-2 mb-2 p-3.5 bg-gradient-to-br from-zinc-950 via-zinc-900 to-slate-950 text-white rounded-2xl border border-zinc-800 shadow-md relative overflow-hidden">
+                          <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center space-x-2 min-w-0">
+                              <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-black text-xs text-emerald-400 shrink-0">
+                                {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                              </div>
+                              <div className="min-w-0">
+                                <p className="text-xs font-bold text-white truncate max-w-[130px]">{user.name}</p>
+                                <p className="text-[10px] text-zinc-400 font-mono">{user.college_id || 'ID Pending'}</p>
+                              </div>
                             </div>
+
                             {user.id_card_status === 'VERIFIED' ? (
-                              <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
-                                ⭐ Verified
+                              <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center space-x-1 shrink-0">
+                                <CheckCircle2 className="w-2.5 h-2.5" />
+                                <span>Verified</span>
                               </span>
                             ) : user.id_card_status === 'PENDING_VERIFICATION' ? (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
-                                ⏳ Under Review
+                              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 shrink-0">
+                                ⏳ Review
                               </span>
                             ) : user.id_card_status === 'REJECTED' ? (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300">
-                                ✗ ID Rejected
-                              </span>
-                            ) : user.is_email_verified ? (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                Email Verified ✓
+                              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30 shrink-0">
+                                ✗ Rejected
                               </span>
                             ) : (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700 shrink-0">
                                 Unverified
                               </span>
                             )}
                           </div>
-                          <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
-                          <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 text-[10px]">
-                            <span className="text-slate-400">Roll / ID:</span>
-                            <span className="font-mono font-bold text-slate-700">{user.college_id}</span>
-                          </div>
 
-                          {/* Rejection reason & Upload ID Card prompt */}
-                          {user.id_card_status === 'REJECTED' && (
-                            <div className="mt-2.5 p-2 bg-rose-50 border border-rose-200 rounded-xl space-y-1.5">
-                              <p className="text-[10px] text-rose-800 font-semibold leading-tight">
-                                ⚠️ {user.id_card_rejection_reason || 'Document could not be verified by admin.'}
-                              </p>
+                          <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between text-[10px]">
+                            <span className="text-zinc-400 truncate max-w-[150px]">{user.email}</span>
+                            <span className="text-emerald-400 font-mono font-bold">₹{Number(user.wallet_balance || 0).toFixed(0)} B-Money</span>
+                          </div>
+                        </div>
+
+                        {/* Status actions / Upload ID Card prompt */}
+                        {(user.id_card_status === 'REJECTED' || (user.id_card_status !== 'VERIFIED' && user.id_card_status !== 'PENDING_VERIFICATION')) && (
+                          <div className="px-2 pb-2">
+                            {user.id_card_status === 'REJECTED' && (
+                              <div className="p-2 bg-rose-50 border border-rose-200 rounded-xl space-y-1.5">
+                                <p className="text-[10px] text-rose-800 font-semibold leading-tight">
+                                  ⚠️ {user.id_card_rejection_reason || 'Document could not be verified by admin.'}
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setShowProfileMenu(false);
+                                    onOpenAuth && onOpenAuth('register', 'ID_CARD');
+                                  }}
+                                  className="w-full py-1.5 px-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-[10px] font-bold flex items-center justify-center space-x-1 transition cursor-pointer shadow-2xs"
+                                >
+                                  <RefreshCw className="w-3 h-3" />
+                                  <span>Re-upload College ID</span>
+                                </button>
+                              </div>
+                            )}
+
+                            {user.id_card_status !== 'VERIFIED' && user.id_card_status !== 'PENDING_VERIFICATION' && user.id_card_status !== 'REJECTED' && (
                               <button
                                 type="button"
                                 onClick={() => {
                                   setShowProfileMenu(false);
                                   onOpenAuth && onOpenAuth('register', 'ID_CARD');
                                 }}
-                                className="w-full py-1.5 px-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-[10px] font-bold flex items-center justify-center space-x-1 transition cursor-pointer shadow-2xs"
+                                className="w-full mt-1.5 py-1.5 px-2 bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 text-indigo-700 border border-indigo-200/80 rounded-xl text-[10px] font-bold flex items-center justify-center space-x-1 transition cursor-pointer"
                               >
-                                <RefreshCw className="w-3 h-3" />
-                                <span>Re-upload College ID</span>
+                                <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
+                                <span>Upload College ID (Get Verified)</span>
                               </button>
-                            </div>
-                          )}
-
-                          {user.id_card_status !== 'VERIFIED' && user.id_card_status !== 'PENDING_VERIFICATION' && user.id_card_status !== 'REJECTED' && (
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setShowProfileMenu(false);
-                                onOpenAuth && onOpenAuth('register', 'ID_CARD');
-                              }}
-                              className="w-full mt-2.5 py-1.5 px-2 bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 text-indigo-700 border border-indigo-200/80 rounded-xl text-[10px] font-bold flex items-center justify-center space-x-1 transition cursor-pointer"
-                            >
-                              <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
-                              <span>Upload College ID (Get Verified)</span>
-                            </button>
-                          )}
-                        </div>
+                            )}
+                          </div>
+                        )}
 
                         {/* SECTION: My Listed Items (Shows your listings right in the dropdown) */}
                         <div className="px-3 py-2.5 bg-slate-50/80 border-b border-slate-100">
@@ -568,9 +608,100 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 </div>
               )}
 
+              {/* Mobile Menu Toggle Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 rounded-xl transition cursor-pointer btn-tactile ml-1"
+                aria-label="Toggle navigation menu"
+              >
+                {mobileMenuOpen ? (
+                  <X className="w-5 h-5 text-zinc-900" />
+                ) : (
+                  <Menu className="w-5 h-5 text-zinc-700" />
+                )}
+              </button>
+
             </div>
           </div>
         </div>
+
+        {/* Animated Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-zinc-200/80 bg-white/95 backdrop-blur-2xl px-4 py-4 space-y-3 animate-fade-in-down shadow-xl max-h-[80vh] overflow-y-auto">
+            
+            {/* Quick Search Trigger */}
+            <div 
+              onClick={() => {
+                setActiveTab('explore');
+                setMobileMenuOpen(false);
+                window.dispatchEvent(new CustomEvent('campusshare-focus-search'));
+              }}
+              className="flex items-center space-x-2.5 px-3.5 py-2.5 rounded-xl bg-zinc-100/90 border border-zinc-200/80 text-zinc-500 text-xs cursor-pointer hover:bg-zinc-100 transition"
+            >
+              <Search className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span className="font-medium text-zinc-700 truncate">Search Casio, drafters, cycles, DSLR...</span>
+            </div>
+
+            {/* Navigation Links Grid */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id || (item.id === 'my-rentals' && (activeTab === 'my-rentals-renter' || activeTab === 'my-rentals-owner'));
+
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      if (item.requiresAuth && !user) {
+                        onOpenAuth('login');
+                      } else {
+                        setActiveTab(item.id);
+                      }
+                    }}
+                    className={`flex items-center space-x-2 p-2.5 rounded-xl text-xs font-bold transition text-left cursor-pointer ${
+                      isActive
+                        ? 'bg-zinc-950 text-white shadow-xs'
+                        : 'bg-zinc-50 hover:bg-zinc-100 text-zinc-700'
+                    }`}
+                  >
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-400' : 'text-zinc-500'}`} />
+                    <span className="truncate">{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* List Gear Mobile CTA */}
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (!user) onOpenAuth('login');
+                else setActiveTab('list-item');
+              }}
+              className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md shadow-emerald-950/20 cursor-pointer"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>+ List New Gear for Rent</span>
+            </button>
+
+            {/* Admin Console Quick Link */}
+            <div className="pt-2 border-t border-zinc-100 flex items-center justify-between text-xs">
+              <span className="text-[11px] text-zinc-400">Campus Student Network</span>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setActiveTab(user?.role === 'ADMIN' ? 'admin' : 'admin-login');
+                }}
+                className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1 cursor-pointer"
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Admin Console</span>
+              </button>
+            </div>
+
+          </div>
+        )}
       </header>
 
       {/* Unified Campus B-Money Portal (Add Money & Instant Bank Withdrawal) */}

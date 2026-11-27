@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider, useToast } from './context/ToastContext';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import ExplorePage from './pages/ExplorePage';
 import ListItemPage from './pages/ListItemPage';
 import MyRentalsPage from './pages/MyRentalsPage';
@@ -185,32 +186,12 @@ const AppContent = () => {
         )}
       </main>
 
-      {/* Clean University Community Footer */}
-      <footer className="bg-white border-t border-slate-200 py-6 mt-16 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center space-x-2">
-            <span className="font-extrabold text-slate-900 tracking-tight">PeerGear</span>
-            <span>• Peer-to-Peer Campus Resource Exchange & Escrow</span>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-400">
-            <span>Verified Student Community</span>
-            <span>•</span>
-            <button
-              onClick={() => setActiveTab(user?.role === 'ADMIN' ? 'admin' : 'admin-login')}
-              className="hover:text-indigo-600 font-bold text-slate-500 hover:underline transition cursor-pointer flex items-center space-x-1"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-indigo-500" />
-              <span>Campus Admin Portal</span>
-            </button>
-            <span>•</span>
-            <span>Dynamic QR Handover</span>
-            <span>•</span>
-            <span>100% Refundable Escrow</span>
-            <span>•</span>
-            <span>© 2026 PeerGear</span>
-          </div>
-        </div>
-      </footer>
+      {/* Ultra-Modern Campus Tech Footer */}
+      <Footer
+        setActiveTab={setActiveTab}
+        onOpenAuth={openAuth}
+        user={user}
+      />
 
       {/* Modals */}
       {showNotificationsModal && (

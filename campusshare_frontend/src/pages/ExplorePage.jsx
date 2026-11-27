@@ -126,8 +126,26 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
       dataCache.invalidate('items_');
       fetchItems(true);
     };
+    const handleFocusSearch = () => {
+      const el = document.getElementById('campus-global-search-input');
+      if (el) {
+        el.focus();
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    };
+    const handleSetCategory = (e) => {
+      if (e.detail) {
+        setSelectedCategory(e.detail);
+      }
+    };
     window.addEventListener('campusshare-item-created', handleItemCreated);
-    return () => window.removeEventListener('campusshare-item-created', handleItemCreated);
+    window.addEventListener('campusshare-focus-search', handleFocusSearch);
+    window.addEventListener('campusshare-set-category', handleSetCategory);
+    return () => {
+      window.removeEventListener('campusshare-item-created', handleItemCreated);
+      window.removeEventListener('campusshare-focus-search', handleFocusSearch);
+      window.removeEventListener('campusshare-set-category', handleSetCategory);
+    };
   }, [selectedCategory, sortBy, searchQuery]);
 
   const fetchDynamicCategories = async () => {
@@ -226,19 +244,8 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Headline, Command Search, Categories */}
-            <div className="lg:col-span-7 flex flex-col items-start">
+            <div className="lg:col-span-7 flex flex-col items-start pt-2">
               
-              {/* Protocol Badge */}
-              <div className="inline-flex items-center space-x-2 bg-zinc-900/90 border border-zinc-800 px-3.5 py-1.5 rounded-full text-zinc-300 text-xs font-semibold mb-4 backdrop-blur-md shadow-xs">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span className="text-[11px] font-bold text-zinc-200">Campus Escrow Protocol</span>
-                <span className="text-zinc-600">•</span>
-                <span className="text-[11px] font-medium text-emerald-400">Zero Theft • Verified Students</span>
-              </div>
-
               {/* Headline */}
               <h1 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-black tracking-[-0.035em] text-white mb-4 leading-[1.08]">
                 Campus Gear, <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200">On Demand.</span>
@@ -254,6 +261,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
                 <div className="flex-1 flex items-center px-3 text-zinc-800 min-w-0">
                   <Search className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 shrink-0 mr-2.5" />
                   <input
+                    id="campus-global-search-input"
                     type="text"
                     placeholder="Search Casio calculators, drafters, geared cycles, DSLR..."
                     value={searchQuery}
@@ -533,7 +541,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
       {/* CAMPUS VERIFICATION ARCHITECTURE (Trust Engine Bento Grid)    */}
       {/* Positioned AFTER inventory and listing grid                    */}
       {/* ============================================================== */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16">
+      <div id="trust-architecture-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16 scroll-mt-24">
         
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-zinc-200/80">
