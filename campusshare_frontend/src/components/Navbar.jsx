@@ -168,12 +168,12 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-r from-emerald-500/10 via-teal-500/15 to-cyan-500/10 blur-xl pointer-events-none"></div>
 
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center justify-between h-16 sm:h-[70px] gap-2 sm:gap-4 w-full">
+          <div className="flex items-center justify-between h-16 sm:h-[70px] gap-4 md:gap-6 lg:gap-8 xl:gap-10 w-full">
             
             {/* ============================================================== */}
             {/* LEFT ZONE (flex-1): Brand Identity & Active Campus Indicator    */}
             {/* ============================================================== */}
-            <div className="flex-1 flex items-center justify-start min-w-0 space-x-2.5 sm:space-x-3">
+            <div className="flex-1 flex items-center justify-start min-w-0 space-x-2.5 sm:space-x-3 shrink-0">
               {/* Geometric Brand Mark */}
               <div 
                 onClick={() => setActiveTab('explore')}
@@ -185,7 +185,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                   <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r from-emerald-500/35 via-teal-500/25 to-cyan-500/35 blur-md opacity-50 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                   
                   {/* 3D Machined Icon Emblem */}
-                  <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-black dark:from-zinc-900 dark:via-zinc-950 dark:to-black text-white flex items-center justify-center shadow-xl shadow-zinc-950/30 group-hover:scale-105 transition-all duration-300 ring-1 ring-zinc-700/60 dark:ring-white/[0.16] group-hover:ring-emerald-500/50">
+                  <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-black dark:from-zinc-900 dark:via-zinc-950 dark:to-black text-white flex items-center justify-center shadow-xl shadow-zinc-950/30 group-hover:scale-105 transition-all duration-300 ring-1 ring-zinc-700/60 dark:ring-white/[0.16] group-hover:ring-emerald-500/50 shrink-0">
                     {/* Custom Interlocking Geometric Nodes SVG */}
                     <svg className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 group-hover:text-emerald-300 group-hover:rotate-12 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="18" cy="6" r="3" />
@@ -204,7 +204,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 </div>
 
                 {/* Brand Typography */}
-                <div className="flex flex-col">
+                <div className="flex flex-col shrink-0">
                   <div className="flex items-center space-x-1.5">
                     <span className="text-lg sm:text-[21px] font-black tracking-[-0.035em] text-zinc-950 dark:text-white leading-none">
                       Peer<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 group-hover:from-emerald-400 group-hover:to-teal-300 transition-all">Gear</span>
@@ -219,10 +219,10 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 </div>
               </div>
 
-              {/* Active Campus Indicator (Anchors campus node identity & balances left space) */}
+              {/* Active Campus Indicator (Appears on XL screens with guaranteed space) */}
               {user?.campus_name && (
                 <div 
-                  className="hidden md:flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-400 text-[11px] font-bold max-w-[150px] lg:max-w-[200px] truncate select-none shadow-2xs shrink-0"
+                  className="hidden xl:flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-400 text-[11px] font-bold max-w-[170px] 2xl:max-w-[220px] truncate select-none shadow-2xs shrink-0"
                   title={`Active Campus Node: ${user.campus_name}`}
                 >
                   <Building2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
@@ -235,7 +235,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
             {/* CENTER ZONE (flex-none): Perfectly Centered Navigation Dock    */}
             {/* ============================================================== */}
             <div className="hidden lg:flex shrink-0 items-center justify-center">
-              <nav className="flex items-center space-x-0.5 xl:space-x-1 p-1 rounded-full bg-zinc-100/90 dark:bg-white/[0.05] border border-zinc-200/80 dark:border-white/[0.08] backdrop-blur-xl shadow-inner">
+              <nav className="flex items-center space-x-1 sm:space-x-1.5 p-1.5 rounded-full bg-zinc-100/90 dark:bg-white/[0.05] border border-zinc-200/80 dark:border-white/[0.08] backdrop-blur-xl shadow-inner">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id || (item.id === 'my-rentals' && (activeTab === 'my-rentals-renter' || activeTab === 'my-rentals-owner'));
@@ -250,7 +250,8 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                           setActiveTab(item.id);
                         }
                       }}
-                      className={`relative px-2.5 xl:px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center space-x-1.5 cursor-pointer whitespace-nowrap ${
+                      title={item.label}
+                      className={`relative px-3 py-1.5 xl:px-3.5 xl:py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center space-x-1.5 cursor-pointer whitespace-nowrap shrink-0 min-h-[34px] ${
                         isActive
                           ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-sm ring-1 ring-emerald-500/40 shadow-emerald-500/10'
                           : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-white/60 dark:hover:bg-zinc-800/60'
@@ -259,10 +260,10 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                       {isActive && (
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.9)] animate-pulse shrink-0"></span>
                       )}
-                      <Icon className={`w-3.5 h-3.5 transition-colors duration-200 ${
+                      <Icon className={`w-3.5 h-3.5 transition-colors duration-200 shrink-0 ${
                         isActive ? 'text-emerald-600 dark:text-emerald-400 stroke-[2.5]' : 'text-zinc-400 dark:text-zinc-500'
                       }`} />
-                      <span>{item.label}</span>
+                      <span className={isActive ? 'inline' : 'hidden xl:inline'}>{item.label}</span>
                     </button>
                   );
                 })}
@@ -273,13 +274,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                     if (!user) onOpenAuth('login');
                     else setActiveTab('list-item');
                   }}
-                  className={`ml-1 px-3.5 xl:px-4 py-1.5 rounded-full text-xs font-black transition-all duration-200 flex items-center space-x-1.5 cursor-pointer shadow-md active:scale-95 group whitespace-nowrap shrink-0 ${
+                  className={`ml-1 px-3.5 xl:px-4 py-1.5 rounded-full text-xs font-black transition-all duration-200 flex items-center space-x-1.5 cursor-pointer shadow-md active:scale-95 group whitespace-nowrap shrink-0 min-h-[34px] ${
                     activeTab === 'list-item'
                       ? 'bg-emerald-600 text-white shadow-emerald-600/40 ring-2 ring-emerald-400/50'
                       : 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/50 hover:scale-[1.03]'
                   }`}
                 >
-                  <PlusCircle className="w-3.5 h-3.5 stroke-[2.8] group-hover:rotate-90 transition-transform duration-300" />
+                  <PlusCircle className="w-3.5 h-3.5 stroke-[2.8] group-hover:rotate-90 transition-transform duration-300 shrink-0" />
                   <span>+ List Gear</span>
                 </button>
               </nav>
@@ -288,31 +289,31 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
             {/* ============================================================== */}
             {/* RIGHT ZONE (flex-1): Theme, B-Money & High-Visibility Profile   */}
             {/* ============================================================== */}
-            <div className="flex-1 flex items-center justify-end min-w-0 space-x-2 sm:space-x-2.5">
+            <div className="flex-1 flex items-center justify-end min-w-0 space-x-2 sm:space-x-3 shrink-0">
               
               {/* Tactile Theme Switcher Button */}
               <button
                 onClick={toggleTheme}
-                className="relative p-2 rounded-full bg-zinc-100 dark:bg-white/[0.06] hover:bg-zinc-200/80 dark:hover:bg-white/[0.12] text-zinc-600 dark:text-amber-400 border border-zinc-200/80 dark:border-white/[0.08] transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 group shrink-0"
+                className="relative p-2 rounded-full min-w-[36px] min-h-[36px] flex items-center justify-center bg-zinc-100 dark:bg-white/[0.06] hover:bg-zinc-200/80 dark:hover:bg-white/[0.12] text-zinc-600 dark:text-amber-400 border border-zinc-200/80 dark:border-white/[0.08] transition-all duration-200 cursor-pointer shadow-2xs hover:scale-105 active:scale-95 group shrink-0"
                 title={isDark ? "Switch to Daylight Mode" : "Switch to Night Mode"}
                 aria-label="Toggle visual theme"
               >
                 {isDark ? (
-                  <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-90 transition-transform duration-500" />
+                  <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-90 transition-transform duration-500 shrink-0" />
                 ) : (
-                  <Moon className="w-4 h-4 text-zinc-700 group-hover:-rotate-12 transition-transform duration-300" />
+                  <Moon className="w-4 h-4 text-zinc-700 group-hover:-rotate-12 transition-transform duration-300 shrink-0" />
                 )}
               </button>
 
               {user ? (
                 <>
-                  {/* Notification Bell (Hidden on small mobile to give room to avatar) */}
+                  {/* Notification Bell (Only shown on XL screens where plenty of space is guaranteed) */}
                   <button
                     onClick={onOpenNotifications}
-                    className="hidden sm:flex relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-white/[0.06] rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] group shrink-0"
+                    className="hidden xl:flex relative p-2 min-w-[36px] min-h-[36px] items-center justify-center text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-white/[0.06] rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] group shrink-0"
                     title="Campus Activity Alerts"
                   >
-                    <Bell className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+                    <Bell className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300 shrink-0" />
                     {unreadNotifications > 0 && (
                       <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
@@ -329,7 +330,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                       setMoneyModalInitialView('CHOICE');
                       setShowManageMoneyModal(true);
                     }}
-                    className="flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-zinc-950 via-zinc-900 to-black dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-950 hover:from-zinc-900 hover:to-zinc-850 dark:hover:from-zinc-850 dark:hover:to-zinc-900 border border-zinc-800/90 dark:border-white/[0.12] text-white px-2.5 sm:px-3.5 py-1.5 rounded-full text-xs font-bold cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md hover:border-emerald-500/50 active:scale-95 group select-none shrink-0"
+                    className="flex items-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-zinc-950 via-zinc-900 to-black dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-950 hover:from-zinc-900 hover:to-zinc-850 dark:hover:from-zinc-850 dark:hover:to-zinc-900 border border-zinc-800/90 dark:border-white/[0.12] text-white px-2.5 sm:px-3.5 py-1.5 rounded-full text-xs font-bold cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md hover:border-emerald-500/50 active:scale-95 group select-none shrink-0 min-h-[34px]"
                     title="Open B-Money Portal (Recharge & Withdraw)"
                   >
                     {/* Concentric Animated Pulse Beacon */}
@@ -338,13 +339,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
 
-                    <span className="text-[10px] font-black text-emerald-400 tracking-wider uppercase hidden md:inline">B-Money</span>
-                    <span className="w-px h-3 bg-zinc-800 dark:bg-zinc-700 hidden md:inline"></span>
+                    <span className="text-[10px] font-black text-emerald-400 tracking-wider uppercase hidden 2xl:inline">B-Money</span>
+                    <span className="w-px h-3 bg-zinc-800 dark:bg-zinc-700 hidden 2xl:inline"></span>
                     
-                    <span className="font-mono font-black text-xs text-zinc-100 group-hover:text-emerald-300 transition-colors">
+                    <span className="font-mono font-black text-xs text-zinc-100 group-hover:text-emerald-300 transition-colors whitespace-nowrap">
                       ₹{Number(user.wallet_balance || 0).toFixed(0)}
                     </span>
-                    <span className="text-[10px] text-zinc-400 group-hover:text-white transition-colors pl-0.5">
+                    <span className="text-[10px] text-zinc-400 group-hover:text-white transition-colors pl-0.5 shrink-0">
                       +
                     </span>
                   </div>
@@ -353,10 +354,10 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                   <div className="relative shrink-0 overflow-visible" ref={profileContainerRef}>
                     <button
                       onClick={handleToggleProfileMenu}
-                      className="flex items-center space-x-2 p-1 sm:pr-2.5 rounded-full bg-zinc-100/90 dark:bg-white/[0.06] hover:bg-zinc-200/80 dark:hover:bg-white/[0.12] border border-zinc-200/80 dark:border-white/[0.1] text-zinc-800 dark:text-zinc-100 transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md shrink-0 group hover:scale-[1.02] active:scale-95"
+                      className="flex items-center space-x-2 p-1 sm:pr-2.5 rounded-full bg-zinc-100/90 dark:bg-white/[0.06] hover:bg-zinc-200/80 dark:hover:bg-white/[0.12] border border-zinc-200/80 dark:border-white/[0.1] text-zinc-800 dark:text-zinc-100 transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md shrink-0 group hover:scale-[1.02] active:scale-95 min-h-[36px]"
                       title="Profile and Campus Identity Settings"
                     >
-                      {/* Avatar Circle (High contrast, vibrant campus gradient, never clipped) */}
+                      {/* Avatar Circle (High contrast, vibrant campus gradient, guaranteed dimensions and visibility) */}
                       <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 aspect-square rounded-full">
                         <div className="w-full h-full rounded-full bg-gradient-to-tr from-emerald-600 via-teal-600 to-cyan-500 text-white font-black text-xs sm:text-sm flex items-center justify-center shadow-md shadow-emerald-500/25 ring-2 ring-emerald-400/40 dark:ring-emerald-400/50 group-hover:ring-emerald-400 transition-all">
                           {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
@@ -365,8 +366,8 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                         <span className="absolute bottom-0 right-0 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#08090e] shadow-xs"></span>
                       </div>
 
-                      {/* Desktop Name Tag */}
-                      <div className="text-left hidden xl:block leading-tight pr-0.5">
+                      {/* Desktop Name Tag (Shown on 2XL screens to maintain space on standard displays) */}
+                      <div className="text-left hidden 2xl:block leading-tight pr-0.5">
                         <p className="font-extrabold text-zinc-900 dark:text-zinc-100 text-xs truncate max-w-24">
                           {user.name.split(' ')[0]}
                         </p>
@@ -673,7 +674,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
               {/* Mobile Menu Toggle Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/[0.06] rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] ml-1 shrink-0"
+                className="lg:hidden p-2 min-w-[36px] min-h-[36px] flex items-center justify-center text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/[0.06] rounded-full transition-all duration-200 cursor-pointer border border-zinc-200/80 dark:border-white/[0.08] shrink-0"
                 aria-label="Toggle navigation menu"
               >
                 {mobileMenuOpen ? (
