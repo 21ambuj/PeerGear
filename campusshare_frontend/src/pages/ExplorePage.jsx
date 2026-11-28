@@ -283,8 +283,8 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
               </p>
 
               {/* Elevated Floating Command Search Box */}
-              <form onSubmit={handleSearchSubmit} className="w-full max-w-xl flex items-center gap-2 p-1.5 bg-white rounded-2xl shadow-2xl shadow-black/40 border border-zinc-200 text-zinc-900 focus-within:ring-2 focus-within:ring-emerald-500/40">
-                <div className="flex-1 flex items-center px-3 text-zinc-800 min-w-0">
+              <form onSubmit={handleSearchSubmit} className="w-full max-w-xl flex items-center gap-2 p-1.5 bg-white dark:bg-zinc-900/90 rounded-2xl shadow-2xl shadow-black/40 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus-within:ring-2 focus-within:ring-emerald-500/40">
+                <div className="flex-1 flex items-center px-3 text-zinc-800 dark:text-zinc-200 min-w-0">
                   <Search className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 shrink-0 mr-2.5" />
                   <input
                     id="campus-global-search-input"
@@ -292,12 +292,12 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
                     placeholder="Search Casio calculators, drafters, geared cycles, DSLR..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-transparent text-zinc-900 placeholder-zinc-400 text-xs sm:text-sm focus:outline-hidden font-medium"
+                    className="w-full bg-transparent text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 text-xs sm:text-sm focus:outline-hidden font-medium"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition cursor-pointer shadow-sm shrink-0 btn-tactile flex items-center space-x-1.5"
+                  className="bg-zinc-950 dark:bg-emerald-600 hover:bg-zinc-800 dark:hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition cursor-pointer shadow-sm shrink-0 btn-tactile flex items-center space-x-1.5"
                 >
                   <span>Search</span>
                 </button>
@@ -825,8 +825,8 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
       {/* Item Detail Modal */}
       {selectedItem && (
         <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in-up">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/90 animate-scale-in">
-            <div className="relative aspect-16/9 bg-slate-100">
+          <div className="bg-white dark:bg-zinc-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/90 dark:border-zinc-800 animate-scale-in text-slate-900 dark:text-zinc-100">
+            <div className="relative aspect-16/9 bg-slate-100 dark:bg-zinc-800">
               <img
                 src={selectedItem.images?.[0] || 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80'}
                 alt={selectedItem.title}
@@ -847,33 +847,33 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
 
             <div className="p-6">
               <div className="flex justify-between items-baseline mb-2">
-                <h2 className="text-xl font-bold text-slate-900">{selectedItem.title}</h2>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-zinc-100">{selectedItem.title}</h2>
                 <div className="text-right">
-                  <span className="text-2xl font-black text-slate-900">₹{selectedItem.rental_rate_per_day}</span>
-                  <span className="text-xs text-slate-500"> / day</span>
+                  <span className="text-2xl font-black text-slate-900 dark:text-zinc-100">₹{selectedItem.rental_rate_per_day}</span>
+                  <span className="text-xs text-slate-500 dark:text-zinc-400"> / day</span>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-3 text-xs text-slate-600 mb-4 pb-4 border-b border-slate-100">
+              <div className="flex items-center space-x-3 text-xs text-slate-600 dark:text-zinc-400 mb-4 pb-4 border-b border-slate-100 dark:border-zinc-800">
                 <span>📍 {selectedItem.pickup_location}</span>
                 <span>•</span>
                 <span>⭐ {selectedItem.ratings?.average || 5.0} ({selectedItem.ratings?.total_reviews || 0} reviews)</span>
               </div>
 
               <div className="mb-4">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1">Description</h4>
-                <p className="text-xs text-slate-600 leading-relaxed">{selectedItem.description}</p>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-zinc-100 uppercase tracking-wider mb-1">Description</h4>
+                <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">{selectedItem.description}</p>
               </div>
 
               {/* Dynamic Specifications */}
               {selectedItem.specifications && Object.keys(selectedItem.specifications).length > 0 && (
                 <div className="mb-4">
-                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">Item Specifications</h4>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-zinc-100 uppercase tracking-wider mb-2">Item Specifications</h4>
                   <div className="grid grid-cols-2 gap-2">
                     {Object.entries(selectedItem.specifications).map(([k, v]) => (
-                      <div key={k} className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs">
-                        <span className="text-slate-400 capitalize block text-[10px]">{k.replace('_', ' ')}</span>
-                        <span className="font-semibold text-slate-800">{String(v)}</span>
+                      <div key={k} className="bg-slate-50 dark:bg-zinc-850 p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-xs">
+                        <span className="text-slate-400 dark:text-zinc-400 capitalize block text-[10px]">{k.replace('_', ' ')}</span>
+                        <span className="font-semibold text-slate-800 dark:text-zinc-200">{String(v)}</span>
                       </div>
                     ))}
                   </div>
@@ -881,56 +881,56 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
               )}
 
               {/* Owner Info & Escrow Guarantee */}
-              <div className="bg-gradient-to-r from-indigo-50/80 via-purple-50/50 to-indigo-50/80 border border-indigo-200/80 rounded-2xl p-4 mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div className="bg-gradient-to-r from-indigo-50/80 via-purple-50/50 to-indigo-50/80 dark:from-zinc-800/90 dark:via-zinc-850 dark:to-zinc-800/90 border border-indigo-200/80 dark:border-zinc-700 rounded-2xl p-4 mb-6 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white font-black flex items-center justify-center text-sm shadow-xs shrink-0">
                     {selectedItem.owner?.name?.charAt(0) || 'O'}
                   </div>
                   <div>
                     <div className="flex items-center space-x-1.5 flex-wrap">
-                      <p className="text-[10px] font-black uppercase text-indigo-700 tracking-wider">Item Owner</p>
+                      <p className="text-[10px] font-black uppercase text-indigo-700 dark:text-indigo-400 tracking-wider">Item Owner</p>
                       {selectedItem.owner?.is_verified ? (
-                        <span className="inline-flex items-center space-x-1 px-2 py-0.2 rounded-full text-[9px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
-                          <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                        <span className="inline-flex items-center space-x-1 px-2 py-0.2 rounded-full text-[9px] font-black bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
+                          <ShieldCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                           <span>CAMPUS ID VERIFIED</span>
                         </span>
                       ) : selectedItem.owner?.is_email_verified ? (
-                        <span className="inline-flex items-center space-x-1 px-2 py-0.2 rounded-full text-[9px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
-                          <CheckCircle2 className="w-3 h-3 text-blue-600" />
+                        <span className="inline-flex items-center space-x-1 px-2 py-0.2 rounded-full text-[9px] font-bold bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-700">
+                          <CheckCircle2 className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                           <span>EMAIL VERIFIED</span>
                         </span>
                       ) : null}
                     </div>
 
                     <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
-                      <p className="font-extrabold text-slate-900 text-sm">{selectedItem.owner?.name || 'Campus Student'}</p>
+                      <p className="font-extrabold text-slate-900 dark:text-zinc-100 text-sm">{selectedItem.owner?.name || 'Campus Student'}</p>
                       {selectedItem.owner?.college_id && (
-                        <span className="font-mono text-[10px] bg-white border border-slate-200 px-1.5 py-0.2 rounded text-slate-600 font-bold">
+                        <span className="font-mono text-[10px] bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 px-1.5 py-0.2 rounded text-slate-600 dark:text-zinc-300 font-bold">
                           Reg: {selectedItem.owner.college_id}
                         </span>
                       )}
                     </div>
-                    <p className="text-[11px] text-slate-500">
-                      📍 {selectedItem.owner?.hostel_block || 'Campus Residence'} • <span className="text-amber-700 font-bold">★ {selectedItem.owner?.trust_score || 5.0} Trust</span>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+                      📍 {selectedItem.owner?.hostel_block || 'Campus Residence'} • <span className="text-amber-700 dark:text-amber-400 font-bold">★ {selectedItem.owner?.trust_score || 5.0} Trust</span>
                     </p>
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <span className="text-[10px] text-emerald-700 font-black uppercase tracking-wider block">Refundable Escrow</span>
-                  <span className="text-lg font-black text-emerald-800">₹{selectedItem.security_deposit}</span>
+                  <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-black uppercase tracking-wider block">Refundable Escrow</span>
+                  <span className="text-lg font-black text-emerald-800 dark:text-emerald-300">₹{selectedItem.security_deposit}</span>
                 </div>
               </div>
 
               {/* Owner Action Buttons or Rent Button */}
               {user && (String(selectedItem.owner_id) === String(user._id) || String(selectedItem.owner?.id) === String(user._id)) ? (
                 <div className="space-y-3">
-                  <div className="p-3 bg-purple-50 border border-purple-200 rounded-xl flex items-center justify-between text-xs text-purple-900">
+                  <div className="p-3 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900/60 rounded-xl flex items-center justify-between text-xs text-purple-900 dark:text-purple-200">
                     <span className="flex items-center space-x-1.5 font-bold">
-                      <Tag className="w-3.5 h-3.5 text-purple-600" />
+                      <Tag className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                       <span>You are the registered owner of this listing</span>
                     </span>
-                    <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-200 text-purple-800">
+                    <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-200 dark:bg-purple-900/80 text-purple-800 dark:text-purple-200">
                       {selectedItem.availability_status}
                     </span>
                   </div>
@@ -951,7 +951,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
                         setDeletingItem(selectedItem);
                         setSelectedItem(null);
                       }}
-                      className="py-3 px-4 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl font-bold text-xs btn-tactile flex items-center justify-center space-x-1.5 cursor-pointer"
+                      className="py-3 px-4 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60 rounded-xl font-bold text-xs btn-tactile flex items-center justify-center space-x-1.5 cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       <span>Delete</span>

@@ -216,57 +216,57 @@ const AdminDashboardPage = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         
         {/* Total Students */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0 shadow-inner">
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-slate-200 dark:border-zinc-800 shadow-xs flex items-center space-x-4">
+          <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-900/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0 shadow-inner">
             <Users className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-slate-500">Total Registered</p>
-            <p className="text-2xl font-black text-slate-900">{metrics.total_students}</p>
-            <p className="text-[11px] text-slate-400">Campus Students</p>
+            <p className="text-xs font-semibold text-slate-500 dark:text-zinc-400">Total Registered</p>
+            <p className="text-2xl font-black text-slate-900 dark:text-zinc-100">{metrics.total_students}</p>
+            <p className="text-[11px] text-slate-400 dark:text-zinc-500">Campus Students</p>
           </div>
         </div>
 
         {/* Pending Review */}
-        <div className="bg-white rounded-2xl p-5 border border-amber-200 bg-amber-50/20 shadow-xs flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-xl bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-700 shrink-0 shadow-inner">
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-amber-200 dark:border-amber-800/60 bg-amber-50/20 dark:bg-amber-950/20 shadow-xs flex items-center space-x-4">
+          <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0 shadow-inner">
             <Clock className="w-6 h-6 animate-pulse" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-amber-800">Pending ID Review</p>
-            <p className="text-2xl font-black text-amber-900">{metrics.pending_verifications}</p>
-            <p className="text-[11px] text-amber-700 font-medium">Awaiting Verification</p>
+            <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">Pending ID Review</p>
+            <p className="text-2xl font-black text-amber-900 dark:text-amber-100">{metrics.pending_verifications}</p>
+            <p className="text-[11px] text-amber-700 dark:text-amber-400 font-medium">Awaiting Verification</p>
           </div>
         </div>
 
         {/* Verified Students */}
-        <div className="bg-white rounded-2xl p-5 border border-emerald-200 bg-emerald-50/20 shadow-xs flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0 shadow-inner">
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/20 dark:bg-emerald-950/20 shadow-xs flex items-center space-x-4">
+          <div className="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center text-emerald-700 dark:text-emerald-400 shrink-0 shadow-inner">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-emerald-800">Verified Members</p>
-            <p className="text-2xl font-black text-emerald-900">{metrics.verified_students}</p>
-            <p className="text-[11px] text-emerald-700 font-medium">Tier-2 Credentials Approved</p>
+            <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-300">Verified Members</p>
+            <p className="text-2xl font-black text-emerald-900 dark:text-emerald-100">{metrics.verified_students}</p>
+            <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">Tier-2 Credentials Approved</p>
           </div>
         </div>
 
         {/* Suspended Accounts */}
-        <div className="bg-white rounded-2xl p-5 border border-rose-200 bg-rose-50/20 shadow-xs flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-xl bg-rose-100 border border-rose-200 flex items-center justify-center text-rose-700 shrink-0 shadow-inner">
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-rose-200 dark:border-rose-800/60 bg-rose-50/20 dark:bg-rose-950/20 shadow-xs flex items-center space-x-4">
+          <div className="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 flex items-center justify-center text-rose-700 dark:text-rose-400 shrink-0 shadow-inner">
             <Ban className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-rose-800">Suspended / Blocked</p>
-            <p className="text-2xl font-black text-rose-900">{metrics.blocked_accounts}</p>
-            <p className="text-[11px] text-rose-700 font-medium">Access Restricted</p>
+            <p className="text-xs font-semibold text-rose-800 dark:text-rose-300">Suspended / Blocked</p>
+            <p className="text-2xl font-black text-rose-900 dark:text-rose-100">{metrics.blocked_accounts}</p>
+            <p className="text-[11px] text-rose-700 dark:text-rose-400 font-medium">Access Restricted</p>
           </div>
         </div>
 
       </div>
 
       {/* Directory Search & Filter Controls */}
-      <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+      <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-xs space-y-4">
         <div className="flex flex-col lg:flex-row gap-3 justify-between items-center">
           
           {/* Search Bar */}
@@ -277,7 +277,7 @@ const AdminDashboardPage = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by student name, email, roll number..."
-              className="w-full pl-9 pr-20 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+              className="w-full pl-9 pr-20 py-2.5 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-zinc-850 transition"
             />
             <button
               type="submit"
@@ -291,12 +291,12 @@ const AdminDashboardPage = () => {
           <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
             
             {/* ID Status Filter */}
-            <div className="flex items-center space-x-1.5 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs">
-              <span className="text-slate-500 font-semibold">ID Status:</span>
+            <div className="flex items-center space-x-1.5 bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 px-3 py-1.5 rounded-xl text-xs">
+              <span className="text-slate-500 dark:text-zinc-400 font-semibold">ID Status:</span>
               <select
                 value={idStatus}
                 onChange={(e) => setIdStatus(e.target.value)}
-                className="bg-transparent font-bold text-slate-800 focus:outline-hidden cursor-pointer"
+                className="bg-transparent font-bold text-slate-800 dark:text-zinc-200 focus:outline-hidden cursor-pointer"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="PENDING_VERIFICATION">Pending Review ⏳</option>
@@ -307,12 +307,12 @@ const AdminDashboardPage = () => {
             </div>
 
             {/* Account Status Filter */}
-            <div className="flex items-center space-x-1.5 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs">
-              <span className="text-slate-500 font-semibold">Account:</span>
+            <div className="flex items-center space-x-1.5 bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 px-3 py-1.5 rounded-xl text-xs">
+              <span className="text-slate-500 dark:text-zinc-400 font-semibold">Account:</span>
               <select
                 value={accountStatus}
                 onChange={(e) => setAccountStatus(e.target.value)}
-                className="bg-transparent font-bold text-slate-800 focus:outline-hidden cursor-pointer"
+                className="bg-transparent font-bold text-slate-800 dark:text-zinc-200 focus:outline-hidden cursor-pointer"
               >
                 <option value="ALL">All Accounts</option>
                 <option value="ACTIVE">Active Only</option>
@@ -325,7 +325,7 @@ const AdminDashboardPage = () => {
               type="button"
               onClick={fetchDirectory}
               disabled={loading}
-              className="p-2 border border-slate-200 rounded-xl hover:bg-slate-100 text-slate-600 transition cursor-pointer"
+              className="p-2 border border-slate-200 dark:border-zinc-700 rounded-xl hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-600 dark:text-zinc-300 transition cursor-pointer"
               title="Refresh Directory"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -336,11 +336,11 @@ const AdminDashboardPage = () => {
       </div>
 
       {/* Student Directory Table */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-sm overflow-hidden">
         <div className="overflow-x-auto no-scrollbar">
           <table className="w-full text-left border-collapse min-w-[720px]">
             <thead>
-              <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              <tr className="bg-slate-50/80 dark:bg-zinc-850/80 border-b border-slate-200 dark:border-zinc-800 text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
                 <th className="py-3.5 px-4 sm:px-6">Student Information</th>
                 <th className="py-3.5 px-4">Campus Credentials</th>
                 <th className="py-3.5 px-4">ID Card Status</th>
@@ -349,20 +349,20 @@ const AdminDashboardPage = () => {
                 <th className="py-3.5 px-4 sm:px-6 text-right">Moderation Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 text-xs">
+            <tbody className="divide-y divide-slate-100 dark:divide-zinc-800 text-xs">
               {loading ? (
                 <tr>
-                  <td colSpan="6" className="py-12 text-center text-slate-400">
-                    <Loader2 className="w-6 h-6 animate-spin mx-auto text-indigo-600 mb-2" />
+                  <td colSpan="6" className="py-12 text-center text-slate-400 dark:text-zinc-500">
+                    <Loader2 className="w-6 h-6 animate-spin mx-auto text-indigo-600 dark:text-indigo-400 mb-2" />
                     <span>Loading student records...</span>
                   </td>
                 </tr>
               ) : students.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="py-12 text-center text-slate-400">
-                    <Users className="w-8 h-8 mx-auto text-slate-300 mb-2" />
-                    <p className="font-semibold text-slate-700">No student accounts matched your query.</p>
-                    <p className="text-[11px] text-slate-400 mt-0.5">Try clearing your search or switching filter categories.</p>
+                  <td colSpan="6" className="py-12 text-center text-slate-400 dark:text-zinc-500">
+                    <Users className="w-8 h-8 mx-auto text-slate-300 dark:text-zinc-600 mb-2" />
+                    <p className="font-semibold text-slate-700 dark:text-zinc-300">No student accounts matched your query.</p>
+                    <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-0.5">Try clearing your search or switching filter categories.</p>
                   </td>
                 </tr>
               ) : (
@@ -373,7 +373,7 @@ const AdminDashboardPage = () => {
                   const isRejected = st.id_card_status === 'REJECTED';
 
                   return (
-                    <tr key={st._id} className={`hover:bg-slate-50/60 transition ${isBlocked ? 'bg-rose-50/30' : ''}`}>
+                    <tr key={st._id} className={`hover:bg-slate-50/60 dark:hover:bg-zinc-850/60 transition ${isBlocked ? 'bg-rose-50/30 dark:bg-rose-950/20' : ''}`}>
                       
                       {/* Student Info */}
                       <td className="py-4 px-4 sm:px-6">
@@ -384,22 +384,22 @@ const AdminDashboardPage = () => {
                             {st.name?.slice(0, 2)?.toUpperCase() || 'ST'}
                           </div>
                           <div>
-                            <p className="font-bold text-slate-900 flex items-center space-x-1.5">
+                            <p className="font-bold text-slate-900 dark:text-zinc-100 flex items-center space-x-1.5">
                               <span>{st.name}</span>
                               {st.is_email_verified && (
                                 <span title="Email Verified" className="text-emerald-600 inline-block">✓</span>
                               )}
                             </p>
-                            <p className="text-slate-500 text-[11px]">{st.email}</p>
-                            <p className="text-slate-400 text-[10px]">{st.phone || 'No phone recorded'}</p>
+                            <p className="text-slate-500 dark:text-zinc-400 text-[11px]">{st.email}</p>
+                            <p className="text-slate-400 dark:text-zinc-500 text-[10px]">{st.phone || 'No phone recorded'}</p>
                           </div>
                         </div>
                       </td>
 
                       {/* Campus Credentials */}
                       <td className="py-4 px-4">
-                        <p className="font-mono font-bold text-slate-800">{st.college_id}</p>
-                        <p className="text-slate-500 text-[11px] truncate max-w-[160px]">
+                        <p className="font-mono font-bold text-slate-800 dark:text-zinc-200">{st.college_id}</p>
+                        <p className="text-slate-500 dark:text-zinc-400 text-[11px] truncate max-w-[160px]">
                           {st.hostel_block || 'Campus Resident'}
                         </p>
                       </td>
@@ -560,26 +560,26 @@ const AdminDashboardPage = () => {
           onClick={() => setInspectStudent(null)}
         >
           <div 
-            className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-in zoom-in-95 duration-200"
+            className="bg-white dark:bg-zinc-900 rounded-3xl max-w-4xl w-full max-h-[90vh] shadow-2xl border border-slate-200 dark:border-zinc-800 flex flex-col overflow-hidden animate-in zoom-in-95 duration-200 text-slate-900 dark:text-zinc-100"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+            <div className="px-6 py-4 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-850">
               <div className="flex items-center space-x-2.5">
-                <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 flex items-center justify-center font-bold">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-black text-slate-900">Student ID Verification Review</h3>
-                  <p className="text-xs text-slate-500">
-                    Inspecting credentials for: <span className="font-bold text-slate-800">{inspectStudent.name}</span> ({inspectStudent.email})
+                  <h3 className="text-base font-black text-slate-900 dark:text-zinc-100">Student ID Verification Review</h3>
+                  <p className="text-xs text-slate-500 dark:text-zinc-400">
+                    Inspecting credentials for: <span className="font-bold text-slate-800 dark:text-zinc-200">{inspectStudent.name}</span> ({inspectStudent.email})
                   </p>
                 </div>
               </div>
 
               <button 
                 onClick={() => setInspectStudent(null)}
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-200/60 transition cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-1 rounded-full hover:bg-slate-200/60 dark:hover:bg-zinc-800 transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -591,35 +591,35 @@ const AdminDashboardPage = () => {
               {/* Left Column: ID Document Viewer Canvas */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-bold text-slate-700 uppercase tracking-wider text-[11px]">Submitted Document</span>
+                  <span className="font-bold text-slate-700 dark:text-zinc-300 uppercase tracking-wider text-[11px]">Submitted Document</span>
                   
                   {/* Canvas Controls */}
                   {inspectStudent.id_card_file && inspectStudent.id_card_filetype !== 'pdf' && (
-                    <div className="flex items-center space-x-1 bg-slate-100 p-1 rounded-lg">
+                    <div className="flex items-center space-x-1 bg-slate-100 dark:bg-zinc-800 p-1 rounded-lg">
                       <button 
                         onClick={() => setImgZoom((prev) => Math.max(0.5, prev - 0.2))}
-                        className="p-1 hover:bg-white rounded text-slate-600 cursor-pointer" 
+                        className="p-1 hover:bg-white dark:hover:bg-zinc-700 rounded text-slate-600 dark:text-zinc-300 cursor-pointer" 
                         title="Zoom Out"
                       >
                         <ZoomOut className="w-3.5 h-3.5" />
                       </button>
                       <button 
                         onClick={() => { setImgZoom(1); setImgRotate(0); }}
-                        className="px-1.5 py-0.5 hover:bg-white rounded text-[10px] font-bold text-slate-600 cursor-pointer" 
+                        className="px-1.5 py-0.5 hover:bg-white dark:hover:bg-zinc-700 rounded text-[10px] font-bold text-slate-600 dark:text-zinc-300 cursor-pointer" 
                         title="Reset"
                       >
                         Reset
                       </button>
                       <button 
                         onClick={() => setImgZoom((prev) => Math.min(3, prev + 0.2))}
-                        className="p-1 hover:bg-white rounded text-slate-600 cursor-pointer" 
+                        className="p-1 hover:bg-white dark:hover:bg-zinc-700 rounded text-slate-600 dark:text-zinc-300 cursor-pointer" 
                         title="Zoom In"
                       >
                         <ZoomIn className="w-3.5 h-3.5" />
                       </button>
                       <button 
                         onClick={() => setImgRotate((prev) => (prev + 90) % 360)}
-                        className="p-1 hover:bg-white rounded text-slate-600 cursor-pointer" 
+                        className="p-1 hover:bg-white dark:hover:bg-zinc-700 rounded text-slate-600 dark:text-zinc-300 cursor-pointer" 
                         title="Rotate"
                       >
                         <RotateCw className="w-3.5 h-3.5" />
@@ -636,18 +636,18 @@ const AdminDashboardPage = () => {
                                 (inspectStudent.id_card_filename && inspectStudent.id_card_filename.toLowerCase().endsWith('.pdf'));
 
                   return (
-                    <div className="border-2 border-slate-200 rounded-2xl bg-slate-900/5 min-h-[320px] max-h-[420px] flex items-center justify-center overflow-hidden relative">
+                    <div className="border-2 border-slate-200 dark:border-zinc-750 rounded-2xl bg-slate-900/5 dark:bg-zinc-950/40 min-h-[320px] max-h-[420px] flex items-center justify-center overflow-hidden relative">
                       {docUrl ? (
                         isPdf ? (
                           <div className="w-full text-center p-6 space-y-4">
-                            <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto shadow-inner">
+                            <div className="w-16 h-16 bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 rounded-2xl flex items-center justify-center mx-auto shadow-inner">
                               <FileText className="w-9 h-9 stroke-[2.2]" />
                             </div>
                             <div>
-                              <p className="font-bold text-slate-900 text-sm truncate max-w-[320px] mx-auto">
+                              <p className="font-bold text-slate-900 dark:text-zinc-100 text-sm truncate max-w-[320px] mx-auto">
                                 {inspectStudent.id_card_filename || 'Student_University_ID.pdf'}
                               </p>
-                              <p className="text-xs text-slate-500 mt-1">Official Student ID Card (PDF Document)</p>
+                              <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1">Official Student ID Card (PDF Document)</p>
                             </div>
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
                               <a
@@ -662,13 +662,13 @@ const AdminDashboardPage = () => {
                               <a
                                 href={docUrl}
                                 download={inspectStudent.id_card_filename || 'student_id.pdf'}
-                                className="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition border border-slate-300 cursor-pointer"
+                                className="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 rounded-xl text-xs font-bold transition border border-slate-300 dark:border-zinc-700 cursor-pointer"
                               >
                                 <Download className="w-3.5 h-3.5" />
                                 <span>Download PDF</span>
                               </a>
                             </div>
-                            <p className="text-[11px] text-slate-400">
+                            <p className="text-[11px] text-slate-400 dark:text-zinc-500">
                               Opens full resolution document directly in a secure view tab.
                             </p>
                           </div>
@@ -690,8 +690,8 @@ const AdminDashboardPage = () => {
                             />
                             <div id="id-fallback-box" style={{ display: 'none' }} className="text-center p-6 space-y-2">
                               <AlertCircle className="w-10 h-10 text-rose-500 mx-auto" />
-                              <p className="font-bold text-slate-800 text-xs">Preview could not be displayed directly</p>
-                              <a href={docUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-1 text-indigo-600 font-bold text-xs underline">
+                              <p className="font-bold text-slate-800 dark:text-zinc-200 text-xs">Preview could not be displayed directly</p>
+                              <a href={docUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-1 text-indigo-600 dark:text-indigo-400 font-bold text-xs underline">
                                 <span>Open Image in New Window</span>
                                 <ExternalLink className="w-3 h-3" />
                               </a>
@@ -699,10 +699,10 @@ const AdminDashboardPage = () => {
                           </div>
                         )
                       ) : (
-                        <div className="text-center p-8 space-y-2 text-slate-400">
-                          <FileText className="w-12 h-12 mx-auto stroke-1 text-slate-300" />
-                          <p className="font-bold text-slate-700 text-xs">No ID Card Document on Record</p>
-                          <p className="text-[11px] text-slate-400">This student has not yet submitted an ID card file.</p>
+                        <div className="text-center p-8 space-y-2 text-slate-400 dark:text-zinc-500">
+                          <FileText className="w-12 h-12 mx-auto stroke-1 text-slate-300 dark:text-zinc-600" />
+                          <p className="font-bold text-slate-700 dark:text-zinc-300 text-xs">No ID Card Document on Record</p>
+                          <p className="text-[11px] text-slate-400 dark:text-zinc-500">This student has not yet submitted an ID card file.</p>
                         </div>
                       )}
                     </div>
@@ -710,7 +710,7 @@ const AdminDashboardPage = () => {
                 })()}
 
                 {inspectStudent.id_card_filename && (
-                  <p className="text-[11px] text-slate-400 text-center font-mono">
+                  <p className="text-[11px] text-slate-400 dark:text-zinc-500 text-center font-mono">
                     File: {inspectStudent.id_card_filename}
                   </p>
                 )}
@@ -718,49 +718,49 @@ const AdminDashboardPage = () => {
 
               {/* Right Column: Student Profile Details & Privacy Banner */}
               <div className="space-y-4">
-                <span className="font-bold text-slate-700 uppercase tracking-wider text-[11px] block">
+                <span className="font-bold text-slate-700 dark:text-zinc-300 uppercase tracking-wider text-[11px] block">
                   Student Verification Profile
                 </span>
 
-                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-3 text-xs">
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-                    <span className="text-slate-500">Student Name:</span>
-                    <span className="font-bold text-slate-900">{inspectStudent.name}</span>
+                <div className="bg-slate-50 dark:bg-zinc-850 rounded-2xl p-4 border border-slate-200 dark:border-zinc-700 space-y-3 text-xs">
+                  <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-zinc-700">
+                    <span className="text-slate-500 dark:text-zinc-400">Student Name:</span>
+                    <span className="font-bold text-slate-900 dark:text-zinc-100">{inspectStudent.name}</span>
                   </div>
 
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-                    <span className="text-slate-500">Email Address:</span>
-                    <span className="font-mono font-semibold text-slate-800">{inspectStudent.email}</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-zinc-700">
+                    <span className="text-slate-500 dark:text-zinc-400">Email Address:</span>
+                    <span className="font-mono font-semibold text-slate-800 dark:text-zinc-200">{inspectStudent.email}</span>
                   </div>
 
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-                    <span className="text-slate-500">College Roll / Reg ID:</span>
-                    <span className="font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                  <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-zinc-700">
+                    <span className="text-slate-500 dark:text-zinc-400">College Roll / Reg ID:</span>
+                    <span className="font-mono font-bold text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-200 dark:border-indigo-800">
                       {inspectStudent.college_id}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-                    <span className="text-slate-500">Hostel &amp; Room:</span>
-                    <span className="font-medium text-slate-800">{inspectStudent.hostel_block || 'N/A'}</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-zinc-700">
+                    <span className="text-slate-500 dark:text-zinc-400">Hostel &amp; Room:</span>
+                    <span className="font-medium text-slate-800 dark:text-zinc-200">{inspectStudent.hostel_block || 'N/A'}</span>
                   </div>
 
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-                    <span className="text-slate-500">Contact Phone:</span>
-                    <span className="font-medium text-slate-800">{inspectStudent.phone || 'N/A'}</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-zinc-700">
+                    <span className="text-slate-500 dark:text-zinc-400">Contact Phone:</span>
+                    <span className="font-medium text-slate-800 dark:text-zinc-200">{inspectStudent.phone || 'N/A'}</span>
                   </div>
 
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-                    <span className="text-slate-500">Trust Score:</span>
-                    <span className="font-bold text-amber-600 flex items-center space-x-1">
+                  <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-zinc-700">
+                    <span className="text-slate-500 dark:text-zinc-400">Trust Score:</span>
+                    <span className="font-bold text-amber-600 dark:text-amber-400 flex items-center space-x-1">
                       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                       <span>{inspectStudent.trust_score?.toFixed(1) || '5.0'} / 5.0</span>
                     </span>
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-500">Wallet Balance:</span>
-                    <span className="font-bold text-emerald-700">₹{inspectStudent.wallet_balance || 0}</span>
+                    <span className="text-slate-500 dark:text-zinc-400">Wallet Balance:</span>
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400">₹{inspectStudent.wallet_balance || 0}</span>
                   </div>
                 </div>
 
@@ -777,14 +777,14 @@ const AdminDashboardPage = () => {
 
                 {/* Reject Reason Selector Form */}
                 {showRejectInput && (
-                  <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4 space-y-2 animate-in fade-in">
-                    <label className="block text-xs font-bold text-rose-900">
+                  <div className="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 rounded-2xl p-4 space-y-2 animate-in fade-in">
+                    <label className="block text-xs font-bold text-rose-900 dark:text-rose-200">
                       Select Rejection Reason (Notified to Student):
                     </label>
                     <select
                       value={rejectReason}
                       onChange={(e) => setRejectReason(e.target.value)}
-                      className="w-full p-2 bg-white border border-rose-300 rounded-xl text-xs font-semibold text-rose-900 focus:outline-hidden"
+                      className="w-full p-2 bg-white dark:bg-zinc-900 border border-rose-300 dark:border-rose-700 rounded-xl text-xs font-semibold text-rose-900 dark:text-rose-200 focus:outline-hidden"
                     >
                       <option value="Photo is blurry or unreadable">Photo is blurry or unreadable</option>
                       <option value="ID card appears expired or invalid academic session">ID card appears expired or invalid academic session</option>
@@ -800,7 +800,7 @@ const AdminDashboardPage = () => {
                         value={customRejectReason}
                         onChange={(e) => setCustomRejectReason(e.target.value)}
                         placeholder="Type custom rejection instructions for student..."
-                        className="w-full p-2 bg-white border border-rose-300 rounded-xl text-xs focus:outline-hidden"
+                        className="w-full p-2 bg-white dark:bg-zinc-900 border border-rose-300 dark:border-rose-700 rounded-xl text-xs text-rose-900 dark:text-rose-200 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden"
                         required
                       />
                     )}
@@ -809,7 +809,7 @@ const AdminDashboardPage = () => {
                       <button
                         type="button"
                         onClick={() => setShowRejectInput(false)}
-                        className="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-lg cursor-pointer"
+                        className="px-3 py-1.5 bg-slate-200 dark:bg-zinc-800 hover:bg-slate-300 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 text-xs font-bold rounded-lg cursor-pointer"
                       >
                         Cancel
                       </button>
@@ -831,9 +831,9 @@ const AdminDashboardPage = () => {
             </div>
 
             {/* Modal Footer Actions */}
-            <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3">
-              <span className="text-xs text-slate-500 font-medium">
-                Current Status: <strong className="text-slate-800">{inspectStudent.id_card_status}</strong>
+            <div className="px-6 py-4 bg-slate-50 dark:bg-zinc-850 border-t border-slate-200 dark:border-zinc-800 flex flex-col sm:flex-row justify-between items-center gap-3">
+              <span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">
+                Current Status: <strong className="text-slate-800 dark:text-zinc-200">{inspectStudent.id_card_status}</strong>
               </span>
 
               <div className="flex items-center space-x-2.5 w-full sm:w-auto">
@@ -842,9 +842,9 @@ const AdminDashboardPage = () => {
                     type="button"
                     disabled={actionLoading}
                     onClick={() => setShowRejectInput(true)}
-                    className="flex-1 sm:flex-none px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs font-bold rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5"
+                    className="flex-1 sm:flex-none px-4 py-2.5 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-300 dark:border-rose-800 text-xs font-bold rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5"
                   >
-                    <XCircle className="w-4 h-4 text-rose-600" />
+                    <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                     <span>Reject ID</span>
                   </button>
                 )}
@@ -874,7 +874,7 @@ const AdminDashboardPage = () => {
           onClick={() => setBlockModalStudent(null)}
         >
           <div 
-            className="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden animate-in zoom-in-95 duration-200"
+            className="bg-white dark:bg-zinc-900 rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden animate-in zoom-in-95 duration-200 text-slate-900 dark:text-zinc-100"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -896,24 +896,24 @@ const AdminDashboardPage = () => {
             <div className="p-6 space-y-4 text-xs">
               {blockAction === 'BLOCK' ? (
                 <>
-                  <div className="bg-rose-50 border border-rose-200 text-rose-800 p-3 rounded-xl space-y-1">
-                    <p className="font-bold flex items-center space-x-1">
-                      <ShieldAlert className="w-4 h-4 text-rose-600 shrink-0" />
+                  <div className="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-800 dark:text-rose-200 p-3 rounded-xl space-y-1">
+                    <p className="font-bold flex items-center space-x-1 text-rose-900 dark:text-rose-100">
+                      <ShieldAlert className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
                       <span>Administrative Suspension Warning</span>
                     </p>
-                    <p className="text-[11px] text-rose-700 leading-relaxed">
+                    <p className="text-[11px] text-rose-700 dark:text-rose-300 leading-relaxed">
                       Suspending this account will immediately terminate active sessions and block the student from logging in or booking items on PeerGear.
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">
                       Select Administrative Suspension Reason:
                     </label>
                     <select
                       value={blockReason}
                       onChange={(e) => setBlockReason(e.target.value)}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium text-slate-800 focus:outline-hidden"
+                      className="w-full p-2.5 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-medium text-slate-800 dark:text-zinc-100 focus:outline-hidden"
                     >
                       <option value="Unreturned rental equipment after multiple notices">Unreturned rental equipment after multiple notices</option>
                       <option value="Academic misconduct or campus honor code violation">Academic misconduct or campus honor code violation</option>
@@ -925,25 +925,25 @@ const AdminDashboardPage = () => {
 
                   {blockReason === 'OTHER' && (
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Custom Reason:</label>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1">Custom Reason:</label>
                       <textarea
                         rows="2"
                         value={customBlockReason}
                         onChange={(e) => setCustomBlockReason(e.target.value)}
                         placeholder="Document violation details..."
-                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:outline-hidden"
+                        className="w-full p-2.5 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs text-slate-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden"
                         required
                       />
                     </div>
                   )}
                 </>
               ) : (
-                <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl space-y-1">
-                  <p className="font-bold flex items-center space-x-1">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-200 p-4 rounded-xl space-y-1">
+                  <p className="font-bold flex items-center space-x-1 text-emerald-900 dark:text-emerald-100">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>Restore Full Platform Access</span>
                   </p>
-                  <p className="text-[11px] text-emerald-700 leading-relaxed">
+                  <p className="text-[11px] text-emerald-700 dark:text-emerald-300 leading-relaxed">
                     Lifting suspension will immediately allow <strong>{blockModalStudent.name}</strong> to sign in, rent gear, and access their campus wallet.
                   </p>
                 </div>
@@ -951,11 +951,11 @@ const AdminDashboardPage = () => {
             </div>
 
             {/* Actions */}
-            <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-end space-x-2.5">
+            <div className="px-6 py-4 bg-slate-50 dark:bg-zinc-850 border-t border-slate-200 dark:border-zinc-800 flex justify-end space-x-2.5">
               <button
                 type="button"
                 onClick={() => setBlockModalStudent(null)}
-                className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-xl cursor-pointer"
+                className="px-4 py-2 bg-slate-200 dark:bg-zinc-800 hover:bg-slate-300 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 text-xs font-bold rounded-xl cursor-pointer"
               >
                 Cancel
               </button>

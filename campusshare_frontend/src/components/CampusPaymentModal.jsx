@@ -198,23 +198,23 @@ const CampusPaymentModal = ({
               </div>
 
               <div>
-                <h3 className="text-lg font-black text-slate-900 mb-1">Processing Campus Payment</h3>
-                <p className="text-xs text-slate-500 max-w-xs mx-auto">
+                <h3 className="text-lg font-black text-slate-900 dark:text-zinc-100 mb-1">Processing Campus Payment</h3>
+                <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-xs mx-auto">
                   Do not refresh or close this window while NPCI verifies the transaction.
                 </p>
               </div>
 
               {/* Progress Steps */}
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left max-w-sm mx-auto space-y-2.5 text-xs">
-                <div className={`flex items-center space-x-2.5 ${processStep >= 1 ? 'text-indigo-600 font-bold' : 'text-slate-400'}`}>
-                  <RefreshCw className={`w-4 h-4 shrink-0 ${processStep === 1 ? 'animate-spin text-indigo-600' : ''}`} />
+              <div className="bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-4 text-left max-w-sm mx-auto space-y-2.5 text-xs">
+                <div className={`flex items-center space-x-2.5 ${processStep >= 1 ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
+                  <RefreshCw className={`w-4 h-4 shrink-0 ${processStep === 1 ? 'animate-spin text-indigo-600 dark:text-indigo-400' : ''}`} />
                   <span>1. Connecting to NPCI Campus Switch...</span>
                 </div>
-                <div className={`flex items-center space-x-2.5 ${processStep >= 2 ? 'text-indigo-600 font-bold' : 'text-slate-400'}`}>
+                <div className={`flex items-center space-x-2.5 ${processStep >= 2 ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
                   <ShieldCheck className="w-4 h-4 shrink-0" />
                   <span>2. Verifying Virtual Payment Address & Balance...</span>
                 </div>
-                <div className={`flex items-center space-x-2.5 ${processStep >= 3 ? 'text-emerald-600 font-bold' : 'text-slate-400'}`}>
+                <div className={`flex items-center space-x-2.5 ${processStep >= 3 ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
                   <Lock className="w-4 h-4 shrink-0" />
                   <span>3. Locking Security Deposit in Smart Escrow...</span>
                 </div>
@@ -224,64 +224,64 @@ const CampusPaymentModal = ({
             /* Payment Success Digital Receipt */
             <div className="space-y-4">
               <div className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2 text-emerald-600 shadow-inner">
+                <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/60 rounded-full flex items-center justify-center mx-auto mb-2 text-emerald-600 dark:text-emerald-400 shadow-inner">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h3 className="text-xl font-black text-slate-900">Payment & Escrow Authorized!</h3>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <h3 className="text-xl font-black text-slate-900 dark:text-zinc-100">Payment & Escrow Authorized!</h3>
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
                   Amount ₹{txnReceipt.amount.toFixed(2)} settled via {txnReceipt.gateway_app}
                 </p>
               </div>
 
               {/* Digital Transaction Receipt Card */}
-              <div className="bg-gradient-to-b from-slate-50 to-indigo-50/40 border border-indigo-100 rounded-2xl p-4 text-xs space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1">
-                    <Receipt className="w-3.5 h-3.5 text-indigo-600" />
+              <div className="bg-gradient-to-b from-slate-50 to-indigo-50/40 dark:from-zinc-900 dark:to-zinc-850 border border-indigo-100 dark:border-zinc-800 rounded-2xl p-4 text-xs space-y-3">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-zinc-750">
+                  <span className="text-[10px] font-bold text-slate-400 dark:text-zinc-400 uppercase tracking-wider flex items-center space-x-1">
+                    <Receipt className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                     <span>Official Campus Receipt</span>
                   </span>
-                  <span className="text-[10px] font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-black text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/70 px-2 py-0.5 rounded-full">
                     TRANSACTION SUCCESS
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-slate-600">
+                <div className="grid grid-cols-2 gap-2 text-slate-600 dark:text-zinc-400">
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Transaction Reference</span>
-                    <div className="flex items-center space-x-1 font-mono font-bold text-slate-800 text-[11px]">
+                    <span className="text-[10px] text-slate-400 dark:text-zinc-500 block">Transaction Reference</span>
+                    <div className="flex items-center space-x-1 font-mono font-bold text-slate-800 dark:text-zinc-200 text-[11px]">
                       <span>{txnReceipt.transaction_ref}</span>
                       <button 
                         type="button"
                         onClick={() => copyToClipboard(txnReceipt.transaction_ref, 'ref')}
-                        className="text-slate-400 hover:text-indigo-600 cursor-pointer p-0.5"
+                        className="text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer p-0.5"
                       >
-                        {copiedField === 'ref' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                        {copiedField === 'ref' ? <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3 h-3" />}
                       </button>
                     </div>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Bank UTR Number</span>
-                    <span className="font-mono font-bold text-slate-800 text-[11px]">{txnReceipt.utr_number}</span>
+                    <span className="text-[10px] text-slate-400 dark:text-zinc-500 block">Bank UTR Number</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-zinc-200 text-[11px]">{txnReceipt.utr_number}</span>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-slate-600">
+                <div className="grid grid-cols-2 gap-2 text-slate-600 dark:text-zinc-400">
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Payment Method</span>
-                    <span className="font-semibold text-slate-800">{txnReceipt.gateway_app}</span>
+                    <span className="text-[10px] text-slate-400 dark:text-zinc-500 block">Payment Method</span>
+                    <span className="font-semibold text-slate-800 dark:text-zinc-200">{txnReceipt.gateway_app}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Escrow Lock ID</span>
-                    <span className="font-mono font-bold text-indigo-700">{txnReceipt.escrow_lock_id}</span>
+                    <span className="text-[10px] text-slate-400 dark:text-zinc-500 block">Escrow Lock ID</span>
+                    <span className="font-mono font-bold text-indigo-700 dark:text-indigo-400">{txnReceipt.escrow_lock_id}</span>
                   </div>
                 </div>
 
                 {rentalDetails?.securityDeposit > 0 && (
-                  <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 flex items-start space-x-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl border border-emerald-200 dark:border-emerald-800/60 text-emerald-900 dark:text-emerald-200 flex items-start space-x-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                     <div className="text-[11px]">
                       <strong>100% Security Deposit (₹{rentalDetails.securityDeposit.toFixed(2)}) Secured in Escrow</strong>
-                      <p className="text-[10px] text-emerald-700 mt-0.5">
+                      <p className="text-[10px] text-emerald-700 dark:text-emerald-300 mt-0.5">
                         This deposit is locked and will automatically refund back to the renter when the item is returned undamaged.
                       </p>
                     </div>
@@ -304,33 +304,33 @@ const CampusPaymentModal = ({
             <div className="space-y-4">
               
               {/* Order Summary Pill */}
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5">
+              <div className="bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-3.5">
                 <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="text-slate-500 font-medium">Order Purpose</span>
-                  <span className="font-bold text-slate-900">
+                  <span className="text-slate-500 dark:text-zinc-400 font-medium">Order Purpose</span>
+                  <span className="font-bold text-slate-900 dark:text-zinc-100">
                     {mode === 'CHECKOUT' ? (item?.title || 'Equipment Rental') : 'Escrow Wallet Recharge'}
                   </span>
                 </div>
 
                 {mode === 'CHECKOUT' && rentalDetails && (
-                  <div className="space-y-1 text-xs border-t border-slate-200 pt-2 my-2 text-slate-600">
+                  <div className="space-y-1 text-xs border-t border-slate-200 dark:border-zinc-800 pt-2 my-2 text-slate-600 dark:text-zinc-400">
                     <div className="flex justify-between">
                       <span>Rental Fee ({rentalDetails.rentalDays} {rentalDetails.rentalDays === 1 ? 'day' : 'days'}):</span>
-                      <span className="font-semibold text-slate-800">₹{rentalDetails.rentalFee.toFixed(2)}</span>
+                      <span className="font-semibold text-slate-800 dark:text-zinc-200">₹{rentalDetails.rentalFee.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between text-emerald-700 font-medium">
+                    <div className="flex justify-between text-emerald-700 dark:text-emerald-400 font-medium">
                       <span className="flex items-center space-x-1">
-                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                         <span>Refundable Security Deposit:</span>
                       </span>
-                      <span className="font-bold text-emerald-800">₹{rentalDetails.securityDeposit.toFixed(2)}</span>
+                      <span className="font-bold text-emerald-800 dark:text-emerald-300">₹{rentalDetails.securityDeposit.toFixed(2)}</span>
                     </div>
                   </div>
                 )}
 
                 {mode === 'TOPUP' && (
                   <div className="my-2">
-                    <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                    <label className="block text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
                       Select Top-Up Amount
                     </label>
                     <div className="grid grid-cols-4 gap-1.5 mb-2">
@@ -342,7 +342,7 @@ const CampusPaymentModal = ({
                           className={`py-1.5 text-xs font-bold rounded-xl border transition cursor-pointer ${
                             Number(customAmount) === amt
                               ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                              : 'bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border-slate-200 dark:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-700'
                           }`}
                         >
                           ₹{amt}
@@ -350,28 +350,28 @@ const CampusPaymentModal = ({
                       ))}
                     </div>
                     <div className="relative">
-                      <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">₹</span>
+                      <span className="absolute left-3 top-2 text-xs font-bold text-slate-400 dark:text-zinc-500">₹</span>
                       <input
                         type="number"
                         value={customAmount}
                         onChange={(e) => setCustomAmount(e.target.value)}
                         placeholder="Enter amount"
                         min="50"
-                        className="w-full pl-7 pr-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full pl-7 pr-3 py-1.5 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                   </div>
                 )}
 
-                <div className="border-t border-slate-200 pt-2 flex items-baseline justify-between">
-                  <span className="text-xs font-bold text-slate-900">Total Payable Now:</span>
-                  <span className="text-xl font-black text-indigo-700">₹{payableAmount.toFixed(2)}</span>
+                <div className="border-t border-slate-200 dark:border-zinc-800 pt-2 flex items-baseline justify-between">
+                  <span className="text-xs font-bold text-slate-900 dark:text-zinc-100">Total Payable Now:</span>
+                  <span className="text-xl font-black text-indigo-700 dark:text-indigo-400">₹{payableAmount.toFixed(2)}</span>
                 </div>
               </div>
 
               {/* Payment Methods Tabs */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                <label className="block text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
                   Select Payment Method
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -380,11 +380,11 @@ const CampusPaymentModal = ({
                     onClick={() => setSelectedMethod('UPI_APP')}
                     className={`p-2.5 rounded-2xl border text-center transition cursor-pointer flex flex-col items-center justify-center space-y-1 ${
                       selectedMethod === 'UPI_APP'
-                        ? 'bg-indigo-50/80 border-indigo-600 text-indigo-900 font-bold shadow-xs'
-                        : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                        ? 'bg-indigo-50/80 dark:bg-indigo-950/60 border-indigo-600 dark:border-indigo-500 text-indigo-900 dark:text-indigo-300 font-bold shadow-xs'
+                        : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800'
                     }`}
                   >
-                    <Smartphone className="w-5 h-5 text-indigo-600" />
+                    <Smartphone className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                     <span className="text-[11px] font-bold leading-tight">UPI Apps</span>
                   </button>
 
@@ -393,11 +393,11 @@ const CampusPaymentModal = ({
                     onClick={() => setSelectedMethod('UPI_QR')}
                     className={`p-2.5 rounded-2xl border text-center transition cursor-pointer flex flex-col items-center justify-center space-y-1 ${
                       selectedMethod === 'UPI_QR'
-                        ? 'bg-indigo-50/80 border-indigo-600 text-indigo-900 font-bold shadow-xs'
-                        : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                        ? 'bg-indigo-50/80 dark:bg-indigo-950/60 border-indigo-600 dark:border-indigo-500 text-indigo-900 dark:text-indigo-300 font-bold shadow-xs'
+                        : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800'
                     }`}
                   >
-                    <QrCode className="w-5 h-5 text-indigo-600" />
+                    <QrCode className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                     <span className="text-[11px] font-bold leading-tight">Scan QR</span>
                   </button>
 
@@ -406,11 +406,11 @@ const CampusPaymentModal = ({
                     onClick={() => setSelectedMethod('CAMPUS_NETBANKING')}
                     className={`p-2.5 rounded-2xl border text-center transition cursor-pointer flex flex-col items-center justify-center space-y-1 ${
                       selectedMethod === 'CAMPUS_NETBANKING'
-                        ? 'bg-indigo-50/80 border-indigo-600 text-indigo-900 font-bold shadow-xs'
-                        : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                        ? 'bg-indigo-50/80 dark:bg-indigo-950/60 border-indigo-600 dark:border-indigo-500 text-indigo-900 dark:text-indigo-300 font-bold shadow-xs'
+                        : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800'
                     }`}
                   >
-                    <Building2 className="w-5 h-5 text-indigo-600" />
+                    <Building2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                     <span className="text-[11px] font-bold leading-tight">Campus Bank</span>
                   </button>
                 </div>
@@ -430,8 +430,8 @@ const CampusPaymentModal = ({
                         }}
                         className={`p-2 rounded-xl border flex flex-col items-center justify-center space-y-1 transition cursor-pointer ${
                           selectedApp === app.id
-                            ? 'bg-indigo-50/90 border-indigo-600 text-indigo-900 font-black shadow-xs ring-1 ring-indigo-500'
-                            : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                            ? 'bg-indigo-50/90 dark:bg-indigo-950/60 border-indigo-600 dark:border-indigo-500 text-indigo-900 dark:text-indigo-300 font-black shadow-xs ring-1 ring-indigo-500'
+                            : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-700 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800'
                         }`}
                       >
                         <div className={`w-8 h-8 rounded-lg bg-gradient-to-tr ${app.color} text-white flex items-center justify-center font-bold text-[10px] shadow-xs`}>
@@ -443,7 +443,7 @@ const CampusPaymentModal = ({
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-zinc-300 mb-1">
                       Student UPI Virtual ID (VPA)
                     </label>
                     <input
@@ -451,9 +451,9 @@ const CampusPaymentModal = ({
                       value={vpaId}
                       onChange={(e) => setVpaId(e.target.value)}
                       placeholder="e.g. rollnumber@oksbi"
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-800 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-mono font-bold text-slate-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     />
-                    <span className="text-[10px] text-slate-400 mt-0.5 block">
+                    <span className="text-[10px] text-slate-400 dark:text-zinc-500 mt-0.5 block">
                       Sandbox simulated handle • No actual bank deduction occurs
                     </span>
                   </div>
@@ -462,13 +462,13 @@ const CampusPaymentModal = ({
 
               {/* METHOD 2: DYNAMIC UPI QR */}
               {selectedMethod === 'UPI_QR' && (
-                <div className="text-center p-3 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 animate-in fade-in duration-150">
-                  <div className="inline-flex items-center space-x-1.5 px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold text-slate-600 shadow-2xs">
+                <div className="text-center p-3 bg-slate-50 dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 space-y-3 animate-in fade-in duration-150">
+                  <div className="inline-flex items-center space-x-1.5 px-3 py-1 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-full text-[10px] font-bold text-slate-600 dark:text-zinc-300 shadow-2xs">
                     <Clock className="w-3 h-3 text-amber-500" />
-                    <span>QR Active for: <strong className="text-slate-900 font-mono">{formatQrTime(qrSecondsLeft)}</strong></span>
+                    <span>QR Active for: <strong className="text-slate-900 dark:text-zinc-100 font-mono">{formatQrTime(qrSecondsLeft)}</strong></span>
                   </div>
 
-                  <div className="w-40 h-40 bg-white p-2.5 rounded-2xl shadow-md border border-slate-200 mx-auto flex items-center justify-center">
+                  <div className="w-40 h-40 bg-white p-2.5 rounded-2xl shadow-md border border-slate-200 dark:border-zinc-700 mx-auto flex items-center justify-center">
                     <QRCodeSVG
                       value={dynamicQrString}
                       size={144}
@@ -477,7 +477,7 @@ const CampusPaymentModal = ({
                     />
                   </div>
 
-                  <p className="text-[11px] text-slate-600 max-w-xs mx-auto">
+                  <p className="text-[11px] text-slate-600 dark:text-zinc-400 max-w-xs mx-auto">
                     Scan with <strong>Google Pay</strong>, <strong>PhonePe</strong>, <strong>Paytm</strong>, or any UPI app to simulate instant campus payment.
                   </p>
                 </div>
@@ -487,13 +487,13 @@ const CampusPaymentModal = ({
               {selectedMethod === 'CAMPUS_NETBANKING' && (
                 <div className="space-y-3 animate-in fade-in duration-150">
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-zinc-300 mb-1">
                       Select University Partner Bank
                     </label>
                     <select
                       value={selectedBank}
                       onChange={(e) => setSelectedBank(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-semibold text-slate-800 dark:text-zinc-100 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     >
                       {banks.map((b) => (
                         <option key={b.id} value={b.id}>
@@ -502,7 +502,7 @@ const CampusPaymentModal = ({
                       ))}
                     </select>
                   </div>
-                  <div className="p-3 bg-indigo-50/70 border border-indigo-100 rounded-xl text-xs text-indigo-900">
+                  <div className="p-3 bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 rounded-xl text-xs text-indigo-900 dark:text-indigo-300">
                     <span className="font-bold block mb-0.5">Campus Student Direct Debit</span>
                     <span>Direct ledger settlement tied to student campus roll number. No convenience charges apply.</span>
                   </div>
@@ -510,8 +510,8 @@ const CampusPaymentModal = ({
               )}
 
               {/* Security Escrow Notice */}
-              <div className="p-3 bg-emerald-50/80 border border-emerald-200/80 rounded-2xl text-[11px] text-emerald-900 flex items-start space-x-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+              <div className="p-3 bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 rounded-2xl text-[11px] text-emerald-900 dark:text-emerald-300 flex items-start space-x-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <span>
                   <strong>Escrow Guarantee:</strong> Security deposits are securely held in peer escrow and automatically refunded to the student's wallet immediately upon return verification.
                 </span>

@@ -228,16 +228,16 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
         {isOwner ? (
           /* Owner View Safeguard */
           <div className="p-8 text-center">
-            <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-purple-600 shadow-inner">
+            <div className="w-16 h-16 bg-purple-100 dark:bg-purple-950/60 rounded-2xl flex items-center justify-center mx-auto mb-4 text-purple-600 dark:text-purple-400 shadow-inner">
               <ShieldCheck className="w-8 h-8" />
             </div>
-            <h3 className="text-lg font-black text-slate-900 mb-1">Your Published Resource</h3>
-            <p className="text-xs text-slate-500 mb-6 leading-relaxed max-w-sm mx-auto">
-              You are the registered owner of this item. You cannot rent your own resource. You can monitor bookings and active handovers from the <span className="font-bold text-slate-800">My Listed Items</span> tab.
+            <h3 className="text-lg font-black text-slate-900 dark:text-zinc-100 mb-1">Your Published Resource</h3>
+            <p className="text-xs text-slate-500 dark:text-zinc-400 mb-6 leading-relaxed max-w-sm mx-auto">
+              You are the registered owner of this item. You cannot rent your own resource. You can monitor bookings and active handovers from the <span className="font-bold text-slate-800 dark:text-zinc-200">My Listed Items</span> tab.
             </p>
             <button
               onClick={onClose}
-              className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition cursor-pointer"
+              className="w-full py-3 bg-slate-900 hover:bg-slate-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white rounded-xl text-xs font-bold transition cursor-pointer"
             >
               Back to Campus Catalog
             </button>
@@ -245,23 +245,23 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
         ) : bookingResult ? (
           /* Booking Success State with PeerGear Dynamic QR Handover Pass */
           <div className="p-6 text-center">
-            <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3 text-emerald-600 shadow-inner">
+            <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-950/60 rounded-full flex items-center justify-center mx-auto mb-3 text-emerald-600 dark:text-emerald-400 shadow-inner">
               <CheckCircle2 className="w-9 h-9" />
             </div>
-            <h3 className="text-xl font-black text-slate-900 mb-1">Booking Confirmed!</h3>
-            <p className="text-xs text-slate-500 mb-4">
-              Security deposit of <strong className="text-slate-800 font-bold">₹{securityDeposit}</strong> held securely in 100% refundable escrow.
+            <h3 className="text-xl font-black text-slate-900 dark:text-zinc-100 mb-1">Booking Confirmed!</h3>
+            <p className="text-xs text-slate-500 dark:text-zinc-400 mb-4">
+              Security deposit of <strong className="text-slate-800 dark:text-zinc-200 font-bold">₹{securityDeposit}</strong> held securely in 100% refundable escrow.
             </p>
 
             {/* Dynamic QR Handover Pass Box */}
-            <div className="bg-gradient-to-b from-indigo-50/80 to-purple-50/80 border border-indigo-200/80 rounded-3xl p-4 mb-4 text-center">
+            <div className="bg-gradient-to-b from-indigo-50/80 to-purple-50/80 dark:from-zinc-900 dark:to-zinc-850 border border-indigo-200/80 dark:border-zinc-750 rounded-3xl p-4 mb-4 text-center">
               <div className="inline-flex items-center space-x-1.5 bg-indigo-600 text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full mb-3 shadow-xs">
                 <Sparkles className="w-3 h-3 text-amber-300" />
                 <span>PeerGear Dynamic QR Pass</span>
               </div>
 
               {/* QR Code Container */}
-              <div className="w-44 h-44 bg-white p-3 rounded-2xl shadow-md border border-slate-200 mx-auto mb-3 flex items-center justify-center">
+              <div className="w-44 h-44 bg-white p-3 rounded-2xl shadow-md border border-slate-200 dark:border-zinc-700 mx-auto mb-3 flex items-center justify-center">
                 <QRCodeSVG
                   value={JSON.stringify({
                     app: "PeerGear",
@@ -277,23 +277,23 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
               </div>
 
               {/* Handover OTP */}
-              <div className="bg-white/90 border border-indigo-100 rounded-xl py-2 px-3 inline-block shadow-2xs mb-2">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+              <div className="bg-white/90 dark:bg-zinc-800/90 border border-indigo-100 dark:border-zinc-700 rounded-xl py-2 px-3 inline-block shadow-2xs mb-2">
+                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-zinc-400 block tracking-wider">
                   Handover Code
                 </span>
-                <span className="text-3xl font-black font-mono tracking-widest text-indigo-700">
+                <span className="text-3xl font-black font-mono tracking-widest text-indigo-700 dark:text-indigo-400">
                   {bookingResult.handover_otp}
                 </span>
               </div>
 
-              <p className="text-[11px] text-slate-500 max-w-xs mx-auto">
+              <p className="text-[11px] text-slate-500 dark:text-zinc-400 max-w-xs mx-auto">
                 Show this QR code to the owner during physical handover. They can scan it with their camera to instantly activate the rental.
               </p>
             </div>
 
             <button
               onClick={onClose}
-              className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition cursor-pointer shadow-md"
+              className="w-full py-3 bg-slate-900 hover:bg-slate-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white rounded-xl text-xs font-bold transition cursor-pointer shadow-md"
             >
               Go to My Rentals
             </button>
@@ -302,7 +302,7 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
           /* Booking Form */
           <form onSubmit={handleBooking} className="p-6 overflow-y-auto no-scrollbar">
             {error && (
-              <div className="mb-4 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-xs flex items-start space-x-2">
+              <div className="mb-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 px-4 py-3 rounded-xl text-xs flex items-start space-x-2">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{error}</span>
               </div>
@@ -311,27 +311,27 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
             {/* Date Selection */}
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Pickup Date</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Pickup Date</label>
                 <div className="relative">
                   <input
                     type="date"
                     value={startDate}
                     min={todayStr}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl text-xs font-medium focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     required
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Return Date</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Return Date</label>
                 <div className="relative">
                   <input
                     type="date"
                     value={endDate}
                     min={startDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl text-xs font-medium focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     required
                   />
                 </div>
@@ -340,42 +340,42 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
 
             {/* Notes to Owner */}
             <div className="mb-4">
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Pickup Notes / Timeslot</label>
+              <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1">Pickup Notes / Timeslot</label>
               <input
                 type="text"
                 placeholder="e.g. Free after 4 PM practicals, will collect at hostel lobby"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 
             {/* Escrow Fee Breakdown Card */}
-            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 mb-5 text-xs">
-              <div className="flex justify-between py-1 text-slate-600">
+            <div className="bg-slate-50 dark:bg-zinc-900/90 rounded-2xl p-4 border border-slate-200 dark:border-zinc-800 mb-5 text-xs">
+              <div className="flex justify-between py-1 text-slate-600 dark:text-zinc-400">
                 <span>Rental Duration:</span>
-                <span className="font-semibold text-slate-900">{rentalDays} {rentalDays === 1 ? 'day' : 'days'}</span>
+                <span className="font-semibold text-slate-900 dark:text-zinc-100">{rentalDays} {rentalDays === 1 ? 'day' : 'days'}</span>
               </div>
-              <div className="flex justify-between py-1 text-slate-600">
+              <div className="flex justify-between py-1 text-slate-600 dark:text-zinc-400">
                 <span>Rental Charge (₹{ratePerDay}/day):</span>
-                <span className="font-semibold text-slate-900">₹{rentalFee.toFixed(2)}</span>
+                <span className="font-semibold text-slate-900 dark:text-zinc-100">₹{rentalFee.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between py-1 text-emerald-700 font-medium">
+              <div className="flex justify-between py-1 text-emerald-700 dark:text-emerald-400 font-medium">
                 <span className="flex items-center space-x-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>Refundable Security Deposit:</span>
                 </span>
-                <span className="font-bold text-emerald-800">₹{securityDeposit.toFixed(2)}</span>
+                <span className="font-bold text-emerald-800 dark:text-emerald-300">₹{securityDeposit.toFixed(2)}</span>
               </div>
 
-              <div className="border-t border-slate-200 my-2 pt-2 flex justify-between items-baseline font-bold">
-                <span className="text-slate-900 text-sm">Total Payable Now:</span>
-                <span className="text-indigo-600 text-lg">₹{totalPayable.toFixed(2)}</span>
+              <div className="border-t border-slate-200 dark:border-zinc-800 my-2 pt-2 flex justify-between items-baseline font-bold">
+                <span className="text-slate-900 dark:text-zinc-100 text-sm">Total Payable Now:</span>
+                <span className="text-indigo-600 dark:text-indigo-400 text-lg">₹{totalPayable.toFixed(2)}</span>
               </div>
 
-              <div className="flex justify-between items-center pt-1 text-[11px] text-slate-500">
+              <div className="flex justify-between items-center pt-1 text-[11px] text-slate-500 dark:text-zinc-400">
                 <span>Your Wallet Balance:</span>
-                <span className={hasEnoughBalance ? 'text-emerald-600 font-bold' : 'text-rose-600 font-bold'}>
+                <span className={hasEnoughBalance ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-rose-600 dark:text-rose-400 font-bold'}>
                   ₹{walletBalance.toFixed(2)}
                 </span>
               </div>
@@ -383,17 +383,17 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
 
             {/* Quick 1-Click Top-Up Assistance if low balance */}
             {!hasEnoughBalance && (
-              <div className="mb-4 p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-2xl">
+              <div className="mb-4 p-3.5 bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/90 dark:border-amber-800/60 rounded-2xl">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-bold text-amber-900 flex items-center space-x-1.5">
-                    <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  <span className="text-xs font-bold text-amber-900 dark:text-amber-200 flex items-center space-x-1.5">
+                    <AlertCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                     <span>Wallet Deposit Top-Up Needed</span>
                   </span>
-                  <span className="text-[10px] font-black text-amber-800 bg-amber-200/70 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-black text-amber-800 dark:text-amber-200 bg-amber-200/70 dark:bg-amber-900/60 px-2 py-0.5 rounded-full">
                     Short by ₹{deficit.toFixed(0)}
                   </span>
                 </div>
-                <p className="text-[11px] text-amber-700 leading-relaxed mb-3">
+                <p className="text-[11px] text-amber-700 dark:text-amber-300 leading-relaxed mb-3">
                   This rental requires a 100% refundable security deposit of ₹{securityDeposit}. Add funds or checkout directly via Campus UPI:
                 </p>
                 <div className="flex gap-2">
@@ -409,7 +409,7 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
                     type="button"
                     disabled={toppingUp}
                     onClick={() => handleQuickTopup(suggestedTopup)}
-                    className="py-2 px-3 bg-white hover:bg-indigo-50 text-indigo-700 font-bold text-xs rounded-xl border border-indigo-200 transition cursor-pointer shadow-2xs"
+                    className="py-2 px-3 bg-white dark:bg-zinc-850 hover:bg-indigo-50 dark:hover:bg-zinc-800 text-indigo-700 dark:text-indigo-300 font-bold text-xs rounded-xl border border-indigo-200 dark:border-indigo-800 transition cursor-pointer shadow-2xs"
                   >
                     <span>+ ₹{suggestedTopup}</span>
                   </button>
@@ -419,11 +419,11 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
 
             {/* Account Suspended Notice */}
             {user?.is_blocked && (
-              <div className="mb-4 p-3.5 bg-red-50 border border-red-200 rounded-2xl text-xs text-red-900 flex items-start space-x-2.5">
-                <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+              <div className="mb-4 p-3.5 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 rounded-2xl text-xs text-red-900 dark:text-red-200 flex items-start space-x-2.5">
+                <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
                 <div className="space-y-1">
-                  <span className="font-bold text-red-800">Account Suspended</span>
-                  <p className="text-[11px] text-red-700 leading-relaxed">
+                  <span className="font-bold text-red-800 dark:text-red-300">Account Suspended</span>
+                  <p className="text-[11px] text-red-700 dark:text-red-300 leading-relaxed">
                     Your campus account is suspended by administration.
                     {user?.blocked_reason && <span className="italic block mt-0.5">"{user.blocked_reason}"</span>}
                     You cannot reserve or rent equipment.
@@ -434,12 +434,12 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
 
             {/* Student ID Card Verification Warning */}
             {user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED' && (
-              <div className="mb-4 p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-2xl text-xs space-y-2">
-                <div className="flex items-center space-x-1.5 font-bold text-amber-900">
-                  <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0" />
+              <div className="mb-4 p-3.5 bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/90 dark:border-amber-800/60 rounded-2xl text-xs space-y-2">
+                <div className="flex items-center space-x-1.5 font-bold text-amber-900 dark:text-amber-200">
+                  <ShieldAlert className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>College ID Card Required to Rent</span>
                 </div>
-                <p className="text-[11px] text-amber-800/90 leading-relaxed">
+                <p className="text-[11px] text-amber-800/90 dark:text-amber-300 leading-relaxed">
                   {user?.id_card_status === 'PENDING_VERIFICATION' ? (
                     '⏳ Your submitted College ID card is under review by campus administration. Equipment renting will unlock as soon as moderation approves it.'
                   ) : user?.id_card_status === 'REJECTED' ? (
@@ -482,9 +482,9 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
                 <button
                   type="submit"
                   disabled={submitting || user?.is_blocked || (user?.role !== 'ADMIN' && user?.id_card_status !== 'VERIFIED')}
-                  className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs transition flex items-center justify-center space-x-2 border border-slate-200 cursor-pointer disabled:opacity-50"
+                  className="w-full py-2.5 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-750 text-slate-800 dark:text-zinc-200 rounded-xl font-bold text-xs transition flex items-center justify-center space-x-2 border border-slate-200 dark:border-zinc-700 cursor-pointer disabled:opacity-50"
                 >
-                  <Wallet className="w-3.5 h-3.5 text-slate-600" />
+                  <Wallet className="w-3.5 h-3.5 text-slate-600 dark:text-zinc-400" />
                   <span>
                     {submitting ? 'Confirming with Escrow...' : `Debit from Campus Wallet (₹${totalPayable.toFixed(2)})`}
                   </span>
@@ -492,7 +492,7 @@ const BookingModal = ({ item, onClose, onSuccess, onOpenAuth }) => {
               )}
             </div>
 
-            <p className="text-[10px] text-center text-slate-400 mt-2">
+            <p className="text-[10px] text-center text-slate-400 dark:text-zinc-500 mt-2">
               100% of the ₹{securityDeposit} deposit is instantly refunded upon returning the item in agreed condition.
             </p>
           </form>

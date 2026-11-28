@@ -490,7 +490,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                             setCampusSearch(e.target.value);
                             loadCampuses(e.target.value);
                           }}
-                          className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg text-slate-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
+                          className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
                           autoFocus
                         />
                       </div>
@@ -771,7 +771,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                         placeholder="e.g. Rahul Sharma"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                         required
                       />
                     </div>
@@ -785,7 +785,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                         placeholder="e.g. 12014522"
                         value={collegeId}
                         onChange={(e) => setCollegeId(e.target.value)}
-                        className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                         required
                       />
                     </div>
@@ -796,7 +796,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                         placeholder="e.g. Block B, 304"
                         value={hostelBlock}
                         onChange={(e) => setHostelBlock(e.target.value)}
-                        className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                   </div>
@@ -810,7 +810,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                         placeholder="e.g. +91 9876543210"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                   </div>
@@ -828,7 +828,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                     placeholder="e.g. student@gmail.com or student@campus.edu"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     required
                   />
                 </div>
@@ -843,7 +843,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    className="w-full pl-9 pr-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     required
                   />
                 </div>

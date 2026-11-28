@@ -660,7 +660,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
               placeholder="e.g. Casio fx-991EX Scientific Calculator, Size M Lab Coat, Hero Geared Bicycle"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
@@ -672,7 +672,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
               placeholder="Describe the condition, what is included (charger, case, lock, etc.), and any instructions..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -689,7 +689,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                 placeholder="e.g. 25"
                 value={rentalRate}
                 onChange={(e) => setRentalRate(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-slate-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                 required
               />
             </div>
@@ -706,7 +706,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
                 placeholder="e.g. 100"
                 value={securityDeposit}
                 onChange={(e) => setSecurityDeposit(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-400 placeholder-zinc-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-400 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 required
               />
             </div>
@@ -720,7 +720,7 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
               placeholder="e.g. Hostel Block B, Library Gate, Food Court"
               value={pickupLocation}
               onChange={(e) => setPickupLocation(e.target.value)}
-              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 bg-white dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>

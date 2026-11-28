@@ -379,19 +379,19 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-base font-black text-slate-900">Authorizing Campus Top-Up</h3>
-                    <p className="text-xs text-slate-500">Connecting to NPCI Campus Switch...</p>
+                    <h3 className="text-base font-black text-slate-900 dark:text-zinc-100">Authorizing Campus Top-Up</h3>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400">Connecting to NPCI Campus Switch...</p>
                   </div>
-                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-left max-w-sm mx-auto space-y-2 text-xs">
-                    <div className={`flex items-center space-x-2 ${topupStep >= 1 ? 'text-indigo-600 font-bold' : 'text-slate-400'}`}>
+                  <div className="bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-3.5 text-left max-w-sm mx-auto space-y-2 text-xs">
+                    <div className={`flex items-center space-x-2 ${topupStep >= 1 ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
                       <RefreshCw className={`w-3.5 h-3.5 ${topupStep === 1 ? 'animate-spin' : ''}`} />
                       <span>1. Handshake with UPI Banking Switch...</span>
                     </div>
-                    <div className={`flex items-center space-x-2 ${topupStep >= 2 ? 'text-indigo-600 font-bold' : 'text-slate-400'}`}>
+                    <div className={`flex items-center space-x-2 ${topupStep >= 2 ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
                       <ShieldCheck className="w-3.5 h-3.5" />
                       <span>2. Validating Escrow Reserve Allocation...</span>
                     </div>
-                    <div className={`flex items-center space-x-2 ${topupStep >= 3 ? 'text-emerald-600 font-bold' : 'text-slate-400'}`}>
+                    <div className={`flex items-center space-x-2 ${topupStep >= 3 ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>3. Crediting B-Money Wallet Balance...</span>
                     </div>
@@ -401,32 +401,32 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                 /* Success Digital Receipt */
                 <div className="space-y-4">
                   <div className="text-center">
-                    <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2 text-emerald-600 shadow-inner">
+                    <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-950/60 rounded-full flex items-center justify-center mx-auto mb-2 text-emerald-600 dark:text-emerald-400 shadow-inner">
                       <CheckCircle2 className="w-8 h-8" />
                     </div>
-                    <h3 className="text-lg font-black text-slate-900">₹{topupReceipt.amount.toFixed(2)} Added Successfully!</h3>
-                    <p className="text-xs text-slate-500 mt-0.5">Credited via {topupReceipt.gateway_app}</p>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-zinc-100">₹{topupReceipt.amount.toFixed(2)} Added Successfully!</h3>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Credited via {topupReceipt.gateway_app}</p>
                   </div>
 
-                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2.5">
-                    <div className="flex justify-between pb-2 border-b border-slate-200">
-                      <span className="text-slate-500">Transaction Ref:</span>
-                      <span className="font-mono font-bold text-slate-900">{topupReceipt.transaction_ref}</span>
+                  <div className="bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-4 text-xs space-y-2.5">
+                    <div className="flex justify-between pb-2 border-b border-slate-200 dark:border-zinc-800">
+                      <span className="text-slate-500 dark:text-zinc-400">Transaction Ref:</span>
+                      <span className="font-mono font-bold text-slate-900 dark:text-zinc-100">{topupReceipt.transaction_ref}</span>
                     </div>
-                    <div className="flex justify-between pb-2 border-b border-slate-200">
-                      <span className="text-slate-500">Bank UTR Number:</span>
-                      <span className="font-mono font-bold text-slate-900">{topupReceipt.utr_number}</span>
+                    <div className="flex justify-between pb-2 border-b border-slate-200 dark:border-zinc-800">
+                      <span className="text-slate-500 dark:text-zinc-400">Bank UTR Number:</span>
+                      <span className="font-mono font-bold text-slate-900 dark:text-zinc-100">{topupReceipt.utr_number}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Updated B-Money:</span>
-                      <span className="font-mono font-black text-emerald-700">₹{walletBalance.toFixed(2)}</span>
+                      <span className="text-slate-500 dark:text-zinc-400">Updated B-Money:</span>
+                      <span className="font-mono font-black text-emerald-700 dark:text-emerald-400">₹{walletBalance.toFixed(2)}</span>
                     </div>
                   </div>
 
                   <button
                     type="button"
                     onClick={onClose}
-                    className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition cursor-pointer"
+                    className="w-full py-3 bg-slate-900 hover:bg-slate-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white font-bold text-xs rounded-xl transition cursor-pointer"
                   >
                     Done & Back to Platform
                   </button>
@@ -435,7 +435,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                 /* Top-Up Form */
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                    <label className="block text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
                       Select Top-Up Amount (₹)
                     </label>
                     <div className="grid grid-cols-4 gap-2 mb-2">
@@ -447,7 +447,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                           className={`py-2 text-xs font-bold rounded-xl border transition cursor-pointer ${
                             Number(topupAmount) === amt
                               ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
-                              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                              : 'bg-white dark:bg-zinc-850 text-slate-700 dark:text-zinc-300 border-slate-200 dark:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-800'
                           }`}
                         >
                           ₹{amt}
@@ -460,7 +460,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                       onChange={(e) => setTopupAmount(e.target.value)}
                       placeholder="Enter custom amount"
                       min="50"
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                     />
                   </div>
 
@@ -471,11 +471,11 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                       onClick={() => setTopupMethod('UPI_APP')}
                       className={`p-2 rounded-xl border text-xs font-bold transition cursor-pointer flex items-center justify-center space-x-1.5 ${
                         topupMethod === 'UPI_APP'
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-900'
-                          : 'bg-white border-slate-200 text-slate-600'
+                          ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-600 dark:border-emerald-500 text-emerald-900 dark:text-emerald-300'
+                          : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800'
                       }`}
                     >
-                      <Smartphone className="w-4 h-4 text-emerald-600" />
+                      <Smartphone className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                       <span>UPI Apps (GPay / PhonePe)</span>
                     </button>
                     <button
@@ -483,11 +483,11 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                       onClick={() => setTopupMethod('UPI_QR')}
                       className={`p-2 rounded-xl border text-xs font-bold transition cursor-pointer flex items-center justify-center space-x-1.5 ${
                         topupMethod === 'UPI_QR'
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-900'
-                          : 'bg-white border-slate-200 text-slate-600'
+                          ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-600 dark:border-emerald-500 text-emerald-900 dark:text-emerald-300'
+                          : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800'
                       }`}
                     >
-                      <QRCodeSVG className="w-4 h-4 text-emerald-600" value="preview" size={16} />
+                      <QRCodeSVG className="w-4 h-4 text-emerald-600 dark:text-emerald-400" value="preview" size={16} />
                       <span>Scan Dynamic QR</span>
                     </button>
                   </div>
@@ -501,8 +501,8 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                           onClick={() => setSelectedUpiApp(app.id)}
                           className={`p-2 rounded-xl border flex flex-col items-center justify-center space-y-1 transition cursor-pointer ${
                             selectedUpiApp === app.id
-                              ? 'bg-emerald-50 border-emerald-600 text-emerald-900 font-bold ring-1 ring-emerald-500'
-                              : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                              ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-600 dark:border-emerald-500 text-emerald-900 dark:text-emerald-300 font-bold ring-1 ring-emerald-500'
+                              : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-700 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800'
                           }`}
                         >
                           <div className={`w-7 h-7 rounded-lg bg-gradient-to-tr ${app.color} text-white flex items-center justify-center font-bold text-[9px]`}>
@@ -513,11 +513,11 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                       ))}
                     </div>
                   ) : (
-                    <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center space-y-2">
-                      <div className="w-32 h-32 bg-white p-2 rounded-xl shadow-xs border border-slate-200 mx-auto flex items-center justify-center">
+                    <div className="p-3 bg-slate-50 dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 text-center space-y-2">
+                      <div className="w-32 h-32 bg-white p-2 rounded-xl shadow-xs border border-slate-200 dark:border-zinc-700 mx-auto flex items-center justify-center">
                         <QRCodeSVG value={dynamicQrString} size={112} level="H" />
                       </div>
-                      <span className="text-[10px] text-slate-500 block">Scan with any UPI app to simulate recharge</span>
+                      <span className="text-[10px] text-slate-500 dark:text-zinc-400 block">Scan with any UPI app to simulate recharge</span>
                     </div>
                   )}
 
@@ -547,19 +547,19 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-base font-black text-slate-900">Disbursing Instant Payout</h3>
-                    <p className="text-xs text-slate-500">Connecting to NPCI IMPS Payout Switch...</p>
+                    <h3 className="text-base font-black text-slate-900 dark:text-zinc-100">Disbursing Instant Payout</h3>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400">Connecting to NPCI IMPS Payout Switch...</p>
                   </div>
-                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-left max-w-sm mx-auto space-y-2 text-xs">
-                    <div className={`flex items-center space-x-2 ${withdrawStep >= 1 ? 'text-indigo-600 font-bold' : 'text-slate-400'}`}>
+                  <div className="bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-3.5 text-left max-w-sm mx-auto space-y-2 text-xs">
+                    <div className={`flex items-center space-x-2 ${withdrawStep >= 1 ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
                       <RefreshCw className={`w-3.5 h-3.5 ${withdrawStep === 1 ? 'animate-spin' : ''}`} />
                       <span>1. Validating Beneficiary UPI VPA / Account...</span>
                     </div>
-                    <div className={`flex items-center space-x-2 ${withdrawStep >= 2 ? 'text-indigo-600 font-bold' : 'text-slate-400'}`}>
+                    <div className={`flex items-center space-x-2 ${withdrawStep >= 2 ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
                       <ShieldCheck className="w-3.5 h-3.5" />
                       <span>2. Authorizing Debit from Escrow Reserve...</span>
                     </div>
-                    <div className={`flex items-center space-x-2 ${withdrawStep >= 3 ? 'text-emerald-600 font-bold' : 'text-slate-400'}`}>
+                    <div className={`flex items-center space-x-2 ${withdrawStep >= 3 ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-slate-400 dark:text-zinc-500'}`}>
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>3. IMPS Direct Bank Payout Dispatched!</span>
                     </div>
@@ -569,38 +569,38 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                 /* Success Digital Payout Voucher */
                 <div className="space-y-4">
                   <div className="text-center">
-                    <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-2 text-indigo-600 shadow-inner">
+                    <div className="w-14 h-14 bg-indigo-100 dark:bg-indigo-950/60 rounded-full flex items-center justify-center mx-auto mb-2 text-indigo-600 dark:text-indigo-400 shadow-inner">
                       <CheckCircle2 className="w-8 h-8" />
                     </div>
-                    <h3 className="text-lg font-black text-slate-900">₹{withdrawReceipt.amount.toFixed(2)} Disbursed to Bank!</h3>
-                    <p className="text-xs text-slate-500 mt-0.5">Instant transfer completed via IMPS</p>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-zinc-100">₹{withdrawReceipt.amount.toFixed(2)} Disbursed to Bank!</h3>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Instant transfer completed via IMPS</p>
                   </div>
 
-                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2.5">
-                    <div className="flex justify-between pb-2 border-b border-slate-200">
-                      <span className="text-slate-500">Payout Reference:</span>
-                      <div className="flex items-center space-x-1 font-mono font-bold text-slate-800">
+                  <div className="bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-4 text-xs space-y-2.5">
+                    <div className="flex justify-between pb-2 border-b border-slate-200 dark:border-zinc-800">
+                      <span className="text-slate-500 dark:text-zinc-400">Payout Reference:</span>
+                      <div className="flex items-center space-x-1 font-mono font-bold text-slate-800 dark:text-zinc-200">
                         <span>{withdrawReceipt.transaction_ref}</span>
                         <button 
                           type="button" 
                           onClick={() => copyToClipboard(withdrawReceipt.transaction_ref, 'payout_ref')}
-                          className="text-slate-400 hover:text-indigo-600 p-0.5 cursor-pointer"
+                          className="text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 p-0.5 cursor-pointer"
                         >
-                          {copiedField === 'payout_ref' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                          {copiedField === 'payout_ref' ? <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3 h-3" />}
                         </button>
                       </div>
                     </div>
-                    <div className="flex justify-between pb-2 border-b border-slate-200">
-                      <span className="text-slate-500">Bank UTR Number:</span>
-                      <span className="font-mono font-bold text-slate-900">{withdrawReceipt.utr_number}</span>
+                    <div className="flex justify-between pb-2 border-b border-slate-200 dark:border-zinc-800">
+                      <span className="text-slate-500 dark:text-zinc-400">Bank UTR Number:</span>
+                      <span className="font-mono font-bold text-slate-900 dark:text-zinc-100">{withdrawReceipt.utr_number}</span>
                     </div>
-                    <div className="flex justify-between pb-2 border-b border-slate-200">
-                      <span className="text-slate-500">Destination Account:</span>
-                      <span className="font-semibold text-slate-800">{withdrawReceipt.destination}</span>
+                    <div className="flex justify-between pb-2 border-b border-slate-200 dark:border-zinc-800">
+                      <span className="text-slate-500 dark:text-zinc-400">Destination Account:</span>
+                      <span className="font-semibold text-slate-800 dark:text-zinc-200">{withdrawReceipt.destination}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Remaining Balance:</span>
-                      <span className="font-mono font-black text-slate-900">₹{Number(withdrawReceipt.balance_after || 0).toFixed(2)}</span>
+                      <span className="text-slate-500 dark:text-zinc-400">Remaining Balance:</span>
+                      <span className="font-mono font-black text-slate-900 dark:text-zinc-100">₹{Number(withdrawReceipt.balance_after || 0).toFixed(2)}</span>
                     </div>
                   </div>
 
@@ -616,7 +616,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                 /* Withdrawal Form */
                 <form onSubmit={handleSimulateWithdrawal} className="space-y-4">
                   {withdrawError && (
-                    <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-start space-x-2">
+                    <div className="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 rounded-xl text-xs flex items-start space-x-2">
                       <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                       <span>{withdrawError}</span>
                     </div>
@@ -625,11 +625,11 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                   {/* Amount to Withdraw */}
                   <div>
                     <div className="flex justify-between items-baseline mb-1">
-                      <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                      <label className="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
                         Amount to Withdraw (₹)
                       </label>
-                      <span className="text-[11px] text-slate-500">
-                        Max Withdrawable: <strong className="text-slate-800">₹{walletBalance.toFixed(2)}</strong>
+                      <span className="text-[11px] text-slate-500 dark:text-zinc-400">
+                        Max Withdrawable: <strong className="text-slate-800 dark:text-zinc-200">₹{walletBalance.toFixed(2)}</strong>
                       </span>
                     </div>
 
@@ -643,7 +643,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                           className={`py-1.5 text-xs font-bold rounded-xl border transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
                             String(withdrawAmount) === String(amt)
                               ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                              : 'bg-white dark:bg-zinc-850 text-slate-700 dark:text-zinc-300 border-slate-200 dark:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-800'
                           }`}
                         >
                           ₹{amt}
@@ -653,7 +653,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                         type="button"
                         onClick={() => setWithdrawAmount(String(Math.floor(walletBalance)))}
                         disabled={walletBalance <= 0}
-                        className="py-1.5 text-xs font-bold rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition cursor-pointer disabled:opacity-40"
+                        className="py-1.5 text-xs font-bold rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition cursor-pointer disabled:opacity-40"
                       >
                         All (100%)
                       </button>
@@ -667,13 +667,13 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                       min="50"
                       max={walletBalance}
                       required
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-slate-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
 
                   {/* Destination Method Tabs */}
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                    <label className="block text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
                       Payout Destination
                     </label>
                     <div className="grid grid-cols-2 gap-2 mb-3">
@@ -682,11 +682,11 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                         onClick={() => setPayoutMethod('UPI')}
                         className={`p-2 rounded-xl border text-xs font-bold transition cursor-pointer flex items-center justify-center space-x-1.5 ${
                           payoutMethod === 'UPI'
-                            ? 'bg-indigo-50 border-indigo-600 text-indigo-900'
-                            : 'bg-white border-slate-200 text-slate-600'
+                            ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-600 dark:border-indigo-500 text-indigo-900 dark:text-indigo-300'
+                            : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800'
                         }`}
                       >
-                        <Smartphone className="w-4 h-4 text-indigo-600" />
+                        <Smartphone className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                         <span>Instant UPI VPA</span>
                       </button>
                       <button
@@ -694,11 +694,11 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                         onClick={() => setPayoutMethod('BANK')}
                         className={`p-2 rounded-xl border text-xs font-bold transition cursor-pointer flex items-center justify-center space-x-1.5 ${
                           payoutMethod === 'BANK'
-                            ? 'bg-indigo-50 border-indigo-600 text-indigo-900'
-                            : 'bg-white border-slate-200 text-slate-600'
+                            ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-600 dark:border-indigo-500 text-indigo-900 dark:text-indigo-300'
+                            : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-750 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800'
                         }`}
                       >
-                        <Building2 className="w-4 h-4 text-indigo-600" />
+                        <Building2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                         <span>Direct Bank (IMPS)</span>
                       </button>
                     </div>
@@ -711,7 +711,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                           onChange={(e) => setDestinationUpi(e.target.value)}
                           placeholder="e.g. yourname@oksbi"
                           required
-                          className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-800 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                          className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-mono font-bold text-slate-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                         />
                         <div className="flex gap-1.5">
                           {['@oksbi', '@okhdfcbank', '@paytm', '@ybl'].map((h) => (
@@ -722,7 +722,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                                 const base = destinationUpi.split('@')[0] || 'student';
                                 setDestinationUpi(`${base}${h}`);
                               }}
-                              className="px-2 py-0.5 rounded-lg bg-slate-100 text-[10px] font-mono text-slate-600 hover:bg-slate-200 cursor-pointer"
+                              className="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-zinc-800 text-[10px] font-mono text-slate-600 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 cursor-pointer"
                             >
                               {h}
                             </button>
@@ -737,7 +737,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                           onChange={(e) => setBankAccount(e.target.value)}
                           placeholder="Bank Account Number"
                           required
-                          className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-800 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                          className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-mono font-bold text-slate-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                         />
                         <div className="grid grid-cols-2 gap-2">
                           <input
@@ -746,7 +746,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                             onChange={(e) => setBankIfsc(e.target.value.toUpperCase())}
                             placeholder="IFSC Code (e.g. SBIN0001234)"
                             required
-                            className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-800 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-mono font-bold text-slate-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                           />
                           <input
                             type="text"
@@ -754,7 +754,7 @@ const ManageMoneyModal = ({ isOpen, onClose, initialView = 'CHOICE', onSuccess }
                             onChange={(e) => setBeneficiaryName(e.target.value)}
                             placeholder="Account Holder Name"
                             required
-                            className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-zinc-850 border border-slate-300 dark:border-zinc-700 rounded-xl text-xs font-bold text-slate-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:bg-white dark:focus:bg-zinc-850 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                           />
                         </div>
                       </div>
