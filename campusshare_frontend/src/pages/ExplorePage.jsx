@@ -486,62 +486,10 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
       {user ? (
         /* ============================================================== */
         /* AUTHENTICATED STUDENT VIEW: Campus Inventory & Node Exchange  */
-        /* (Items listed based on student's campus, zero marketing clutter)*/
+        /* (Items listed directly on student's campus, zero clutter)     */
         /* ============================================================== */
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           
-          {/* Active Campus Node Mesh Banner */}
-          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-emerald-950/40 via-zinc-900 to-teal-950/30 border border-emerald-500/30 dark:border-emerald-500/20 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg shadow-emerald-950/20">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-400 flex items-center justify-center shrink-0 shadow-inner">
-                <Building2 className="w-6 h-6 stroke-[2.2]" />
-              </div>
-              <div>
-                <div className="flex items-center space-x-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
-                    Active University Node
-                  </span>
-                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                    Mesh Verified
-                  </span>
-                </div>
-                <h3 className="text-base sm:text-lg font-black text-white tracking-tight mt-0.5">
-                  {user.campus_name || 'Campus Student Node'}
-                </h3>
-                <p className="text-[11px] text-zinc-400 font-medium">
-                  Showing equipment verified for students on your university campus.
-                </p>
-              </div>
-            </div>
-
-            {/* Campus Scope Selector */}
-            <div className="flex items-center space-x-2 self-start md:self-auto bg-zinc-900/90 p-1 rounded-2xl border border-white/10 shrink-0">
-              <button
-                type="button"
-                onClick={() => setCampusFilter('my-campus')}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  campusFilter === 'my-campus'
-                    ? 'bg-emerald-600 text-white shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
-                }`}
-              >
-                My Campus Hub
-              </button>
-              <button
-                type="button"
-                onClick={() => setCampusFilter('all')}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  campusFilter === 'all'
-                    ? 'bg-zinc-800 text-white shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
-                }`}
-              >
-                All Campuses
-              </button>
-            </div>
-          </div>
-
           {/* Catalog Explorer Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
             <div>
@@ -549,7 +497,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
                 {selectedCategory === "All" ? "Available Campus Inventory" : `${selectedCategory}`}
               </h2>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
-                Showing {items.length} verified item{items.length === 1 ? '' : 's'} available on {campusFilter === 'my-campus' ? (user.campus_name || 'your campus') : 'all campuses'}
+                Showing {items.length} verified item{items.length === 1 ? '' : 's'} available at {user.campus_name || 'your university campus'}
               </p>
             </div>
 
