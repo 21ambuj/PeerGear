@@ -159,14 +159,17 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/85 dark:bg-[#08090e]/85 backdrop-blur-2xl border-b border-zinc-200/75 dark:border-white/[0.08] shadow-[0_4px_24px_-4px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.7)] transition-colors duration-300">
-        {/* Luminous Multi-stop Top Laser Beam */}
-        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-emerald-400 via-teal-400 to-transparent opacity-90"></div>
+      <header className="sticky top-0 z-40 bg-white/85 dark:bg-[#08090e]/85 backdrop-blur-2xl border-b border-zinc-200/75 dark:border-white/[0.08] shadow-[0_4px_30px_-4px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_45px_-8px_rgba(0,0,0,0.8)] transition-colors duration-300 relative">
+        {/* Dynamic Multi-Stop Iridescent Top Laser Beam with Ambient Breathing Pulse */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-emerald-400 via-teal-300 via-cyan-400 to-transparent animate-pulse opacity-90"></div>
 
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        {/* Ambient Top Halo Light across the Header */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-r from-emerald-500/10 via-teal-500/15 to-cyan-500/10 blur-xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-between h-16 sm:h-[70px] gap-2 sm:gap-4 lg:gap-6">
             
-            {/* LEFT: Distinctive Geometric Brand Mark */}
+            {/* LEFT: Distinctive Geometric Brand Mark with Holographic Aura */}
             <div 
               onClick={() => setActiveTab('explore')}
               className="flex items-center space-x-3 cursor-pointer group select-none shrink-0"
@@ -174,12 +177,12 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
             >
               <div className="relative shrink-0">
                 {/* Radiant Ambient Back-Glow */}
-                <div className="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-emerald-500/30 via-teal-500/20 to-cyan-500/30 blur-md opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r from-emerald-500/35 via-teal-500/25 to-cyan-500/35 blur-md opacity-50 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 
                 {/* 3D Machined Icon Emblem */}
-                <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-950 to-black dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-950 text-white flex items-center justify-center shadow-lg shadow-zinc-950/20 group-hover:scale-105 transition-all duration-300 ring-1 ring-zinc-700/60 dark:ring-white/[0.14]">
+                <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-black dark:from-zinc-900 dark:via-zinc-950 dark:to-black text-white flex items-center justify-center shadow-xl shadow-zinc-950/30 group-hover:scale-105 transition-all duration-300 ring-1 ring-zinc-700/60 dark:ring-white/[0.16] group-hover:ring-emerald-500/50">
                   {/* Custom Interlocking Geometric Nodes SVG */}
-                  <svg className="w-5 h-5 text-emerald-400 group-hover:text-emerald-300 group-hover:rotate-6 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-5 h-5 text-emerald-400 group-hover:text-emerald-300 group-hover:rotate-12 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="18" cy="6" r="3" />
                     <circle cx="6" cy="18" r="3" />
                     <path d="M15.5 8.5L8.5 15.5" />
@@ -199,7 +202,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
               <div className="flex flex-col">
                 <div className="flex items-center space-x-1.5">
                   <span className="text-xl sm:text-[21px] font-black tracking-[-0.035em] text-zinc-950 dark:text-white leading-none">
-                    Peer<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-400 dark:to-teal-300">Gear</span>
+                    Peer<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 group-hover:from-emerald-400 group-hover:to-teal-300 transition-all">Gear</span>
                   </span>
                   <span className="text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded-md border border-emerald-500/25 shadow-2xs">
                     Campus
@@ -227,7 +230,7 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
               </kbd>
             </button>
 
-            {/* CENTER: Floating Glass Capsule Navigation Dock */}
+            {/* CENTER: Floating Glass Capsule Navigation Dock with Luminous Active Indicators */}
             <nav className="hidden lg:flex items-center space-x-1 p-1 rounded-full bg-zinc-100/90 dark:bg-white/[0.05] border border-zinc-200/80 dark:border-white/[0.08] backdrop-blur-xl shadow-inner shrink-0">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -245,10 +248,13 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                     }}
                     className={`relative px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center space-x-1.5 cursor-pointer ${
                       isActive
-                        ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-sm ring-1 ring-zinc-200 dark:ring-white/[0.1]'
+                        ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-sm ring-1 ring-emerald-500/40 shadow-emerald-500/10'
                         : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-white/60 dark:hover:bg-zinc-800/60'
                     }`}
                   >
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.9)] animate-pulse shrink-0"></span>
+                    )}
                     <Icon className={`w-3.5 h-3.5 transition-colors duration-200 ${
                       isActive ? 'text-emerald-600 dark:text-emerald-400 stroke-[2.5]' : 'text-zinc-400 dark:text-zinc-500'
                     }`} />
@@ -265,8 +271,8 @@ const Navbar = ({ activeTab, setActiveTab, onOpenNotifications, onOpenAuth }) =>
                 }}
                 className={`ml-1 px-4 py-1.5 rounded-full text-xs font-black transition-all duration-200 flex items-center space-x-1.5 cursor-pointer shadow-md active:scale-95 group ${
                   activeTab === 'list-item'
-                    ? 'bg-emerald-600 text-white shadow-emerald-600/30 ring-2 ring-emerald-500/40'
-                    : 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-emerald-500/25 hover:shadow-lg hover:shadow-emerald-500/35'
+                    ? 'bg-emerald-600 text-white shadow-emerald-600/40 ring-2 ring-emerald-400/50'
+                    : 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/50 hover:scale-[1.03]'
                 }`}
               >
                 <PlusCircle className="w-3.5 h-3.5 stroke-[2.8] group-hover:rotate-90 transition-transform duration-300" />

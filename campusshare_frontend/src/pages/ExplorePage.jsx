@@ -320,147 +320,136 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
 
             </div>
 
-            {/* Right Column: Interactive Animated Equipment Showcase with Real Pictures */}
-            <div className="lg:col-span-5 hidden lg:block">
+            {/* Right Column: Deeply Integrated Holographic Equipment Showcase (Zero Card Box) */}
+            <div className="lg:col-span-5 hidden lg:block relative select-none">
+              
+              {/* Radial Atmosphere Glow & Holographic Stage Rings */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] bg-gradient-to-tr from-emerald-500/15 via-teal-500/10 to-cyan-500/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border border-emerald-500/20 border-dashed animate-[spin_50s_linear_infinite] pointer-events-none"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-white/5 pointer-events-none"></div>
+
               <div 
                 onMouseEnter={() => setIsHeroHovered(true)}
                 onMouseLeave={() => setIsHeroHovered(false)}
-                className="glass-panel-dark rounded-3xl p-5 border border-zinc-800 relative shadow-2xl overflow-hidden group"
+                className="relative z-10"
               >
-                {/* Header with live pulse and 3 interactive gear switcher pills */}
-                <div className="flex items-center justify-between pb-3 border-b border-zinc-800/80 mb-3.5">
-                  <div className="flex items-center space-x-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span className="text-[11px] font-black text-zinc-200 uppercase tracking-wider">
-                      Featured Campus Gear
-                    </span>
-                  </div>
-
-                  {/* Interactive Switcher Tabs */}
-                  <div className="flex bg-zinc-900 p-0.5 rounded-lg border border-zinc-800">
-                    {HERO_FEATURED_GEAR.map((gear, idx) => (
-                      <button
-                        key={gear.id}
-                        type="button"
-                        onClick={() => setActiveHeroIdx(idx)}
-                        className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer ${
-                          activeHeroIdx === idx
-                            ? 'bg-zinc-800 text-white shadow-xs'
-                            : 'text-zinc-500 hover:text-zinc-300'
-                        }`}
-                      >
-                        {gear.shortName}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Main Hero Picture Container with Smooth Transition */}
                 {(() => {
                   const currentGear = HERO_FEATURED_GEAR[activeHeroIdx];
                   return (
-                    <div key={currentGear.id} className="animate-scale-in">
-                      {/* Photo with Overlay Badges */}
-                      <div className="relative aspect-16/10 rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 mb-3 group/img">
+                    <div key={currentGear.id} className="relative animate-scale-in">
+                      
+                      {/* Floating HUD Telemetry Badge: Top Left (Escrow Lock) */}
+                      <div className="absolute -top-3.5 -left-3.5 z-20 flex items-center space-x-2 px-3 py-1.5 rounded-full bg-zinc-950/90 backdrop-blur-md border border-emerald-500/40 shadow-xl shadow-emerald-950/40 text-xs font-bold text-white animate-float">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <Lock className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="tracking-tight">₹{currentGear.deposit} Escrow Locked</span>
+                      </div>
+
+                      {/* Floating HUD Telemetry Badge: Top Right (Verified QR Protocol) */}
+                      <div 
+                        className="absolute -top-3.5 -right-3.5 z-20 flex items-center space-x-2 px-3 py-1.5 rounded-full bg-zinc-950/90 backdrop-blur-md border border-indigo-500/40 shadow-xl shadow-indigo-950/40 text-xs font-bold text-white animate-float"
+                        style={{ animationDelay: '1.8s' }}
+                      >
+                        <Zap className="w-3.5 h-3.5 text-indigo-400" />
+                        <span className="tracking-tight">Encrypted QR Pass</span>
+                      </div>
+
+                      {/* Borderless Organic Visual Canvas */}
+                      <div className="relative aspect-16/11 rounded-3xl overflow-hidden bg-zinc-950 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.85)] group/img">
                         <img
                           src={currentGear.image}
                           alt={currentGear.name}
-                          className="w-full h-full object-cover group-hover/img:scale-106 transition-transform duration-500 ease-out"
+                          className="w-full h-full object-cover group-hover/img:scale-106 transition-transform duration-700 ease-out"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                        
+                        {/* Futuristic Holographic Laser Scanline */}
+                        <div className="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-laser-scan pointer-events-none opacity-80"></div>
+                        
+                        {/* Smooth bottom cinematic fade that integrates directly with hero background */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#090a0f] via-transparent to-black/30 pointer-events-none"></div>
 
-                        {/* Top Overlay Badges */}
-                        <div className="absolute top-2.5 left-2.5 flex items-center space-x-1.5">
-                          <span className="bg-black/75 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-white/20">
-                            {currentGear.category}
-                          </span>
-                        </div>
-
-                        <div className="absolute top-2.5 right-2.5">
-                          <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border backdrop-blur-md shadow-xs ${currentGear.badgeStyle}`}>
-                            {currentGear.status}
-                          </span>
-                        </div>
-
-                        {/* Bottom Picture Info */}
-                        <div className="absolute bottom-2.5 left-3 right-3 text-left">
-                          <h4 className="text-base font-extrabold text-white tracking-tight leading-tight drop-shadow-xs">
-                            {currentGear.name}
-                          </h4>
-                          <p className="text-[11px] text-zinc-300 mt-0.5 flex items-center space-x-1">
-                            <MapPin className="w-3 h-3 text-emerald-400 shrink-0" />
-                            <span>{currentGear.location}</span>
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Equipment Pricing, Deposit & Quick Action */}
-                      <div className="p-3 bg-zinc-900/90 rounded-2xl border border-zinc-800 flex items-center justify-between">
-                        <div>
-                          <div className="flex items-baseline space-x-1">
-                            <span className="text-xl font-black text-emerald-400 font-mono tracking-tight">₹{currentGear.rate}</span>
-                            <span className="text-zinc-500 text-xs font-semibold">/ day</span>
+                        {/* Floating Hardware Spec Pill Overlay */}
+                        <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between z-10">
+                          <div className="p-2.5 rounded-2xl bg-zinc-950/85 backdrop-blur-md border border-white/10 shadow-lg max-w-[250px]">
+                            <div className="flex items-center space-x-1.5 mb-0.5">
+                              <span className="text-[9px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                                {currentGear.category}
+                              </span>
+                              <span className="text-[10px] text-zinc-400 font-mono">100% P2P Handover</span>
+                            </div>
+                            <h4 className="text-sm font-black text-white tracking-tight truncate">
+                              {currentGear.name}
+                            </h4>
+                            <p className="text-[10px] text-zinc-300 flex items-center space-x-1 mt-0.5">
+                              <MapPin className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
+                              <span className="truncate">{currentGear.location}</span>
+                            </p>
                           </div>
-                          <span className="text-[10px] text-zinc-400 font-medium">₹{currentGear.deposit} Escrow Deposit</span>
+
+                          {/* Floating Rate & Quick Inspect CTA */}
+                          <div className="flex flex-col items-end space-y-1.5">
+                            <div className="px-3 py-1.5 rounded-2xl bg-emerald-950/90 backdrop-blur-md border border-emerald-500/40 shadow-lg text-right">
+                              <span className="text-[9px] text-emerald-300 font-bold uppercase tracking-wider block">Daily Rate</span>
+                              <div className="flex items-baseline space-x-0.5">
+                                <span className="text-lg font-black text-emerald-400 font-mono">₹{currentGear.rate}</span>
+                                <span className="text-[10px] text-zinc-400 font-medium">/d</span>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSearchQuery(currentGear.searchQuery);
+                                setSelectedCategory('All');
+                              }}
+                              className="px-3 py-1.5 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-black text-[11px] shadow-md flex items-center space-x-1 cursor-pointer transition-all duration-200 active:scale-95 group/btn"
+                            >
+                              <span>Explore</span>
+                              <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-0.5 transition-transform" />
+                            </button>
+                          </div>
                         </div>
 
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSearchQuery(currentGear.searchQuery);
-                            setSelectedCategory('All');
-                          }}
-                          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-zinc-950 font-black text-xs rounded-xl shadow-md shadow-emerald-600/20 btn-tactile flex items-center space-x-1.5 cursor-pointer"
-                        >
-                          <span>Explore Gear</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
                       </div>
+
+                      {/* Integrated Seamless Floating Equipment Selector */}
+                      <div className="mt-3.5 flex items-center justify-between p-1.5 rounded-2xl bg-zinc-900/80 backdrop-blur-xl border border-white/[0.08] shadow-lg">
+                        <div className="flex items-center space-x-1.5">
+                          {HERO_FEATURED_GEAR.map((gear, idx) => {
+                            const isSelected = activeHeroIdx === idx;
+                            return (
+                              <button
+                                key={gear.id}
+                                type="button"
+                                onClick={() => setActiveHeroIdx(idx)}
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center space-x-1.5 cursor-pointer ${
+                                  isSelected
+                                    ? 'bg-zinc-800 text-white shadow-sm ring-1 ring-emerald-500/50'
+                                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
+                                }`}
+                              >
+                                {isSelected && (
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                )}
+                                <span>{gear.shortName}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        <div className="flex items-center space-x-1 text-[10px] font-semibold text-zinc-400 pr-2 hidden sm:flex">
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                          <span>Condition Verified</span>
+                        </div>
+                      </div>
+
                     </div>
                   );
                 })()}
-
-                {/* 3 Clickable Equipment Preview Thumbnails */}
-                <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-zinc-800/80">
-                  {HERO_FEATURED_GEAR.map((gear, idx) => {
-                    const isSelected = activeHeroIdx === idx;
-                    return (
-                      <button
-                        key={gear.id}
-                        type="button"
-                        onClick={() => setActiveHeroIdx(idx)}
-                        className={`p-1.5 rounded-xl border text-left transition-all cursor-pointer flex items-center space-x-2 group/thumb btn-tactile ${
-                          isSelected
-                            ? 'bg-zinc-800/90 border-emerald-500/60 shadow-xs'
-                            : 'bg-zinc-900/60 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900'
-                        }`}
-                      >
-                        <img
-                          src={gear.image}
-                          alt={gear.shortName}
-                          className="w-8 h-8 rounded-lg object-cover bg-zinc-800 shrink-0 border border-zinc-700/60"
-                        />
-                        <div className="min-w-0 flex-1">
-                          <p className={`text-[10px] font-bold truncate ${isSelected ? 'text-emerald-400' : 'text-zinc-300'}`}>
-                            {gear.shortName}
-                          </p>
-                          <p className="text-[9px] text-zinc-500 font-mono">₹{gear.rate}/d</p>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Bottom Trust Guarantee Footer */}
-                <div className="mt-3 pt-2.5 border-t border-zinc-800/70 flex items-center justify-between text-[10px] text-zinc-400">
-                  <div className="flex items-center space-x-1 text-emerald-400 font-semibold">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Dual-Party Condition Ledger</span>
-                  </div>
-                  <span className="text-zinc-500">100% P2P Handover</span>
-                </div>
-
               </div>
+
             </div>
 
           </div>

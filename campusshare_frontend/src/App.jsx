@@ -16,6 +16,7 @@ import AuthModal from './components/AuthModal';
 import MobileBottomNav from './components/MobileBottomNav';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
+import SnakeCursor from './components/SnakeCursor';
 import { Bell, ShieldCheck } from 'lucide-react';
 
 const AppContent = () => {
@@ -37,6 +38,9 @@ const AppContent = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#07080b] flex flex-col font-sans text-slate-800 dark:text-zinc-100 transition-colors duration-200">
       
+      {/* Organic Trailing Snake Cursor with Click Ripple */}
+      <SnakeCursor />
+
       {/* Navigation Bar */}
       <Navbar
         activeTab={activeTab}
