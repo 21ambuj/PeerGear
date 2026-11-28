@@ -18,7 +18,10 @@ import {
   KeyRound, 
   Camera,
   Check,
-  Loader2
+  Loader2,
+  Building2,
+  Search,
+  Plus
 } from 'lucide-react';
 
 const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM' }) => {
@@ -29,13 +32,53 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
   const [regStep, setRegStep] = useState(initialStep); // 'FORM' | 'OTP' | 'ID_CARD' | 'SUCCESS'
   const isSubmittingRef = useRef(false);
 
+  // Campus Directory States (Compulsory Selection & Extensible Database Repository)
+  const [campuses, setCampuses] = useState([]);
+  const [selectedCampus, setSelectedCampus] = useState(user?.campus_name || '');
+  const [campusSearch, setCampusSearch] = useState('');
+  const [isCampusDropdownOpen, setIsCampusDropdownOpen] = useState(false);
+  const [loadingCampuses, setLoadingCampuses] = useState(false);
+
+  const loadCampuses = async (query = '') => {
+    try {
+      setLoadingCampuses(true);
+      const res = await authApi.getCampuses({ q: query });
+      if (res.data?.campuses) {
+        setCampuses(res.data.campuses);
+      }
+    } catch (err) {
+      console.warn('Failed to load campuses list:', err);
+    } finally {
+      setLoadingCampuses(false);
+    }
+  };
+
   useEffect(() => {
     if (isOpen) {
       setMode(initialMode);
       setRegStep(initialStep);
       setError('');
+      loadCampuses();
+      if (user?.campus_name) {
+        setSelectedCampus(user.campus_name);
+      }
     }
-  }, [isOpen, initialMode, initialStep]);
+  }, [isOpen, initialMode, initialStep, user]);
+
+  const handleAddNewCampus = async (nameToAdd) => {
+    const trimmed = nameToAdd.trim();
+    if (!trimmed) return;
+    try {
+      setSelectedCampus(trimmed);
+      setCampusSearch('');
+      setIsCampusDropdownOpen(false);
+      await authApi.addCampus({ name: trimmed });
+      showToast(`'${trimmed}' registered in campus network!`, 'success', 'Campus Added');
+      loadCampuses();
+    } catch (err) {
+      console.error('Failed to add campus:', err);
+    }
+  };
   
   // Registration Form States
   const [email, setEmail] = useState('');
@@ -253,6 +296,12 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
       return;
     }
 
+    if (!selectedCampus || !selectedCampus.trim()) {
+      setError('University / Campus name is compulsory for student ID verification. Please select or add your campus.');
+      showToast('Please select or add your university campus.', 'error', 'Campus Required');
+      return;
+    }
+
     setError('');
     setLoading(true);
 
@@ -263,12 +312,14 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
         try {
           const formData = new FormData();
           formData.append('id_card', idCardFile);
+          formData.append('campus_name', selectedCampus.trim());
           res = await authApi.uploadIdCard(formData);
         } catch (uploadErr) {
           if (idCardPreview) {
             res = await authApi.uploadIdCard({
               id_card_data: idCardPreview,
-              filename: idCardFileName || idCardFile.name || 'student_id'
+              filename: idCardFileName || idCardFile.name || 'student_id',
+              campus_name: selectedCampus.trim()
             });
           } else {
             throw uploadErr;
@@ -277,7 +328,8 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
       } else {
         res = await authApi.uploadIdCard({
           id_card_data: idCardPreview,
-          filename: idCardFileName || 'student_id'
+          filename: idCardFileName || 'student_id',
+          campus_name: selectedCampus.trim()
         });
       }
 
@@ -389,6 +441,108 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialStep = 'FORM
             )}
 
             <form onSubmit={handleUploadIdCard} className="space-y-4">
+              
+              {/* COMPULSORY CAMPUS SELECTION COMPONENT */}
+              <div className="space-y-1.5 relative">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-slate-800 dark:text-zinc-200">
+                    Select University / Campus <span className="text-rose-500 font-black">*</span>
+                  </label>
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center space-x-1">
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span>Compulsory Node</span>
+                  </span>
+                </div>
+
+                {/* Dropdown Trigger Box */}
+                <div className="relative">
+                  <div
+                    onClick={() => setIsCampusDropdownOpen(!isCampusDropdownOpen)}
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between cursor-pointer transition border ${
+                      selectedCampus 
+                        ? 'bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800 text-slate-900 dark:text-zinc-100'
+                        : 'bg-slate-50 dark:bg-zinc-800 border-slate-300 dark:border-zinc-700 text-slate-500 dark:text-zinc-400'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2 min-w-0">
+                      <Building2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                      <span className="truncate font-bold">
+                        {selectedCampus || 'Search or select your university campus...'}
+                      </span>
+                    </div>
+                    <span className="text-[10px] bg-white dark:bg-zinc-700 text-slate-700 dark:text-zinc-200 px-2 py-0.5 rounded-md font-bold shrink-0 border border-slate-200 dark:border-zinc-600 shadow-2xs">
+                      {selectedCampus ? 'Change' : 'Choose'}
+                    </span>
+                  </div>
+
+                  {/* Dropdown Menu Overlay */}
+                  {isCampusDropdownOpen && (
+                    <div className="absolute top-full left-0 right-0 mt-1.5 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-2xl shadow-2xl p-2.5 z-50 animate-scale-in max-h-64 overflow-y-auto">
+                      
+                      {/* Live Campus Search Input */}
+                      <div className="relative mb-2">
+                        <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
+                        <input
+                          type="text"
+                          placeholder="Type campus name (e.g. IIT, BITS, NIT, VIT, LPU)..."
+                          value={campusSearch}
+                          onChange={(e) => {
+                            setCampusSearch(e.target.value);
+                            loadCampuses(e.target.value);
+                          }}
+                          className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg text-slate-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
+                          autoFocus
+                        />
+                      </div>
+
+                      {/* Filtered Campus List */}
+                      <div className="space-y-1 max-h-36 overflow-y-auto pr-1">
+                        {campuses.map((c) => (
+                          <div
+                            key={c._id || c.name}
+                            onClick={() => {
+                              setSelectedCampus(c.name);
+                              setIsCampusDropdownOpen(false);
+                              setCampusSearch('');
+                              setError('');
+                            }}
+                            className={`p-2 rounded-xl text-xs font-semibold flex items-center justify-between cursor-pointer transition ${
+                              selectedCampus === c.name
+                                ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700'
+                                : 'text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800'
+                            }`}
+                          >
+                            <span className="truncate pr-2">{c.name}</span>
+                            {c.code && (
+                              <span className="text-[9px] font-mono font-bold bg-slate-200 dark:bg-zinc-700 text-slate-600 dark:text-zinc-300 px-1.5 py-0.5 rounded shrink-0">
+                                {c.code}
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Manual Campus Addition Button (If typed campus is not in dropdown) */}
+                      {campusSearch.trim() && !campuses.some(c => c.name.toLowerCase() === campusSearch.trim().toLowerCase()) && (
+                        <div className="mt-2 pt-2 border-t border-slate-100 dark:border-zinc-800">
+                          <button
+                            type="button"
+                            onClick={() => handleAddNewCampus(campusSearch)}
+                            className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 cursor-pointer shadow-xs"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span className="truncate">Add & Select: "{campusSearch.trim()}"</span>
+                          </button>
+                          <p className="text-[9px] text-zinc-400 mt-1 text-center">
+                            This campus will be saved and visible to other students in the dropdown.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Upload Dropzone */}
               <div className="border-2 border-dashed border-indigo-200 dark:border-indigo-900/60 hover:border-indigo-400 dark:hover:border-indigo-600 rounded-2xl p-4 bg-indigo-50/40 dark:bg-indigo-950/20 transition text-center relative group">
                 <input

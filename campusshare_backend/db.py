@@ -78,6 +78,9 @@ def get_wallet_transactions_collection() -> Collection:
 def get_categories_collection() -> Collection:
     return get_db()['categories']
 
+def get_campuses_collection() -> Collection:
+    return get_db()['campuses']
+
 def get_email_otps_collection() -> Collection:
     return get_db()['email_otps']
 

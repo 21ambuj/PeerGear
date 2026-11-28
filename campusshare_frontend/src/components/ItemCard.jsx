@@ -76,6 +76,11 @@ const ItemCard = ({ item, onSelect, onBook, animationDelayClass = '' }) => {
           <div className="flex items-center space-x-1.5 text-zinc-500 dark:text-zinc-400 text-xs mb-3">
             <MapPin className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
             <span className="truncate font-medium">{item.pickup_location || 'Campus Main Hub'}</span>
+            {(item.campus_name || item.owner?.campus_name) && (
+              <span className="text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800/50 truncate max-w-[130px] shrink-0">
+                {item.campus_code || (item.campus_name || item.owner?.campus_name).split(' ')[0]}
+              </span>
+            )}
           </div>
 
           {/* Dynamic Specifications */}

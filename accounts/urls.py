@@ -18,6 +18,8 @@ urlpatterns = [
     path('withdraw/', views.wallet_withdraw_view, name='account-withdraw'),
     path('wallet-history/', views.wallet_history_view, name='account-wallet-history'),
     path('students/', views.students_list_view, name='students-list'),
+    path('campuses/', views.campuses_list_view, name='campuses-list'),
+    path('update-campus/', views.update_campus_view, name='update-campus'),
     
     # Campus Administration & Moderation Endpoints
     path('admin/login/', views.admin_login_view, name='admin-login'),

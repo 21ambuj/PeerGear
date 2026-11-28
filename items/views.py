@@ -108,6 +108,23 @@ def items_list_create_view(request):
         if price_query:
             query["rental_rate_per_day"] = price_query
 
+        # Campus-isolated inventory query
+        campus_filter = safe_str(request.GET.get("campus", "")).strip()
+        auth_user = get_current_user_from_request(request)
+        if campus_filter:
+            if campus_filter.lower() != "all":
+                query["$or"] = [
+                    {"campus_name": {"$regex": re.escape(campus_filter), "$options": "i"}},
+                    {"campus_code": campus_filter.upper()},
+                    {"campus_name": {"$exists": False}}
+                ]
+        elif auth_user and auth_user.get("campus_name"):
+            student_campus = auth_user["campus_name"]
+            query["$or"] = [
+                {"campus_name": {"$regex": re.escape(student_campus), "$options": "i"}},
+                {"campus_name": {"$exists": False}}
+            ]
+
         # Sorting strategy
         sort_config = [("created_at", -1)]
         if sort_by == "price_asc":
@@ -221,6 +238,8 @@ def items_list_create_view(request):
             "security_deposit": round(security_deposit, 2),
             "replacement_value": round(replacement_val, 2),
             "pickup_location": pickup_location or safe_str(user.get("hostel_block", "Campus Hostel")),
+            "campus_name": safe_str(user.get("campus_name", "IIT Delhi (Indian Institute of Technology)"), max_length=150),
+            "campus_code": safe_str(user.get("campus_code", "IITD"), max_length=50),
             "availability_status": "AVAILABLE",
             "images": images,
             "specifications": specifications,  # Embedded dynamic specs
@@ -263,6 +282,7 @@ def _attach_owners(items_list, users_col):
                 "is_email_verified": bool(owner.get("is_email_verified", False)),
                 "verification_tier": owner.get("verification_tier", "UNVERIFIED"),
                 "id_card_status": owner.get("id_card_status", "NOT_UPLOADED"),
+                "campus_name": owner.get("campus_name", item.get("campus_name", "Campus Mesh")),
                 "phone": owner.get("phone")
             }
 

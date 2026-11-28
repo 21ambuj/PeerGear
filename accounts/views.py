@@ -21,6 +21,7 @@ from campusshare_backend.db import (
     get_items_collection, 
     get_email_otps_collection,
     get_notifications_collection,
+    get_campuses_collection,
     serialize_doc, 
     to_object_id
 )
@@ -354,9 +355,11 @@ def upload_id_card_view(request):
     file_url = None
     original_filename = "student_id"
     file_type = "image"
+    campus_name = ""
 
     # Check for multipart/form-data upload
     if request.FILES and "id_card" in request.FILES:
+        campus_name = safe_str(request.POST.get("campus_name", "")).strip()
         uploaded_file = request.FILES["id_card"]
         original_filename = uploaded_file.name
         ext = os.path.splitext(uploaded_file.name)[1].lower()
@@ -388,6 +391,7 @@ def upload_id_card_view(request):
             data = json.loads(request.body.decode("utf-8"))
             id_data = data.get("id_card_data", "")
             original_filename = safe_str(data.get("filename", "student_id"))
+            campus_name = safe_str(data.get("campus_name", "")).strip()
         except Exception:
             return JsonResponse({"error": "No file uploaded or invalid JSON body."}, status=400)
 
@@ -405,6 +409,33 @@ def upload_id_card_view(request):
         else:
             return JsonResponse({"error": "Invalid ID card data. Must be an image or PDF."}, status=400)
 
+    # Campus name validation: compulsory as requested by user
+    if not campus_name:
+        existing_campus = user.get("campus_name")
+        if not existing_campus:
+            return JsonResponse({"error": "University / Campus name is required for ID verification. Please select or enter your campus."}, status=400)
+        campus_name = existing_campus
+
+    # Compute short campus code (acronym)
+    campus_code = "".join([w[0].upper() for w in campus_name.replace("(", " ").replace(")", " ").split() if w and w[0].isalnum()])[:8] or "CAMPUS"
+
+    # Persist or update campus in dynamic database collection so future students can select it from the dropdown
+    campuses_col = get_campuses_collection()
+    campuses_col.update_one(
+        {"name_lower": campus_name.lower()},
+        {
+            "$setOnInsert": {
+                "name": campus_name,
+                "name_lower": campus_name.lower(),
+                "code": campus_code,
+                "created_at": datetime.now(timezone.utc),
+                "is_custom": True
+            },
+            "$inc": {"student_count": 1}
+        },
+        upsert=True
+    )
+
     users_col = get_users_collection()
     users_col.update_one(
         {"_id": user["_id"]},
@@ -415,8 +446,10 @@ def upload_id_card_view(request):
                 "id_card_filetype": file_type,
                 "id_card_status": "PENDING_VERIFICATION",
                 "id_card_uploaded_at": datetime.now(timezone.utc),
+                "campus_name": campus_name,
+                "campus_code": campus_code,
                 "is_verified": True, # Active student on campus platform
-                "verification_status_message": "College ID submitted. Our campus moderation team will verify your credentials soon."
+                "verification_status_message": f"College ID submitted for {campus_name}. Our campus moderation team will verify your credentials soon."
             }
         }
     )
@@ -1079,6 +1112,168 @@ def admin_verify_id_view(request, user_id):
     updated_student = users_col.find_one({"_id": oid}, {"password_hash": 0, "salt": 0})
     return JsonResponse({"message": msg, "student": serialize_doc(updated_student)}, status=200)
 
+# =====================================================================
+# DYNAMIC CAMPUS DIRECTORY ENDPOINTS (Searchable & Extensible by Students)
+# =====================================================================
+
+DEFAULT_CAMPUSES_SEED = [
+    {"name": "IIT Delhi (Indian Institute of Technology)", "code": "IITD", "city": "New Delhi"},
+    {"name": "IIT Bombay (Indian Institute of Technology)", "code": "IITB", "city": "Mumbai"},
+    {"name": "IIT Madras (Indian Institute of Technology)", "code": "IITM", "city": "Chennai"},
+    {"name": "IIT Kharagpur (Indian Institute of Technology)", "code": "IITKGP", "city": "Kharagpur"},
+    {"name": "IIT Roorkee (Indian Institute of Technology)", "code": "IITR", "city": "Roorkee"},
+    {"name": "BITS Pilani (Pilani Campus)", "code": "BITS-P", "city": "Pilani"},
+    {"name": "BITS Pilani (Goa Campus)", "code": "BITS-G", "city": "Goa"},
+    {"name": "BITS Pilani (Hyderabad Campus)", "code": "BITS-H", "city": "Hyderabad"},
+    {"name": "NIT Trichy (National Institute of Technology)", "code": "NITT", "city": "Tiruchirappalli"},
+    {"name": "NIT Surathkal (National Institute of Technology)", "code": "NITK", "city": "Mangalore"},
+    {"name": "NIT Warangal (National Institute of Technology)", "code": "NITW", "city": "Warangal"},
+    {"name": "Delhi Technological University (DTU)", "code": "DTU", "city": "New Delhi"},
+    {"name": "Netaji Subhas University of Technology (NSUT)", "code": "NSUT", "city": "New Delhi"},
+    {"name": "VIT Vellore (Vellore Institute of Technology)", "code": "VIT", "city": "Vellore"},
+    {"name": "Lovely Professional University (LPU)", "code": "LPU", "city": "Phagwara"},
+    {"name": "Thapar University (TIET)", "code": "TIET", "city": "Patiala"},
+    {"name": "IIIT Hyderabad", "code": "IIITH", "city": "Hyderabad"},
+    {"name": "University of Delhi (North Campus)", "code": "DU-NC", "city": "New Delhi"},
+    {"name": "University of Delhi (South Campus)", "code": "DU-SC", "city": "New Delhi"},
+    {"name": "Manipal Academy of Higher Education (MAHE)", "code": "MAHE", "city": "Manipal"},
+    {"name": "SRM Institute of Science and Technology", "code": "SRM", "city": "Chennai"},
+]
+
+@csrf_exempt
+def campuses_list_view(request):
+    """
+    GET /api/accounts/campuses/
+    Returns list of campuses with optional search query ?q=...
+    Auto-seeds standard list if collection is empty.
+    
+    POST /api/accounts/campuses/
+    Allows registering a new campus manually so it immediately becomes available for all other students!
+    """
+    campuses_col = get_campuses_collection()
+
+    # Auto-seed if collection is completely fresh
+    if campuses_col.count_documents({}) == 0:
+        docs = []
+        for c in DEFAULT_CAMPUSES_SEED:
+            docs.append({
+                "name": c["name"],
+                "name_lower": c["name"].lower(),
+                "code": c["code"],
+                "city": c.get("city", "Campus"),
+                "student_count": 0,
+                "is_custom": False,
+                "created_at": datetime.now(timezone.utc)
+            })
+        if docs:
+            try:
+                campuses_col.insert_many(docs, ordered=False)
+            except Exception:
+                pass
+
+    if request.method == "GET":
+        q = safe_str(request.GET.get("q", "")).strip()
+        query = {}
+        if q:
+            query = {
+                "$or": [
+                    {"name": {"$regex": re.escape(q), "$options": "i"}},
+                    {"code": {"$regex": re.escape(q), "$options": "i"}},
+                    {"city": {"$regex": re.escape(q), "$options": "i"}}
+                ]
+            }
+        
+        cursor = campuses_col.find(query).sort([("student_count", -1), ("name", 1)]).limit(50)
+        campuses = list(cursor)
+        return JsonResponse({"campuses": serialize_doc(campuses)}, status=200)
+
+    elif request.method == "POST":
+        try:
+            data = json.loads(request.body.decode("utf-8"))
+        except Exception:
+            data = request.POST
+
+        name = safe_str(data.get("name", "")).strip()
+        if not name:
+            return JsonResponse({"error": "Campus / University name cannot be empty."}, status=400)
+
+        existing = campuses_col.find_one({"name_lower": name.lower()})
+        if existing:
+            return JsonResponse({"message": "Campus already registered in directory.", "campus": serialize_doc(existing)}, status=200)
+
+        code = "".join([w[0].upper() for w in name.replace("(", " ").replace(")", " ").split() if w and w[0].isalnum()])[:8] or "CAMPUS"
+        new_doc = {
+            "name": name,
+            "name_lower": name.lower(),
+            "code": code,
+            "city": safe_str(data.get("city", "Campus")),
+            "student_count": 1,
+            "is_custom": True,
+            "created_at": datetime.now(timezone.utc)
+        }
+        res = campuses_col.insert_one(new_doc)
+        new_doc["_id"] = res.inserted_id
+        return JsonResponse({"message": f"'{name}' successfully added to university network!", "campus": serialize_doc(new_doc)}, status=201)
+
+    return JsonResponse({"error": "Method not allowed."}, status=405)
+
+@csrf_exempt
+def update_campus_view(request):
+    """
+    POST /api/accounts/update-campus/
+    Allows authenticated student to update their primary campus.
+    """
+    if request.method != "POST":
+        return JsonResponse({"error": "Method not allowed. Use POST."}, status=405)
+
+    user = get_current_user_from_request(request)
+    if not user:
+        return JsonResponse({"error": "Authentication required."}, status=401)
+
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+    except Exception:
+        data = request.POST
+
+    campus_name = safe_str(data.get("campus_name", "")).strip()
+    if not campus_name:
+        return JsonResponse({"error": "Campus name is required."}, status=400)
+
+    campus_code = "".join([w[0].upper() for w in campus_name.replace("(", " ").replace(")", " ").split() if w and w[0].isalnum()])[:8] or "CAMPUS"
+
+    campuses_col = get_campuses_collection()
+    campuses_col.update_one(
+        {"name_lower": campus_name.lower()},
+        {
+            "$setOnInsert": {
+                "name": campus_name,
+                "name_lower": campus_name.lower(),
+                "code": campus_code,
+                "created_at": datetime.now(timezone.utc),
+                "is_custom": True
+            },
+            "$inc": {"student_count": 1}
+        },
+        upsert=True
+    )
+
+    users_col = get_users_collection()
+    users_col.update_one(
+        {"_id": user["_id"]},
+        {
+            "$set": {
+                "campus_name": campus_name,
+                "campus_code": campus_code
+            }
+        }
+    )
+
+    updated_user = users_col.find_one({"_id": user["_id"]}, {"password_hash": 0, "salt": 0})
+    return JsonResponse({
+        "message": f"Your campus has been updated to {campus_name}!",
+        "user": serialize_doc(updated_user)
+    }, status=200)
+
 @csrf_exempt
 @require_admin
 def admin_toggle_block_view(request, user_id):
@@ -1166,3 +1361,165 @@ def admin_toggle_block_view(request, user_id):
 
     updated_student = users_col.find_one({"_id": oid}, {"password_hash": 0, "salt": 0})
     return JsonResponse({"message": msg, "student": serialize_doc(updated_student)}, status=200)
+
+# =====================================================================
+# DYNAMIC CAMPUS DIRECTORY ENDPOINTS (Searchable & Extensible by Students)
+# =====================================================================
+
+DEFAULT_CAMPUSES_SEED = [
+    {"name": "IIT Delhi (Indian Institute of Technology)", "code": "IITD", "city": "New Delhi"},
+    {"name": "IIT Bombay (Indian Institute of Technology)", "code": "IITB", "city": "Mumbai"},
+    {"name": "IIT Madras (Indian Institute of Technology)", "code": "IITM", "city": "Chennai"},
+    {"name": "IIT Kharagpur (Indian Institute of Technology)", "code": "IITKGP", "city": "Kharagpur"},
+    {"name": "IIT Roorkee (Indian Institute of Technology)", "code": "IITR", "city": "Roorkee"},
+    {"name": "BITS Pilani (Pilani Campus)", "code": "BITS-P", "city": "Pilani"},
+    {"name": "BITS Pilani (Goa Campus)", "code": "BITS-G", "city": "Goa"},
+    {"name": "BITS Pilani (Hyderabad Campus)", "code": "BITS-H", "city": "Hyderabad"},
+    {"name": "NIT Trichy (National Institute of Technology)", "code": "NITT", "city": "Tiruchirappalli"},
+    {"name": "NIT Surathkal (National Institute of Technology)", "code": "NITK", "city": "Mangalore"},
+    {"name": "NIT Warangal (National Institute of Technology)", "code": "NITW", "city": "Warangal"},
+    {"name": "Delhi Technological University (DTU)", "code": "DTU", "city": "New Delhi"},
+    {"name": "Netaji Subhas University of Technology (NSUT)", "code": "NSUT", "city": "New Delhi"},
+    {"name": "VIT Vellore (Vellore Institute of Technology)", "code": "VIT", "city": "Vellore"},
+    {"name": "Lovely Professional University (LPU)", "code": "LPU", "city": "Phagwara"},
+    {"name": "Thapar University (TIET)", "code": "TIET", "city": "Patiala"},
+    {"name": "IIIT Hyderabad", "code": "IIITH", "city": "Hyderabad"},
+    {"name": "University of Delhi (North Campus)", "code": "DU-NC", "city": "New Delhi"},
+    {"name": "University of Delhi (South Campus)", "code": "DU-SC", "city": "New Delhi"},
+    {"name": "Manipal Academy of Higher Education (MAHE)", "code": "MAHE", "city": "Manipal"},
+    {"name": "SRM Institute of Science and Technology", "code": "SRM", "city": "Chennai"},
+]
+
+@csrf_exempt
+def campuses_list_view(request):
+    """
+    GET /api/accounts/campuses/
+    Returns list of campuses with optional search query ?q=...
+    Auto-seeds standard list if collection is empty.
+    
+    POST /api/accounts/campuses/
+    Allows registering a new campus manually so it immediately becomes available for all other students!
+    """
+    campuses_col = get_campuses_collection()
+
+    # Auto-seed if collection is completely fresh
+    if campuses_col.count_documents({}) == 0:
+        docs = []
+        for c in DEFAULT_CAMPUSES_SEED:
+            docs.append({
+                "name": c["name"],
+                "name_lower": c["name"].lower(),
+                "code": c["code"],
+                "city": c.get("city", "Campus"),
+                "student_count": 0,
+                "is_custom": False,
+                "created_at": datetime.now(timezone.utc)
+            })
+        if docs:
+            try:
+                campuses_col.insert_many(docs, ordered=False)
+            except Exception:
+                pass
+
+    if request.method == "GET":
+        q = safe_str(request.GET.get("q", "")).strip()
+        query = {}
+        if q:
+            query = {
+                "$or": [
+                    {"name": {"$regex": re.escape(q), "$options": "i"}},
+                    {"code": {"$regex": re.escape(q), "$options": "i"}},
+                    {"city": {"$regex": re.escape(q), "$options": "i"}}
+                ]
+            }
+        
+        cursor = campuses_col.find(query).sort([("student_count", -1), ("name", 1)]).limit(50)
+        campuses = list(cursor)
+        return JsonResponse({"campuses": serialize_doc(campuses)}, status=200)
+
+    elif request.method == "POST":
+        try:
+            data = json.loads(request.body.decode("utf-8"))
+        except Exception:
+            data = request.POST
+
+        name = safe_str(data.get("name", "")).strip()
+        if not name:
+            return JsonResponse({"error": "Campus / University name cannot be empty."}, status=400)
+
+        existing = campuses_col.find_one({"name_lower": name.lower()})
+        if existing:
+            return JsonResponse({"message": "Campus already registered in directory.", "campus": serialize_doc(existing)}, status=200)
+
+        code = "".join([w[0].upper() for w in name.replace("(", " ").replace(")", " ").split() if w and w[0].isalnum()])[:8] or "CAMPUS"
+        new_doc = {
+            "name": name,
+            "name_lower": name.lower(),
+            "code": code,
+            "city": safe_str(data.get("city", "Campus")),
+            "student_count": 1,
+            "is_custom": True,
+            "created_at": datetime.now(timezone.utc)
+        }
+        res = campuses_col.insert_one(new_doc)
+        new_doc["_id"] = res.inserted_id
+        return JsonResponse({"message": f"'{name}' successfully added to university network!", "campus": serialize_doc(new_doc)}, status=201)
+
+    return JsonResponse({"error": "Method not allowed."}, status=405)
+
+@csrf_exempt
+def update_campus_view(request):
+    """
+    POST /api/accounts/update-campus/
+    Allows authenticated student to update their primary campus.
+    """
+    if request.method != "POST":
+        return JsonResponse({"error": "Method not allowed. Use POST."}, status=405)
+
+    user = get_current_user_from_request(request)
+    if not user:
+        return JsonResponse({"error": "Authentication required."}, status=401)
+
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+    except Exception:
+        data = request.POST
+
+    campus_name = safe_str(data.get("campus_name", "")).strip()
+    if not campus_name:
+        return JsonResponse({"error": "Campus name is required."}, status=400)
+
+    campus_code = "".join([w[0].upper() for w in campus_name.replace("(", " ").replace(")", " ").split() if w and w[0].isalnum()])[:8] or "CAMPUS"
+
+    campuses_col = get_campuses_collection()
+    campuses_col.update_one(
+        {"name_lower": campus_name.lower()},
+        {
+            "$setOnInsert": {
+                "name": campus_name,
+                "name_lower": campus_name.lower(),
+                "code": campus_code,
+                "created_at": datetime.now(timezone.utc),
+                "is_custom": True
+            },
+            "$inc": {"student_count": 1}
+        },
+        upsert=True
+    )
+
+    users_col = get_users_collection()
+    users_col.update_one(
+        {"_id": user["_id"]},
+        {
+            "$set": {
+                "campus_name": campus_name,
+                "campus_code": campus_code
+            }
+        }
+    )
+
+    updated_user = users_col.find_one({"_id": user["_id"]}, {"password_hash": 0, "salt": 0})
+    return JsonResponse({
+        "message": f"Your campus has been updated to {campus_name}!",
+        "user": serialize_doc(updated_user)
+    }, status=200)

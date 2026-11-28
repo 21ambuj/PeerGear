@@ -246,6 +246,8 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
         rental_rate_per_day: parseFloat(rentalRate),
         security_deposit: parseFloat(securityDeposit),
         pickup_location: pickupLocation.trim(),
+        campus_name: user?.campus_name || "Main Campus Node",
+        campus_code: user?.campus_code || "CAMPUS",
         images: [photoToSubmit],
         tags: tags.trim(),
         specifications: dynamicSpecs,
@@ -420,6 +422,12 @@ const ListItemPage = ({ onListed, onOpenAuth }) => {
             <p className="text-xs sm:text-sm text-zinc-400 mt-1">
               Rent out your equipment safely. Security deposit is locked in automated escrow before physical pickup.
             </p>
+            <div className="mt-3 flex items-center space-x-2 text-xs">
+              <span className="text-zinc-400 font-medium">Publishing to:</span>
+              <span className="font-bold text-emerald-400 flex items-center space-x-1.5 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800 shadow-xs">
+                <span>🏫 {user?.campus_name || 'Main Campus Mesh'}</span>
+              </span>
+            </div>
           </div>
         </div>
 

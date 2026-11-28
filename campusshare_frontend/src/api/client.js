@@ -47,6 +47,9 @@ export const authApi = {
   withdrawFunds: (data) => api.post('/accounts/withdraw/', data),
   getWalletHistory: () => api.get('/accounts/wallet-history/'),
   getStudentsList: () => api.get('/accounts/students/'),
+  getCampuses: (params) => api.get('/accounts/campuses/', { params }),
+  addCampus: (data) => api.post('/accounts/campuses/', data),
+  updateCampus: (data) => api.post('/accounts/update-campus/', data),
 };
 
 export const adminApi = {

@@ -28,7 +28,10 @@ import {
   ArrowRight,
   Zap,
   Smartphone,
-  ArrowUpRight
+  ArrowUpRight,
+  Building2,
+  GraduationCap,
+  Users
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -96,6 +99,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("newest");
+  const [campusFilter, setCampusFilter] = useState("my-campus"); // 'my-campus' | 'all'
   const [loading, setLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null);
   const [bookingItem, setBookingItem] = useState(null);
@@ -115,16 +119,21 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   }, [isHeroHovered]);
 
   useEffect(() => {
-    fetchItems();
-    fetchRecommendations();
+    if (user) {
+      fetchItems();
+      fetchRecommendations();
+    } else {
+      setItems([]);
+      setLoading(false);
+    }
     fetchDynamicCategories();
-  }, [selectedCategory, sortBy, user]);
+  }, [selectedCategory, sortBy, user, campusFilter]);
 
   // Listen for real-time item creation/updates to refresh cache
   useEffect(() => {
     const handleItemCreated = () => {
       dataCache.invalidate('items_');
-      fetchItems(true);
+      if (user) fetchItems(true);
     };
     const handleFocusSearch = () => {
       const el = document.getElementById('campus-global-search-input');
@@ -146,7 +155,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
       window.removeEventListener('campusshare-focus-search', handleFocusSearch);
       window.removeEventListener('campusshare-set-category', handleSetCategory);
     };
-  }, [selectedCategory, sortBy, searchQuery]);
+  }, [selectedCategory, sortBy, searchQuery, user, campusFilter]);
 
   const fetchDynamicCategories = async () => {
     const cached = dataCache.get('categories_list');
@@ -167,13 +176,19 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   };
 
   const fetchItems = async (forceRefresh = false) => {
-    const cacheKey = `items_${selectedCategory}_${sortBy}_${searchQuery.trim()}`;
+    if (!user) {
+      setItems([]);
+      setLoading(false);
+      return;
+    }
+
+    const studentCampus = user.campus_name || '';
+    const cacheKey = `items_${selectedCategory}_${sortBy}_${searchQuery.trim()}_${campusFilter}_${studentCampus}`;
     const cached = dataCache.get(cacheKey);
 
     if (cached && !forceRefresh) {
       setItems(cached);
       setLoading(false);
-      // If cached data is fresh (< 2 mins), don't block UI with skeletons
       if (dataCache.isFresh(cacheKey)) return;
     } else if (!cached) {
       setLoading(true);
@@ -187,6 +202,12 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
       if (searchQuery.trim()) {
         params.q = searchQuery.trim();
       }
+      if (campusFilter === 'my-campus' && studentCampus) {
+        params.campus = studentCampus;
+      } else if (campusFilter === 'all') {
+        params.campus = 'all';
+      }
+
       const res = await itemsApi.list(params);
       const fetchedItems = res.data.items || [];
       dataCache.set(cacheKey, fetchedItems);
@@ -199,6 +220,7 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
   };
 
   const fetchRecommendations = async () => {
+    if (!user) return;
     const recKey = `recs_${selectedCategory}_${user?._id || 'anon'}`;
     const cached = dataCache.get(recKey);
     if (cached) {
@@ -223,7 +245,11 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    fetchItems();
+    if (!user) {
+      if (onOpenAuth) onOpenAuth('login');
+      return;
+    }
+    fetchItems(true);
   };
 
   return (
@@ -457,301 +483,396 @@ const ExplorePage = ({ onNavigateToList, onRequireAuth, onOpenAuth }) => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        
-        {/* Catalog Explorer Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-zinc-950 dark:text-white">
-              {selectedCategory === "All" ? "Available Campus Inventory" : `${selectedCategory}`}
-            </h2>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
-              Showing {items.length} verified item{items.length === 1 ? '' : 's'} available for peer rental
-            </p>
-          </div>
-
-          <div className="flex items-center space-x-2.5">
-            <SlidersHorizontal className="w-4 h-4 text-zinc-400" />
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-bold text-zinc-700 dark:text-zinc-200 rounded-full px-4 py-2 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 cursor-pointer shadow-xs btn-tactile"
-            >
-              <option value="newest">Sort: Newest First</option>
-              <option value="price_asc">Price: Low to High</option>
-              <option value="price_desc">Price: High to Low</option>
-              <option value="rating_desc">Highest Peer Rating</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Item Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="h-80 bg-zinc-100 dark:bg-zinc-900 rounded-3xl animate-pulse"></div>
-            ))}
-          </div>
-        ) : items.length === 0 ? (
-          /* Empty State for Real User Uploads */
-          <div className="text-center py-16 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-8 shadow-xs max-w-xl mx-auto my-8">
-            <div className="w-14 h-14 bg-zinc-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-zinc-600 dark:text-zinc-300">
-              <PackageOpen className="w-7 h-7 stroke-[1.8]" />
-            </div>
-            <h3 className="text-lg font-black text-zinc-900 dark:text-white mb-1 tracking-tight">No campus items found</h3>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mb-6 leading-relaxed">
-              Be the first student to list a scientific calculator, textbook, lab coat, cycle, or project kit. Start sharing with your university halls!
-            </p>
-            <button
-              onClick={onNavigateToList}
-              className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3 rounded-full shadow-md shadow-emerald-600/20 btn-tactile cursor-pointer"
-            >
-              <PlusCircle className="w-4 h-4 stroke-[2.5]" />
-              <span>List Your First Item</span>
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {items.map((item, index) => (
-              <ItemCard
-                key={item._id}
-                item={item}
-                animationDelayClass={`delay-${(index % 6) + 1}`}
-                onSelect={setSelectedItem}
-                onBook={setBookingItem}
-              />
-            ))}
-          </div>
-        )}
-
-      </div>
-
-      {/* ============================================================== */}
-      {/* CAMPUS VERIFICATION ARCHITECTURE (Trust Engine Bento Grid)    */}
-      {/* Positioned AFTER inventory and listing grid                    */}
-      {/* ============================================================== */}
-      <div id="trust-architecture-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16 scroll-mt-24">
-        
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
-          <div>
-            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">
-              Campus Verification Architecture
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
-              Why Campus Students Trust PeerGear
-            </h2>
-          </div>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-md mt-2 sm:mt-0 font-medium leading-relaxed">
-            Automated bank-grade escrow locks, in-person QR handovers, and zero platform theft across all university hostels.
-          </p>
-        </div>
-
-        {/* 4 Bento Cards with Interactive Animated Pictures */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      {user ? (
+        /* ============================================================== */
+        /* AUTHENTICATED STUDENT VIEW: Campus Inventory & Node Exchange  */
+        /* (Items listed based on student's campus, zero marketing clutter)*/
+        /* ============================================================== */
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           
-          {/* Card 1: 100% Refundable Escrow */}
-          <div className="bento-card p-5 flex flex-col justify-between group">
-            <div>
-              {/* Animated Picture / Visual Mockup */}
-              <div className="h-44 rounded-2xl bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 border border-zinc-800 p-3.5 mb-4 relative overflow-hidden flex flex-col justify-between shadow-inner">
-                <div className="absolute inset-0 bg-dark-grid opacity-30 pointer-events-none"></div>
-                
-                {/* Vault Top Bar */}
-                <div className="flex items-center justify-between relative z-10">
-                  <div className="flex items-center space-x-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span className="text-[10px] font-black text-emerald-400 uppercase tracking-wider">ICICI Escrow Vault</span>
-                  </div>
-                  <span className="text-[9px] font-mono text-zinc-400 bg-zinc-800 px-1.5 py-0.5 rounded border border-zinc-700">LOCKED</span>
-                </div>
-
-                {/* Animated Pulsing Shield Centerpiece */}
-                <div className="my-auto text-center relative z-10 flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-1.5 shadow-lg shadow-emerald-500/10 animate-float">
-                    <Lock className="w-6 h-6 stroke-[2.2]" />
-                  </div>
-                  <span className="font-mono text-xs font-black text-white tracking-tight">₹500.00 Security Deposit</span>
-                  <span className="text-[9px] text-emerald-400/90 font-medium">Safe in campus custody</span>
-                </div>
-
-                {/* Simulated Auto-Refund Timeline */}
-                <div className="relative z-10 bg-zinc-900/90 rounded-xl p-2 border border-zinc-800 text-[10px] flex items-center justify-between">
-                  <span className="text-zinc-400">Return Verified</span>
-                  <span className="font-bold text-emerald-400 flex items-center space-x-1">
-                    <span>100% Auto-Refunded</span>
-                    <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+          {/* Active Campus Node Mesh Banner */}
+          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-emerald-950/40 via-zinc-900 to-teal-950/30 border border-emerald-500/30 dark:border-emerald-500/20 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg shadow-emerald-950/20">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-400 flex items-center justify-center shrink-0 shadow-inner">
+                <Building2 className="w-6 h-6 stroke-[2.2]" />
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
+                    Active University Node
+                  </span>
+                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                    Mesh Verified
                   </span>
                 </div>
+                <h3 className="text-base sm:text-lg font-black text-white tracking-tight mt-0.5">
+                  {user.campus_name || 'Campus Student Node'}
+                </h3>
+                <p className="text-[11px] text-zinc-400 font-medium">
+                  Showing equipment verified for students on your university campus.
+                </p>
               </div>
-
-              {/* Text & Content */}
-              <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">100% Refundable Escrow</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Deposit is securely locked in campus escrow and auto-refunded to your wallet the minute the gear is returned.
-              </p>
             </div>
 
-            <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
-              <span>Automatic Settlement</span>
-              <ShieldCheck className="w-4 h-4 text-emerald-500" />
+            {/* Campus Scope Selector */}
+            <div className="flex items-center space-x-2 self-start md:self-auto bg-zinc-900/90 p-1 rounded-2xl border border-white/10 shrink-0">
+              <button
+                type="button"
+                onClick={() => setCampusFilter('my-campus')}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  campusFilter === 'my-campus'
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                My Campus Hub
+              </button>
+              <button
+                type="button"
+                onClick={() => setCampusFilter('all')}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  campusFilter === 'all'
+                    ? 'bg-zinc-800 text-white shadow-sm'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                All Campuses
+              </button>
             </div>
           </div>
 
-          {/* Card 2: Dynamic Handover Pass */}
-          <div className="bento-card p-5 flex flex-col justify-between group">
+          {/* Catalog Explorer Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
             <div>
-              {/* Animated Picture / Visual Mockup */}
-              <div className="h-44 rounded-2xl bg-zinc-950 border border-zinc-800 p-3.5 mb-4 relative overflow-hidden flex items-center justify-between shadow-inner">
-                <div className="absolute inset-0 bg-dark-grid opacity-25 pointer-events-none"></div>
-                
-                {/* QR Code with Animated Laser Scanner */}
-                <div className="relative w-24 h-24 bg-white p-2 rounded-xl shrink-0 flex items-center justify-center shadow-md">
-                  <QRCodeSVG value="peergear://verify-pass/8492" size={80} level="M" fgColor="#090a0f" bgColor="#ffffff" />
-                  {/* Laser Scan Line Animation */}
-                  <div className="absolute left-1 right-1 h-0.5 bg-gradient-to-r from-transparent via-emerald-500 to-transparent shadow-[0_0_8px_#10b981] animate-laser-scan pointer-events-none"></div>
-                </div>
-
-                {/* Digital Pass Details */}
-                <div className="flex-1 pl-3 text-left relative z-10 flex flex-col justify-between h-24">
-                  <div>
-                    <span className="text-[9px] font-black uppercase text-zinc-400 tracking-wider block">Encrypted Pass</span>
-                    <span className="text-[11px] font-bold text-white block">Hostel Handover</span>
-                  </div>
-
-                  <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-1.5 text-center">
-                    <span className="text-[9px] text-zinc-400 block font-semibold">Pickup OTP</span>
-                    <span className="font-mono text-sm font-black text-emerald-400 tracking-widest block">8 4 9 2</span>
-                  </div>
-
-                  <span className="text-[9px] text-zinc-500 flex items-center space-x-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span>Ready for Scan</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Text & Content */}
-              <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Dynamic Handover Pass</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Encrypted QR pass and 4-digit OTP ensure equipment only changes hands between verified university students.
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-zinc-950 dark:text-white">
+                {selectedCategory === "All" ? "Available Campus Inventory" : `${selectedCategory}`}
+              </h2>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
+                Showing {items.length} verified item{items.length === 1 ? '' : 's'} available on {campusFilter === 'my-campus' ? (user.campus_name || 'your campus') : 'all campuses'}
               </p>
             </div>
 
-            <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-indigo-600 dark:text-indigo-400">
-              <span>OTP Handover Protocol</span>
-              <KeyRound className="w-4 h-4 text-indigo-500" />
+            <div className="flex items-center space-x-2.5">
+              <SlidersHorizontal className="w-4 h-4 text-zinc-400" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-bold text-zinc-700 dark:text-zinc-200 rounded-full px-4 py-2 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 cursor-pointer shadow-xs btn-tactile"
+              >
+                <option value="newest">Sort: Newest First</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="rating_desc">Highest Peer Rating</option>
+              </select>
             </div>
           </div>
 
-          {/* Card 3: Condition Inspector */}
-          <div className="bento-card p-5 flex flex-col justify-between group">
-            <div>
-              {/* Animated Picture / Visual Mockup */}
-              <div className="h-44 rounded-2xl bg-zinc-950 border border-zinc-800 p-2.5 mb-4 relative overflow-hidden flex gap-2 shadow-inner">
-                <div className="absolute inset-0 bg-dark-grid opacity-20 pointer-events-none"></div>
-                
-                {/* Photo 1: Pickup Snapshot with Scanner Overlay */}
-                <div className="flex-1 rounded-xl overflow-hidden relative border border-zinc-800 bg-zinc-900 group-hover:scale-102 transition-transform">
-                  <img
-                    src="https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?w=300&auto=format&fit=crop&q=80"
-                    alt="Pickup Condition Scan"
-                    className="w-full h-full object-cover opacity-80"
-                  />
-                  <div className="absolute top-1.5 left-1.5 bg-black/80 backdrop-blur-xs text-[8px] font-black text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/30">
-                    Pickup 10:14 AM
-                  </div>
-                  {/* Viewfinder crosshair */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-8 h-8 border border-emerald-400/50 rounded flex items-center justify-center animate-pulse">
-                      <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
-                    </div>
-                  </div>
-                  <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-emerald-950/80 backdrop-blur-xs text-[8px] font-bold text-emerald-300 text-center py-0.5 rounded">
-                    Mint Condition ✓
-                  </div>
-                </div>
-
-                {/* Photo 2: Return Snapshot */}
-                <div className="flex-1 rounded-xl overflow-hidden relative border border-zinc-800 bg-zinc-900 group-hover:scale-102 transition-transform">
-                  <img
-                    src="https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=300&auto=format&fit=crop&q=80"
-                    alt="Return Condition Scan"
-                    className="w-full h-full object-cover opacity-80"
-                  />
-                  <div className="absolute top-1.5 left-1.5 bg-black/80 backdrop-blur-xs text-[8px] font-black text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/30">
-                    Return 04:30 PM
-                  </div>
-                  <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-emerald-950/80 backdrop-blur-xs text-[8px] font-bold text-emerald-300 text-center py-0.5 rounded">
-                    100% Matched ✓
-                  </div>
-                </div>
+          {/* Item Grid */}
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((n) => (
+                <div key={n} className="h-80 bg-zinc-100 dark:bg-zinc-900 rounded-3xl animate-pulse"></div>
+              ))}
+            </div>
+          ) : items.length === 0 ? (
+            /* Empty State */
+            <div className="text-center py-16 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-8 shadow-xs max-w-xl mx-auto my-8">
+              <div className="w-14 h-14 bg-zinc-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-zinc-600 dark:text-zinc-300">
+                <PackageOpen className="w-7 h-7 stroke-[1.8]" />
               </div>
-
-              {/* Text & Content */}
-              <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Condition Inspector</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Time-stamped photos recorded before and after rental. Zero disputes, complete equipment transparency.
+              <h3 className="text-lg font-black text-zinc-900 dark:text-white mb-1 tracking-tight">No gear listed yet on {user.campus_name || 'your campus'}</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mb-6 leading-relaxed">
+                Be the first student to list a scientific calculator, drafter, cycle, or lab gear on your campus node!
               </p>
+              <button
+                onClick={onNavigateToList}
+                className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3 rounded-full shadow-md shadow-emerald-600/20 btn-tactile cursor-pointer"
+              >
+                <PlusCircle className="w-4 h-4 stroke-[2.5]" />
+                <span>+ List Gear on Your Campus</span>
+              </button>
             </div>
-
-            <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400">
-              <span>Damage Proof Ledger</span>
-              <Camera className="w-4 h-4 text-amber-500" />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {items.map((item, index) => (
+                <ItemCard
+                  key={item._id}
+                  item={item}
+                  animationDelayClass={`delay-${(index % 6) + 1}`}
+                  onSelect={setSelectedItem}
+                  onBook={setBookingItem}
+                />
+              ))}
             </div>
-          </div>
-
-          {/* Card 4: Instant B-Money Payouts */}
-          <div className="bento-card p-5 flex flex-col justify-between group">
-            <div>
-              {/* Animated Picture / Visual Mockup */}
-              <div className="h-44 rounded-2xl bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 border border-zinc-800 p-3 mb-4 relative overflow-hidden flex flex-col justify-between shadow-inner">
-                <div className="absolute inset-0 bg-dark-grid opacity-25 pointer-events-none"></div>
-
-                {/* Push Notification Card */}
-                <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-2.5 relative z-10 shadow-lg animate-float-card">
-                  <div className="flex items-center justify-between mb-1">
-                    <div className="flex items-center space-x-1.5">
-                      <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-white text-[9px] font-black">
-                        ✓
-                      </div>
-                      <span className="text-[10px] font-bold text-zinc-200">Payout Credited</span>
-                    </div>
-                    <span className="text-[9px] text-zinc-500">Just now</span>
-                  </div>
-                  <p className="font-mono text-sm font-black text-emerald-400">+₹450.00 IMPS Payout</p>
-                  <p className="text-[9px] text-zinc-400">Direct to UPI: student@oksbi</p>
-                </div>
-
-                {/* Gateway App Indicators */}
-                <div className="relative z-10 flex items-center justify-between pt-1">
-                  <div className="flex items-center space-x-1">
-                    <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[8px] font-bold">GPay</span>
-                    <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[8px] font-bold">PhonePe</span>
-                    <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[8px] font-bold">Paytm</span>
-                  </div>
-                  <span className="text-[9px] text-emerald-400 font-bold flex items-center space-x-0.5">
-                    <Zap className="w-2.5 h-2.5" />
-                    <span>0.4s Instant</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Text & Content */}
-              <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Instant B-Money Payouts</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Earn money from your idle lab gear and cycles. Withdraw directly to Google Pay, PhonePe, or Bank in seconds.
-              </p>
-            </div>
-
-            <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-purple-600 dark:text-purple-400">
-              <span>Instant IMPS & UPI</span>
-              <Wallet className="w-4 h-4 text-purple-500" />
-            </div>
-          </div>
+          )}
 
         </div>
-      </div>
+      ) : (
+        /* ============================================================== */
+        /* PUBLIC / VISITOR VIEW: Trust Engine & Campus Gateway (NO ITEMS)*/
+        /* ============================================================== */
+        <>
+          {/* CAMPUS VERIFICATION ARCHITECTURE (Trust Engine Bento Grid) */}
+          <div id="trust-architecture-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-16 scroll-mt-24">
+            
+            {/* Section Header */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
+              <div>
+                <span className="text-[11px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">
+                  Campus Verification Architecture
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
+                  Why Campus Students Trust PeerGear
+                </h2>
+              </div>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-md mt-2 sm:mt-0 font-medium leading-relaxed">
+                Automated bank-grade escrow locks, in-person QR handovers, and zero platform theft across all university hostels.
+              </p>
+            </div>
+
+            {/* 4 Bento Cards with Interactive Animated Pictures */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              
+              {/* Card 1: 100% Refundable Escrow */}
+              <div className="bento-card p-5 flex flex-col justify-between group">
+                <div>
+                  {/* Animated Picture / Visual Mockup */}
+                  <div className="h-44 rounded-2xl bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 border border-zinc-800 p-3.5 mb-4 relative overflow-hidden flex flex-col justify-between shadow-inner">
+                    <div className="absolute inset-0 bg-dark-grid opacity-30 pointer-events-none"></div>
+                    
+                    {/* Vault Top Bar */}
+                    <div className="flex items-center justify-between relative z-10">
+                      <div className="flex items-center space-x-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span className="text-[10px] font-black text-emerald-400 uppercase tracking-wider">ICICI Escrow Vault</span>
+                      </div>
+                      <span className="text-[9px] font-mono text-zinc-400 bg-zinc-800 px-1.5 py-0.5 rounded border border-zinc-700">LOCKED</span>
+                    </div>
+
+                    {/* Animated Pulsing Shield Centerpiece */}
+                    <div className="my-auto text-center relative z-10 flex flex-col items-center">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-1.5 shadow-lg shadow-emerald-500/10 animate-float">
+                        <Lock className="w-6 h-6 stroke-[2.2]" />
+                      </div>
+                      <span className="font-mono text-xs font-black text-white tracking-tight">₹500.00 Security Deposit</span>
+                      <span className="text-[9px] text-emerald-400/90 font-medium">Safe in campus custody</span>
+                    </div>
+
+                    {/* Simulated Auto-Refund Timeline */}
+                    <div className="relative z-10 bg-zinc-900/90 rounded-xl p-2 border border-zinc-800 text-[10px] flex items-center justify-between">
+                      <span className="text-zinc-400">Return Verified</span>
+                      <span className="font-bold text-emerald-400 flex items-center space-x-1">
+                        <span>100% Auto-Refunded</span>
+                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Text & Content */}
+                  <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">100% Refundable Escrow</h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    Deposit is securely locked in campus escrow and auto-refunded to your wallet the minute the gear is returned.
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                  <span>Automatic Settlement</span>
+                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                </div>
+              </div>
+
+              {/* Card 2: Dynamic Handover Pass */}
+              <div className="bento-card p-5 flex flex-col justify-between group">
+                <div>
+                  {/* Animated Picture / Visual Mockup */}
+                  <div className="h-44 rounded-2xl bg-zinc-950 border border-zinc-800 p-3.5 mb-4 relative overflow-hidden flex items-center justify-between shadow-inner">
+                    <div className="absolute inset-0 bg-dark-grid opacity-25 pointer-events-none"></div>
+                    
+                    {/* QR Code with Animated Laser Scanner */}
+                    <div className="relative w-24 h-24 bg-white p-2 rounded-xl shrink-0 flex items-center justify-center shadow-md">
+                      <QRCodeSVG value="peergear://verify-pass/8492" size={80} level="M" fgColor="#090a0f" bgColor="#ffffff" />
+                      {/* Laser Scan Line Animation */}
+                      <div className="absolute left-1 right-1 h-0.5 bg-gradient-to-r from-transparent via-emerald-500 to-transparent shadow-[0_0_8px_#10b981] animate-laser-scan pointer-events-none"></div>
+                    </div>
+
+                    {/* Digital Pass Details */}
+                    <div className="flex-1 pl-3 text-left relative z-10 flex flex-col justify-between h-24">
+                      <div>
+                        <span className="text-[9px] font-black uppercase text-zinc-400 tracking-wider block">Encrypted Pass</span>
+                        <span className="text-[11px] font-bold text-white block">Hostel Handover</span>
+                      </div>
+
+                      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-1.5 text-center">
+                        <span className="text-[9px] text-zinc-400 block font-semibold">Pickup OTP</span>
+                        <span className="font-mono text-sm font-black text-emerald-400 tracking-widest block">8 4 9 2</span>
+                      </div>
+
+                      <span className="text-[9px] text-zinc-500 flex items-center space-x-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span>Ready for Scan</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Text & Content */}
+                  <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Dynamic Handover Pass</h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    Encrypted QR pass and 4-digit OTP ensure equipment only changes hands between verified university students.
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-indigo-600 dark:text-indigo-400">
+                  <span>OTP Handover Protocol</span>
+                  <KeyRound className="w-4 h-4 text-indigo-500" />
+                </div>
+              </div>
+
+              {/* Card 3: Condition Inspector */}
+              <div className="bento-card p-5 flex flex-col justify-between group">
+                <div>
+                  {/* Animated Picture / Visual Mockup */}
+                  <div className="h-44 rounded-2xl bg-zinc-950 border border-zinc-800 p-2.5 mb-4 relative overflow-hidden flex gap-2 shadow-inner">
+                    <div className="absolute inset-0 bg-dark-grid opacity-20 pointer-events-none"></div>
+                    
+                    {/* Photo 1: Pickup Snapshot with Scanner Overlay */}
+                    <div className="flex-1 rounded-xl overflow-hidden relative border border-zinc-800 bg-zinc-900 group-hover:scale-102 transition-transform">
+                      <img
+                        src="https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?w=300&auto=format&fit=crop&q=80"
+                        alt="Pickup Condition Scan"
+                        className="w-full h-full object-cover opacity-80"
+                      />
+                      <div className="absolute top-1.5 left-1.5 bg-black/80 backdrop-blur-xs text-[8px] font-black text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/30">
+                        Pickup 10:14 AM
+                      </div>
+                      {/* Viewfinder crosshair */}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-8 h-8 border border-emerald-400/50 rounded flex items-center justify-center animate-pulse">
+                          <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
+                        </div>
+                      </div>
+                      <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-emerald-950/80 backdrop-blur-xs text-[8px] font-bold text-emerald-300 text-center py-0.5 rounded">
+                        Mint Condition ✓
+                      </div>
+                    </div>
+
+                    {/* Photo 2: Return Snapshot */}
+                    <div className="flex-1 rounded-xl overflow-hidden relative border border-zinc-800 bg-zinc-900 group-hover:scale-102 transition-transform">
+                      <img
+                        src="https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=300&auto=format&fit=crop&q=80"
+                        alt="Return Condition Scan"
+                        className="w-full h-full object-cover opacity-80"
+                      />
+                      <div className="absolute top-1.5 left-1.5 bg-black/80 backdrop-blur-xs text-[8px] font-black text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/30">
+                        Return 04:30 PM
+                      </div>
+                      <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-emerald-950/80 backdrop-blur-xs text-[8px] font-bold text-emerald-300 text-center py-0.5 rounded">
+                        100% Matched ✓
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Text & Content */}
+                  <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Condition Inspector</h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    Time-stamped photos recorded before and after rental. Zero disputes, complete equipment transparency.
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400">
+                  <span>Damage Proof Ledger</span>
+                  <Camera className="w-4 h-4 text-amber-500" />
+                </div>
+              </div>
+
+              {/* Card 4: Instant B-Money Payouts */}
+              <div className="bento-card p-5 flex flex-col justify-between group">
+                <div>
+                  {/* Animated Picture / Visual Mockup */}
+                  <div className="h-44 rounded-2xl bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 border border-zinc-800 p-3 mb-4 relative overflow-hidden flex flex-col justify-between shadow-inner">
+                    <div className="absolute inset-0 bg-dark-grid opacity-25 pointer-events-none"></div>
+
+                    {/* Push Notification Card */}
+                    <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-2.5 relative z-10 shadow-lg animate-float-card">
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center space-x-1.5">
+                          <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-white text-[9px] font-black">
+                            ✓
+                          </div>
+                          <span className="text-[10px] font-bold text-zinc-200">Payout Credited</span>
+                        </div>
+                        <span className="text-[9px] text-zinc-500">Just now</span>
+                      </div>
+                      <p className="font-mono text-sm font-black text-emerald-400">+₹450.00 IMPS Payout</p>
+                      <p className="text-[9px] text-zinc-400">Direct to UPI: student@oksbi</p>
+                    </div>
+
+                    {/* Gateway App Indicators */}
+                    <div className="relative z-10 flex items-center justify-between pt-1">
+                      <div className="flex items-center space-x-1">
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[8px] font-bold">GPay</span>
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[8px] font-bold">PhonePe</span>
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[8px] font-bold">Paytm</span>
+                      </div>
+                      <span className="text-[9px] text-emerald-400 font-bold flex items-center space-x-0.5">
+                        <Zap className="w-2.5 h-2.5" />
+                        <span>0.4s Instant</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Text & Content */}
+                  <h3 className="font-black text-zinc-950 dark:text-white text-base mb-1 tracking-tight">Instant B-Money Payouts</h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    Earn money from your idle lab gear and cycles. Withdraw directly to Google Pay, PhonePe, or Bank in seconds.
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs font-bold text-purple-600 dark:text-purple-400">
+                  <span>Instant IMPS & UPI</span>
+                  <Wallet className="w-4 h-4 text-purple-500" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Campus Gateway Callout (Public Visitor CTA) */}
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-20">
+            <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-black border border-emerald-500/30 text-white text-center relative overflow-hidden shadow-2xl">
+              <div className="absolute top-0 right-1/4 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+              
+              <div className="relative z-10 max-w-2xl mx-auto space-y-4">
+                <span className="text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/30 inline-block">
+                  Closed University Network
+                </span>
+                <h2 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
+                  Sign In to View & Rent Gear on Your Campus
+                </h2>
+                <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+                  PeerGear protects university students with 100% refundable escrow and verified college ID cards. Log in with your campus account to browse your campus inventory and borrow from peers.
+                </p>
+                <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => onOpenAuth && onOpenAuth('login')}
+                    className="w-full sm:w-auto px-8 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-black text-xs sm:text-sm rounded-full shadow-lg shadow-emerald-500/25 transition cursor-pointer"
+                  >
+                    Sign In to Campus Mesh
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onOpenAuth && onOpenAuth('register')}
+                    className="w-full sm:w-auto px-8 py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs sm:text-sm rounded-full border border-zinc-700 transition cursor-pointer"
+                  >
+                    Create Student Account
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Item Detail Modal */}
       {selectedItem && (
